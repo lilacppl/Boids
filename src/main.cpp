@@ -27,9 +27,7 @@ int main()
     };
 
     // prep code
-    std::vector<Boids> boids_vector;
-    Boids              b1;
-    boids_vector.push_back(b1);
+    Boid b1;
     // Declare your infinite update loop.
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::CadetBlue);
@@ -38,8 +36,7 @@ int main()
             p6::Radius{0.2f}
         );
         ctx.square(p6::Center{}, p6::Radius{square_radius});
-        // boids_vector[1].draw(ctx);
-        //b1.draw(ctx);
+        b1.draw(ctx);
     };
 
     // Should be done last. It starts the infinite loop.

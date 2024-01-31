@@ -18,16 +18,16 @@ public:
     Boid();
     ~Boid() = default;
     void move();
-    void draw(p6::Context ctx);
+    void draw(p6::Context& ctx);
 };
 
 Boid::Boid()
     : m_position(std::vector<double>{0, 0, 0}), m_direction(std::vector<double>{0, 1, 0}), m_speed(std::vector<double>{0.5, 0.5, 1}) {}
 
-void Boid::draw(p6::Context ctx)
+void Boid::draw(p6::Context& ctx)
 {
     ctx.fill = {1, 1, 1, 0.5};
-    ctx.square(p6::Center{}, p6::Radius{0.3f});
+    ctx.square(p6::Center{}, p6::Radius{0.01f});
 }
 
 void Boid::move()
