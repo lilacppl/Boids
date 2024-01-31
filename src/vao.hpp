@@ -13,10 +13,14 @@
 #include "vertex3d.hpp"
 
 class VAO {
+private:
     GLuint m_vao;
 
+public:
     VAO();
     ~VAO();
+    VAO(VAO&& other) noexcept;
+    VAO& operator=(VAO&& other) noexcept;
 
     void bind();
     void debind();
@@ -33,6 +37,23 @@ VAO::VAO()
 VAO::~VAO()
 {
     glDeleteVertexArrays(1, &m_vao);
+}
+
+VAO::VAO(VAO&& other) noexcept // Move constructor
+    : m_vao{other.m_vao}
+{
+    other.m_vao = 0; // Make sure that other won't delete the _id we just copied
+}
+
+VAO& VAO::operator=(VAO&& other) noexcept // Move assignment operator
+{
+    if (this != &other)
+    {                               // Make sure that we don't do silly things when we try to move an object to itself
+        glDeleteBuffers(1, &m_vao); // Delete the previous object
+        m_vao       = other.m_vao;  // Copy the object
+        other.m_vao = 0;            // Make sure that other won't delete the _id we just copied
+    }
+    return *this; // move assignment must return a reference to this, so we do it
 }
 
 void VAO::bind()

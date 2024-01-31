@@ -4,7 +4,6 @@
 #include "boids.hpp"
 #include "doctest/doctest.h"
 
-
 int main()
 {
     // Run the tests
@@ -40,7 +39,7 @@ int main()
         );
         ctx.square(p6::Center{}, p6::Radius{square_radius});
         // boids_vector[1].draw(ctx);
-        // b1.draw(ctx);
+        //b1.draw(ctx);
     };
 
     // Should be done last. It starts the infinite loop.
