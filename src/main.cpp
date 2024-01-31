@@ -1,7 +1,9 @@
 #include <cstdlib>
+#include <vector>
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "doctest/doctest.h"
 #include "boids.hpp"
+#include "doctest/doctest.h"
+
 
 int main()
 {
@@ -22,17 +24,23 @@ int main()
         ImGui::End();
         // Show the official ImGui demo window
         // It is very useful to discover all the widgets available in ImGui
-        ImGui::ShowDemoWindow();
+        // ImGui::ShowDemoWindow();
     };
 
+    // prep code
+    std::vector<Boids> boids_vector;
+    Boids              b1;
+    boids_vector.push_back(b1);
     // Declare your infinite update loop.
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::CadetBlue);
-        // ctx.circle(
-        //     p6::Center{ctx.mouse()},
-        //     p6::Radius{0.2f}
-        // );
+        ctx.circle(
+            p6::Center{ctx.mouse()},
+            p6::Radius{0.2f}
+        );
         ctx.square(p6::Center{}, p6::Radius{square_radius});
+        // boids_vector[1].draw(ctx);
+        // b1.draw(ctx);
     };
 
     // Should be done last. It starts the infinite loop.
