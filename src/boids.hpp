@@ -3,30 +3,31 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include "boid.hpp"
 #include "doctest/doctest.h"
 #include "p6/p6.h"
 
-class Boids {
-public:
-    std::vector<double> m_position[3];
-    std::vector<double> m_direction[3];
-    std::vector<double> m_speed[3];
+// ensemble des Boids
 
+class Boids {
+private:
+    std::vector<Boid> m_boids; // vecteur de Boid
+    int               m_numberOfBoids;
+
+public:
     Boids();
     ~Boids() = default;
-    void move();
-    void draw(auto ctx);
+    Boid                getBoid(int id);
+    void                addBoid(const Boid& boid);
+    void                draw(p6::Context& ctx); // dessine tous les Boids
+    std::vector<double> alignement();
+    std::vector<double> cohesion();
+    std::vector<double> separation();
 };
 
 Boids::Boids()
-    : m_position(std::vector<double>{0, 0, 0}), m_direction(std::vector<double>{0, 1, 0}), m_speed(std::vector<double>{0.5, 0.5, 1}) {}
+    : m_boids(std::vector<Boids>{}), m_numberOfBoids(8) {}
 
-void Boids::draw(auto ctx)
-{
-    ctx.fill = {1, 1, 1, 0.5};
-    ctx.square(p6::Center{}, p6::Radius{0.3f});
-}
-
-void Boids::move()
+void Boids::draw(p6::Context& ctx)
 {
 }
