@@ -15,7 +15,7 @@ private:
     int               m_numberOfBoids;
 
 public:
-    Boids();
+    Boids(std::vector<Boids> vec, int number);
     ~Boids() = default;
     Boid                getBoid(int id);
     void                addBoid(const Boid& boid);
@@ -25,8 +25,8 @@ public:
     std::vector<double> separation();
 };
 
-Boids::Boids()
-    : m_boids(std::vector<Boids>{}), m_numberOfBoids(8) {}
+Boids::Boids(std::vector<Boids> vec, int number)
+    : m_boids(vec), m_numberOfBoids(number) {}
 
 void Boids::draw(p6::Context& ctx)
 {
