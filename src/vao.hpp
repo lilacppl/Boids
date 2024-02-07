@@ -19,6 +19,8 @@ private:
 public:
     VAO();
     ~VAO();
+    VAO(const VAO& other)            = delete;
+    VAO& operator=(const VAO& other) = delete;
     VAO(VAO&& other) noexcept;
     VAO& operator=(VAO&& other) noexcept;
 
@@ -29,8 +31,6 @@ public:
 
 VAO::VAO()
 {
-    GLuint VAO;
-    m_vao = VAO;
     glGenVertexArrays(1, &m_vao);
 }
 

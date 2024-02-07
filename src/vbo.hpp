@@ -20,6 +20,8 @@ public:
     VBO();
     VBO(std::vector<Vertex3D> vertices);
     ~VBO();
+    VBO(const VBO& other)            = delete;
+    VBO& operator=(const VBO& other) = delete;
     VBO(VBO&& other) noexcept;
     VBO& operator=(VBO&& other) noexcept;
 
@@ -29,15 +31,13 @@ public:
 
 VBO::VBO()
 {
-    GLuint VBO;
-    m_vbo = VBO;
     glGenBuffers(1, &m_vbo);
 }
 
 VBO::VBO(std::vector<Vertex3D> vertices)
 {
-    GLuint VBO;
-    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &m_vbo);
+    bind();
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex3D), vertices.data(), GL_STATIC_DRAW);
 }
 
