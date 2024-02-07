@@ -15,7 +15,7 @@ private:
     // int               m_numberOfBoids;
 
 public:
-    Boids(std::vector<Boid> vec, int number);
+    Boids(std::vector<Boid> vec);
     ~Boids() = default;
     std::vector<Boid>   getVect() const; // get le vector de Boids
     int                 NumberOfBoids() const;
@@ -27,8 +27,8 @@ public:
     std::vector<double> separation();
 };
 
-Boids::Boids(std::vector<Boid> vec, int number)
-    : m_boids(vec), m_numberOfBoids(number) {}
+Boids::Boids(std::vector<Boid> vec)
+    : m_boids(vec) {}
 
 std::vector<Boid> Boids::getVect() const
 { // getter du vecteur de boids
