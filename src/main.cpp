@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdlib>
 #include <vector>
 #define DOCTEST_CONFIG_IMPLEMENT
@@ -35,7 +37,7 @@ int main()
             p6::Center{ctx.mouse()},
             p6::Radius{0.1f}
         );
-        // ctx.square(p6::Center{}, p6::Radius{square_radius});
+        ctx.square(p6::Center{}, p6::Radius{0.9});
         b1.draw(ctx);
         b1.move();
     };
