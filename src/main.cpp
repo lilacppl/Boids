@@ -33,10 +33,11 @@ int main()
         ctx.background(p6::NamedColor::CadetBlue);
         ctx.circle(
             p6::Center{ctx.mouse()},
-            p6::Radius{0.2f}
+            p6::Radius{0.1f}
         );
-        ctx.square(p6::Center{}, p6::Radius{square_radius});
+        // ctx.square(p6::Center{}, p6::Radius{square_radius});
         b1.draw(ctx);
+        b1.move();
     };
 
     // Should be done last. It starts the infinite loop.
