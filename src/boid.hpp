@@ -6,6 +6,8 @@
 #include "doctest/doctest.h"
 #include "p6/p6.h"
 
+// getter setter + surcharge + et =
+
 class Boid {
 private:
     std::vector<double> m_position[3];
@@ -32,4 +34,8 @@ void Boid::draw(p6::Context& ctx)
 
 void Boid::move()
 {
+    for (int i = 0; i < 3; i++)
+    {
+        // m_position[i] = m_speed[i] + m_position[i];
+    }
 }
