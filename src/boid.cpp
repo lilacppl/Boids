@@ -3,6 +3,7 @@
 #include "boid.hpp"
 // #include <bits/stdc++.h>
 #include <random>
+#include "glm/fwd.hpp"
 
 static constexpr float                 maxSpeed = 5;
 static constexpr float                 maxForce = 10;
@@ -40,4 +41,38 @@ void Boid::move()
         m_position[1] = -m_position[1];
     glm::vec3 new_pos = m_speed + m_position;
     m_position        = new_pos;
+}
+
+glm::vec3 Boid::alignement(Boids& all)
+{
+    float neighbordist = 50; // Field of vision
+
+    glm::vec3 sum(0, 0, 0);
+    int       count = 0;
+    for (int i = 0; i < all.NumberOfBoids(); i++)
+    {
+        float d = abs(get_position() - Boids[i].get_position());
+        if ((d > 0) && (d < neighbordist))
+        { // 0 < d < 50
+            sum += Boids[i].get_speed();
+            count++;
+        }
+    }
+    // If there are boids close enough for alignment...
+    if (count > 0)
+    {
+        sum = sum / (float)count;  // Divide sum by the number of close boids (average of velocity)
+        sum = glm::normalize(sum); // Turn sum into a unit vector, and
+        sum = sum * maxSpeed;      // Multiply by maxSpeed
+        // Steer = Desired - Velocity
+        glm::vec3 steer;
+        steer = sum - get_speed(); // sum = desired(average)
+        // steer.limit(maxForce); pas compris
+        return steer;
+    }
+    else
+    {
+        glm::vec3 temp(0, 0, 0);
+        return temp;
+    }
 }
