@@ -6,6 +6,7 @@
 #include "doctest/doctest.h"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
+#include "boids.hpp"
 
 class Boid {
 private:
@@ -19,4 +20,5 @@ public:
     glm::vec3 get_speed() const;
     void      move();
     void      draw(p6::Context& ctx);
+    glm::vec3 alignement(Boids& all);
 };
