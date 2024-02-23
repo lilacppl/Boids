@@ -43,18 +43,18 @@ void Boid::move()
     m_position        = new_pos;
 }
 
-glm::vec3 Boid::alignement(Boids& all)
+glm::vec3 Boid::alignement(std::vector<Boid>& all)
 {
     float neighbordist = 50; // Field of vision
 
     glm::vec3 sum(0, 0, 0);
     int       count = 0;
-    for (int i = 0; i < all.NumberOfBoids(); i++)
+    for (int i = 0; i < all.size(); i++)
     {
-        float d = abs(get_position() - Boids[i].get_position());
+        float d = abs(get_position()[0] - all[i].get_position()[0]);
         if ((d > 0) && (d < neighbordist))
         { // 0 < d < 50
-            sum += Boids[i].get_speed();
+            sum += all[i].get_speed();
             count++;
         }
     }

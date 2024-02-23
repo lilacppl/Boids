@@ -16,7 +16,7 @@ private:
 
 public:
     Boids(std::vector<Boid> vec);
-    ~Boids() = default;
+    Boids(const int number);
     std::vector<Boid>   getVect() const; // get le vector de Boids
     int                 NumberOfBoids() const;
     Boid                getBoid(int id);
@@ -30,6 +30,14 @@ public:
 Boids::Boids(std::vector<Boid> vec)
     : m_boids(vec) {}
 
+Boids::Boids(const int number)
+{
+    for (int i = 0; i < number; i++)
+    {
+        Boid b1;
+        m_boids.push_back(b1);
+    }
+}
 std::vector<Boid> Boids::getVect() const
 { // getter du vecteur de boids
     std::vector<Boid> boids = m_boids;
@@ -43,9 +51,14 @@ int Boids::NumberOfBoids() const
 
 void Boids::draw(p6::Context& ctx)
 {
+    for (auto& i : m_boids)
+    {
+        i.draw(ctx);
+        i.move();
+    }
 }
 
 void Boids::addBoid(const Boid& boid)
 {
-    getVect().push_back(std::move(boid));
+    m_boids.push_back(boid);
 }

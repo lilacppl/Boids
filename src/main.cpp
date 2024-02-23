@@ -29,7 +29,8 @@ int main()
     };
 
     // prep code
-    Boid b1;
+    Boids boids2(10); // crée un flock de Boids de taille n
+
     // Declare your infinite update loop.
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::CadetBlue);
@@ -37,9 +38,8 @@ int main()
             p6::Center{ctx.mouse()},
             p6::Radius{0.1f}
         );
-        ctx.square(p6::Center{}, p6::Radius{0.9});
-        b1.draw(ctx);
-        b1.move();
+        // ctx.square(p6::Center{}, p6::Radius{square_radius});
+        boids2.draw(ctx);
     };
 
     // Should be done last. It starts the infinite loop.
