@@ -19,4 +19,5 @@ public:
     glm::vec3 get_speed() const;
     void      move();
     void      draw(p6::Context& ctx);
+    glm::vec3 alignement(std::vector<Boid>& all);
 };
