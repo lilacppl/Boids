@@ -29,7 +29,7 @@ int main()
     };
 
     // prep code
-    Boids boids2(10); // crée un flock de Boids de taille n
+    Boids boids2(30); // crée un flock de Boids de taille n
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
@@ -38,8 +38,8 @@ int main()
             p6::Center{ctx.mouse()},
             p6::Radius{0.1f}
         );
-        // ctx.square(p6::Center{}, p6::Radius{square_radius});
-        boids2.draw(ctx);
+        ctx.square((p6::Center{}), p6::Radius{0.9});
+        boids2.update(ctx);
     };
 
     // Should be done last. It starts the infinite loop.

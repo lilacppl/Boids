@@ -10,16 +10,14 @@
 class Boid {
 private:
     glm::vec3 m_position;
-    glm::vec3 m_speed;
-    float     m_radius;
+
+    float m_radius;
 
 public:
+    glm::vec3 m_speed;
     Boid();
     glm::vec3 get_position() const;
     glm::vec3 get_speed() const;
     void      move();
     void      draw(p6::Context& ctx);
-    glm::vec3 alignement(std::vector<Boid>& all);
-    glm::vec3 cohesion(std::vector<Boid>& all);
-    
 };
