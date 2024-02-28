@@ -20,4 +20,6 @@ public:
     void      move();
     void      draw(p6::Context& ctx);
     glm::vec3 alignement(std::vector<Boid>& all);
+    glm::vec3 cohesion(std::vector<Boid>& all);
+    
 };

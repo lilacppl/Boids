@@ -43,7 +43,7 @@ void Boid::move()
     m_position        = new_pos;
 }
 
-glm::vec3 Boid::alignement(std::vector<Boid>& all)
+glm::vec3 Boid::alignement(std::vector<Boid>& all) // pourquoi ne pas utiliser la classe Boids jsp ptet c pas pertinent
 {
     float neighbordist = 50; // Field of vision
 
@@ -62,13 +62,41 @@ glm::vec3 Boid::alignement(std::vector<Boid>& all)
     if (count > 0)
     {
         sum = sum / (float)count;  // Divide sum by the number of close boids (average of velocity)
-        sum = glm::normalize(sum); // Turn sum into a unit vector, and
+        sum = glm::normalize(sum); // Turn sum into a unit vector
         sum = sum * maxSpeed;      // Multiply by maxSpeed
         // Steer = Desired - Velocity
         glm::vec3 steer;
         steer = sum - get_speed(); // sum = desired(average)
-        // steer.limit(maxForce); pas compris
+        // steer.limit(maxForce);//faire seek a la fin
         return steer;
+    }
+    else
+    {
+        glm::vec3 temp(0, 0, 0);
+        return temp;
+    }
+}
+
+glm::vec3 Boid::cohesion(std::vector<Boid>& all) // peut etre utiliser la classe Boids aussi plutot qu'un vector de Boids
+{
+    // Move toward center of mass of boids in visible range.
+    float     neighbordist = 50;
+    glm::vec3 sum(0, 0, 0);
+    int       count = 0;
+    for (int i = 0; i < all.size(); i++)
+    {
+        float d = abs(get_position()[0] - all[i].get_position()[0]);
+        if ((d > 0) && (d < neighbordist))
+        {
+            sum += all[i].get_position()[0];
+            count++;
+        }
+    }
+    // if there is boids close enough for cohesion
+    if (count > 0)
+    {
+        sum /= static_cast<float>(count); // average new position
+        // return seek(sum);
     }
     else
     {

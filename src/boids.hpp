@@ -17,14 +17,15 @@ private:
 public:
     Boids(std::vector<Boid> vec);
     Boids(const int number);
-    std::vector<Boid>   getVect() const; // get le vector de Boids
-    int                 NumberOfBoids() const;
-    Boid                getBoid(int id);
-    void                addBoid(const Boid& boid);
-    void                draw(p6::Context& ctx); // dessine tous les Boids
-    std::vector<double> alignement();
-    std::vector<double> cohesion();
-    std::vector<double> separation();
+    std::vector<Boid> getVect() const; // get le vector de Boids
+    int               NumberOfBoids() const;
+    Boid              getBoid(int id);
+    void              addBoid(const Boid& boid);
+    void              draw(p6::Context& ctx); // dessine tous les Boids
+    // std::vector<double> alignement();
+    // std::vector<double> cohesion();
+    // std::vector<double> separation();
+    void update(p6::Context& ctx); // contient draw, alignement ... pour tout regrouper
 };
 
 Boids::Boids(std::vector<Boid> vec)
@@ -61,4 +62,11 @@ void Boids::draw(p6::Context& ctx)
 void Boids::addBoid(const Boid& boid)
 {
     m_boids.push_back(boid);
+}
+
+
+void Boids::update(p6::Context& ctx)
+{
+    this->draw(ctx);
+    //mettre l'alignement et la cohesion
 }
