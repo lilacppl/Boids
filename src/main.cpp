@@ -17,13 +17,16 @@ int main()
     ctx.maximize_window();
     auto        square_radius = 0.5f;
     auto        boids_number  = 30;
+    auto        neighbor_dist = 0.15f;
+    auto        avoid_factor  = 0.02f;
     std::string text          = "Hello";
     ctx.imgui                 = [&]() {
         // Show a simple window
         ImGui::Begin("Test");
         ImGui::SliderFloat("Square size", &square_radius, 0.f, 1.f);
         ImGui::SliderInt("Boids number", &boids_number, 1, 50);
-        ImGui::SliderFloat("Square size", &square_radius, 0.f, 1.f);
+        ImGui::SliderFloat("Neihbor distance", &neighbor_dist, 0.f, 2.f);  // champ de vision
+        ImGui::SliderFloat("Separation factor", &avoid_factor, 0.f, 0.1f); // avoid factor pour la séparation
         ImGui::End();
         // Show the official ImGui demo window
         // It is very useful to discover all the widgets available in ImGui
@@ -37,8 +40,7 @@ int main()
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::CadetBlue);
         ctx.square((p6::Center{}), p6::Radius{square_radius});
-        boids2.update(ctx, square_radius);
-        boids2.changeSize(boids_number);
+        boids2.update(ctx, boids_number, square_radius, neighbor_dist, avoid_factor);
     };
 
     // Should be done last. It starts the infinite loop.
