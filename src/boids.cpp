@@ -39,6 +39,28 @@ void Boids::addBoid(const Boid& boid)
 {
     m_boids.push_back(boid);
 }
+void Boids::deleteBoid()
+{
+    m_boids.pop_back();
+}
+void Boids::changeSize(const int boids_number)
+{
+    if (boids_number > this->NumberOfBoids())
+    {
+        for (unsigned int i = 0; i < (boids_number - NumberOfBoids()); i++)
+        {
+            Boid newboid;
+            this->addBoid(newboid);
+        }
+    }
+    else if (boids_number < this->NumberOfBoids())
+    {
+        for (unsigned int i = 0; i < (NumberOfBoids() - boids_number); i++)
+        {
+            this->deleteBoid();
+        }
+    }
+}
 
 std::vector<Boid> Boids::other_boids(const Boid& active_boid)
 {

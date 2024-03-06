@@ -21,6 +21,7 @@ public:
     int               NumberOfBoids() const;
     Boid              getBoid(int id);
     void              addBoid(const Boid& boid);
+    void              deleteBoid();
     void              changeSize(const int boids_number);
     void              draw(p6::Context& ctx, float square_radius); // dessine tous les Boids
     void              alignement();
