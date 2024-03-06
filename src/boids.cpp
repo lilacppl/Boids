@@ -57,13 +57,14 @@ void Boids::update(p6::Context& ctx)
 {
     alignement();
     cohesion();
+    separation();
     draw(ctx);
 }
 
 void Boids::alignement()
 {
-    float neighbordist    = 0.1; // Field of vision
-    float matching_factor = 1;
+    float neighbordist    = 0.15; // Field of vision
+    float matching_factor = 0.01;
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
@@ -97,8 +98,8 @@ void Boids::alignement()
 
 void Boids::cohesion()
 {
-    float neighbordist     = 0.1; // Field of vision
-    float centering_factor = 0.1;
+    float neighbordist     = 0.15; // Field of vision
+    float centering_factor = 0.01;
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
@@ -126,5 +127,33 @@ void Boids::cohesion()
                 b.m_speed[i] += (sum[i] - b.m_speed[i]) * centering_factor;
             }
         }
+    }
+}
+
+void Boids::separation()
+{
+    float neighborprotect = 0.09;
+    float avoidfactor     = 0.02;
+    float close_dx, close_dy;
+    for (auto& b : m_boids)
+    {
+        close_dx = 0;
+        close_dy = 0;
+        for (auto& other_b : other_boids(b))
+        {
+            float distance = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
+            }
+            distance = std::sqrt(distance);
+            if (distance < neighborprotect) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
+            {
+                close_dx += b.m_position[0] - other_b.m_position[0];
+                close_dy += b.m_position[1] - other_b.m_position[1];
+            }
+        }
+        b.m_speed[0] += close_dx * avoidfactor;
+        b.m_speed[1] += close_dy * avoidfactor;
     }
 }
