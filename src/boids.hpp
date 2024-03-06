@@ -21,10 +21,11 @@ public:
     int               NumberOfBoids() const;
     Boid              getBoid(int id);
     void              addBoid(const Boid& boid);
-    void              draw(p6::Context& ctx); // dessine tous les Boids
+    void              changeSize(const int boids_number);
+    void              draw(p6::Context& ctx, float square_radius); // dessine tous les Boids
     void              alignement();
     void              cohesion();
     void              separation();
-    void              update(p6::Context& ctx); // contient draw, alignement ... pour tout regrouper
+    void              update(p6::Context& ctx, float square_radius); // contient draw, alignement ... pour tout regrouper
     std::vector<Boid> other_boids(const Boid& b);
 };
