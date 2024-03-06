@@ -28,16 +28,16 @@ void Boid::draw(p6::Context& ctx)
     ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
 }
 
-void Boid::move()
+void Boid::move(float square_radius)
 {
-    if (m_position[0] - m_radius < -0.9)
-        m_position[0] = 0.9f * 2 + m_position[0];
-    if (m_position[0] + m_radius > 0.9)
+    if (m_position[0] - m_radius < -square_radius)
+        m_position[0] = square_radius * 2 + m_position[0];
+    if (m_position[0] + m_radius > square_radius)
         m_position[0] = -m_position[0];
 
-    if (m_position[1] - m_radius < -0.9)
-        m_position[1] = 0.9f * 2 + m_position[1];
-    if (m_position[1] + m_radius > 0.9)
+    if (m_position[1] - m_radius < -square_radius)
+        m_position[1] = square_radius * 2 + m_position[1];
+    if (m_position[1] + m_radius > square_radius)
         m_position[1] = -m_position[1];
 
     glm::vec3 new_pos = m_speed + m_position;

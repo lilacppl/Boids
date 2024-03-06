@@ -16,30 +16,27 @@ int main()
     auto ctx = p6::Context{{.title = "Simple-p6-Setup"}};
     ctx.maximize_window();
     auto        square_radius = 0.5f;
+    auto        boids_number  = 30;
     std::string text          = "Hello";
     ctx.imgui                 = [&]() {
         // Show a simple window
         ImGui::Begin("Test");
         ImGui::SliderFloat("Square size", &square_radius, 0.f, 1.f);
-        ImGui::InputText("Text", &text);
+        ImGui::SliderInt("Boids number", &boids_number, 1, 50);
         ImGui::End();
         // Show the official ImGui demo window
         // It is very useful to discover all the widgets available in ImGui
-        // ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
     };
 
     // prep code
-    Boids boids2(30); // crée un flock de Boids de taille n
+    Boids boids2(boids_number); // crée un flock de Boids de taille n
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::CadetBlue);
-        ctx.circle(
-            p6::Center{ctx.mouse()},
-            p6::Radius{0.1f}
-        );
-        ctx.square((p6::Center{}), p6::Radius{0.9});
-        boids2.update(ctx);
+        ctx.square((p6::Center{}), p6::Radius{square_radius});
+        boids2.update(ctx, square_radius);
     };
 
     // Should be done last. It starts the infinite loop.

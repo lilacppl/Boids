@@ -18,6 +18,6 @@ public:
     Boid();
     glm::vec3 get_position() const;
     glm::vec3 get_speed() const;
-    void      move();
+    void      move(float square_radius);
     void      draw(p6::Context& ctx);
 };
