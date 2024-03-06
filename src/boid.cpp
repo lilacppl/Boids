@@ -4,11 +4,13 @@
 // #include <bits/stdc++.h>
 #include <cstdlib>
 #include <random>
+#include <vector>
 #include "glm/fwd.hpp"
 
 std::default_random_engine             gen;
 std::uniform_real_distribution<double> distrib_pos(-0.3, 0.3);
-std::uniform_real_distribution<double> distrib_speed(-0.01, 0.01);
+std::uniform_real_distribution<double> distrib_speed(-0.005, 0.005);
+std::vector<int>                       rand_speed{-1, 1};
 
 Boid::Boid()
     : m_position(glm::vec3{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen)}), m_speed(glm::vec3{distrib_speed(gen), distrib_speed(gen), 0}), m_radius(0.01) {}
