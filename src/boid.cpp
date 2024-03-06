@@ -8,7 +8,7 @@
 #include "glm/fwd.hpp"
 
 std::default_random_engine             gen;
-std::uniform_real_distribution<double> distrib_pos(-0.3, 0.3);
+std::uniform_real_distribution<double> distrib_pos(-0.09, 0.09);
 std::uniform_real_distribution<double> distrib_speed(-0.005, 0.005);
 std::vector<int>                       rand_speed{-1, 1};
 
@@ -30,17 +30,50 @@ void Boid::draw(p6::Context& ctx)
     ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
 }
 
-void Boid::move(float square_radius)
+void Boid::move(float square_radius, float maxspeed, float minspeed)
 {
-    if (m_position[0] - m_radius < -square_radius)
-        m_position[0] = square_radius * 2 + m_position[0];
-    if (m_position[0] + m_radius > square_radius)
-        m_position[0] = -m_position[0];
+    // if (m_position[0] - m_radius < -square_radius)
+    //     m_position[0] = square_radius * 2 + m_position[0];
+    // if (m_position[0] + m_radius > square_radius)
+    //     m_position[0] = -m_position[0];
 
-    if (m_position[1] - m_radius < -square_radius)
-        m_position[1] = square_radius * 2 + m_position[1];
-    if (m_position[1] + m_radius > square_radius)
-        m_position[1] = -m_position[1];
+    // if (m_position[1] - m_radius < -square_radius)
+    //     m_position[1] = square_radius * 2 + m_position[1];
+    // if (m_position[1] + m_radius > square_radius)
+    //     m_position[1] = -m_position[1];
+
+    float margin     = 0.97;
+    float turnfactor = 0.002;
+    // float maxspeed   = 0.006;
+    // float minspeed   = 0.002;
+    if (m_position[0] < -square_radius * margin)
+    {
+        m_speed[0] += turnfactor;
+    }
+    if (m_position[0] > square_radius * margin)
+    {
+        m_speed[0] -= turnfactor;
+    }
+    if (m_position[1] < -square_radius * margin)
+    {
+        m_speed[1] += turnfactor;
+    }
+    if (m_position[1] > square_radius * margin)
+    {
+        m_speed[1] -= turnfactor;
+    }
+    float speed = sqrt(m_speed[0] * m_speed[0] + m_speed[1] * m_speed[1]);
+    if (speed > maxspeed)
+    {
+        m_speed[0] = (m_speed[0] / speed) * maxspeed;
+        m_speed[1] = (m_speed[1] / speed) * maxspeed;
+    }
+
+    if (speed < minspeed)
+    {
+        m_speed[0] = (m_speed[0] / speed) * minspeed;
+        m_speed[1] = (m_speed[1] / speed) * minspeed;
+    }
 
     glm::vec3 new_pos = m_speed + m_position;
     m_position        = new_pos;

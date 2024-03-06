@@ -26,12 +26,12 @@ int Boids::NumberOfBoids() const
     return (m_boids.size());
 }
 
-void Boids::draw(p6::Context& ctx, float square_radius)
+void Boids::draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed)
 {
     for (auto& i : m_boids)
     {
         i.draw(ctx);
-        i.move(square_radius);
+        i.move(square_radius, maxspeed, minspeed);
     }
 }
 
@@ -75,13 +75,13 @@ std::vector<Boid> Boids::other_boids(const Boid& active_boid)
     return others;
 }
 
-void Boids::update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor)
+void Boids::update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed)
 {
     alignement(neighbor_dist);
     cohesion(neighbor_dist);
     separation(avoid_factor);
     changeSize(boids_number);
-    draw(ctx, square_radius);
+    draw(ctx, square_radius, maxspeed, minspeed);
 }
 
 void Boids::alignement(float neighbor_dist)

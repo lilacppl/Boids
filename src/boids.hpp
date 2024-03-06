@@ -23,10 +23,10 @@ public:
     void              addBoid(const Boid& boid);
     void              deleteBoid();
     void              changeSize(const int boids_number);
-    void              draw(p6::Context& ctx, float square_radius); // dessine tous les Boids
+    void              draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed); // dessine tous les Boids
     void              alignement(float neighbor_dist);
     void              cohesion(float neighbor_dist);
     void              separation(float avoid_factor);
-    void              update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor); // contient draw, alignement ... pour tout regrouper
+    void              update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed); // contient draw, alignement ... pour tout regrouper
     std::vector<Boid> other_boids(const Boid& b);
 };
