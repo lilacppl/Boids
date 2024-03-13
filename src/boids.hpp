@@ -2,19 +2,24 @@
 
 #include <cstdlib>
 #include <iostream>
+// #include <type>
 #include <vector>
 #include "boid.hpp"
 #include "doctest/doctest.h"
+#include "imguivariables.hpp"
 #include "p6/p6.h"
+
 
 // ensemble des Boids
 
 class Boids {
 private:
     std::vector<Boid> m_boids; // vecteur de Boid
-    // int               m_numberOfBoids;
+    // String m_type;
+    ImguiVariables m_variables;
 
 public:
+    Boids() = default;
     Boids(std::vector<Boid> vec);
     Boids(const int number);
     std::vector<Boid> getVect() const; // get le vector de Boids
