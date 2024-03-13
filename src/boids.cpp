@@ -155,5 +155,37 @@ void Boids::separation()
         }
         b.m_speed[0] += close_dx * avoidfactor;
         b.m_speed[1] += close_dy * avoidfactor;
+        
     }
 }
+
+// void Boids::food()
+// {
+//     float bias_x = -0.03;
+//     float bias_y = 0.06;
+//     for (auto& b : m_boids) // on boucle sur chaque boid
+//     {
+//         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
+//         {
+//             float distance = 0;
+//             for (int i = 0; i < 3; i++)
+//             {
+//                 distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
+//             }
+//             distance = std::sqrt(distance);
+//             if (distance < neighbordist) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
+//             {
+//                 sum += other_b.get_speed();
+//                 neighboring_boids++;
+//             }
+//         }
+//         if (neighboring_boids > 0) // si il y a plus d'un boid dans la zone d'alignement
+//         {
+//             sum = sum / (float)neighboring_boids; // on moyenne les positions des boids dans la zone
+//             for (int i = 0; i < 2; i++)
+//             {
+//                 b.m_speed[i] += (sum[i] - b.m_speed[i]) * centering_factor;
+//             }
+//         }
+//     }
+// }

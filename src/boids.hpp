@@ -28,4 +28,5 @@ public:
     void              separation();
     void              update(p6::Context& ctx, float square_radius); // contient draw, alignement ... pour tout regrouper
     std::vector<Boid> other_boids(const Boid& b);
+    void food();
 };
