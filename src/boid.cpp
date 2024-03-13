@@ -30,7 +30,7 @@ void Boid::draw(p6::Context& ctx)
     ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
 }
 
-void Boid::move(float square_radius)
+void Boid::move(float square_radius, float maxspeed, float minspeed)
 {
     // if (m_position[0] - m_radius < -square_radius)
     //     m_position[0] = square_radius * 2 + m_position[0];
@@ -44,8 +44,8 @@ void Boid::move(float square_radius)
 
     float margin     = 0.97;
     float turnfactor = 0.002;
-    float maxspeed   = 0.006;
-    float minspeed   = 0.002;
+    // float maxspeed   = 0.006;
+    // float minspeed   = 0.002;
     if (m_position[0] < -square_radius * margin)
     {
         m_speed[0] += turnfactor;
