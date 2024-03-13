@@ -81,6 +81,7 @@ void Boids::update(p6::Context& ctx, int boids_number, float square_radius, floa
     cohesion(neighbor_dist);
     separation(avoid_factor);
     changeSize(boids_number);
+    food();
     draw(ctx, square_radius, maxspeed, minspeed);
 }
 
@@ -181,33 +182,25 @@ void Boids::separation(float avoid_factor)
     }
 }
 
-// void Boids::food()
-// {
-//     float bias_x = -0.03;
-//     float bias_y = 0.06;
-//     for (auto& b : m_boids) // on boucle sur chaque boid
-//     {
-//         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
-//         {
-//             float distance = 0;
-//             for (int i = 0; i < 3; i++)
-//             {
-//                 distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
-//             }
-//             distance = std::sqrt(distance);
-//             if (distance < neighbordist) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
-//             {
-//                 sum += other_b.get_speed();
-//                 neighboring_boids++;
-//             }
-//         }
-//         if (neighboring_boids > 0) // si il y a plus d'un boid dans la zone d'alignement
-//         {
-//             sum = sum / (float)neighboring_boids; // on moyenne les positions des boids dans la zone
-//             for (int i = 0; i < 2; i++)
-//             {
-//                 b.m_speed[i] += (sum[i] - b.m_speed[i]) * centering_factor;
-//             }
-//         }
-//     }
-// }
+void Boids::food()
+{
+    float bias_x      = -0.03;
+    float bias_y      = 0.06;
+    float food_dist   = 0.1;
+    float food_factor = 1.0;
+    for (auto& b : m_boids) // on boucle sur chaque boid
+    {
+        float distance = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            distance += (b.get_position()[i] - bias_x) * (b.get_position()[i] - bias_x);
+            distance += (b.get_position()[i] - bias_y) * (b.get_position()[i] - bias_y);
+        }
+        distance = std::sqrt(distance);
+        if (distance < food_dist) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
+        {
+            b.m_speed[0] += (bias_x - b.m_speed[0]) * food_factor;
+            b.m_speed[1] += (bias_y - b.m_speed[1]) * food_factor;
+        } 
+    }
+}
