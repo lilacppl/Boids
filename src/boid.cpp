@@ -13,13 +13,13 @@ std::uniform_real_distribution<double> distrib_speed(-0.005, 0.005);
 std::vector<int>                       rand_speed{-1, 1};
 
 Boid::Boid()
-    : m_position(glm::vec3{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen)}), m_speed(glm::vec3{distrib_speed(gen), distrib_speed(gen), 0}), m_radius(0.01) {}
+    : m_position(glm::vec4{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen),0}), m_speed(glm::vec4{distrib_speed(gen), distrib_speed(gen),distrib_speed(gen), 0}), m_radius(0.01) {}
 
-glm::vec3 Boid::get_position() const
+glm::vec4 Boid::get_position() const
 {
     return m_position;
 }
-glm::vec3 Boid::get_speed() const
+glm::vec4 Boid::get_speed() const
 {
     return m_speed;
 }
@@ -75,6 +75,6 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
         m_speed[1] = (m_speed[1] / speed) * minspeed;
     }
 
-    glm::vec3 new_pos = m_speed + m_position;
+    glm::vec4 new_pos = m_speed + m_position;
     m_position        = new_pos;
 }

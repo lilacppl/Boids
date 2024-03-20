@@ -91,7 +91,7 @@ void Boids::alignement(float neighbor_dist)
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
-        glm::vec3 sum(0, 0, 0);
+        glm::vec4 sum(0, 0, 0, 0);
         int       neighboring_boids = 0;
         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
         {
@@ -126,7 +126,7 @@ void Boids::cohesion(float neighbor_dist)
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
-        glm::vec3 sum(0, 0, 0); // somme des positions
+        glm::vec4 sum(0, 0, 0, 0); // somme des positions
         int       neighboring_boids = 0;
         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
         {

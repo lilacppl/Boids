@@ -12,11 +12,11 @@ private:
     float m_radius;
 
 public:
-    glm::vec3 m_speed;
-    glm::vec3 m_position;
+    glm::vec4 m_speed;
+    glm::vec4 m_position;
     Boid();
-    glm::vec3 get_position() const;
-    glm::vec3 get_speed() const;
+    glm::vec4 get_position() const;
+    glm::vec4 get_speed() const;
     void      move(float square_radius, float maxspeed, float minspeed);
     void      draw(p6::Context& ctx);
 };
