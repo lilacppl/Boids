@@ -42,8 +42,8 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
     // if (m_position[1] + m_radius > square_radius)
     //     m_position[1] = -m_position[1];
 
-    float margin     = 0.97;
-    float turnfactor = 0.002;
+    float margin     = 0.80;
+    float turnfactor = 0.0003;
     // float maxspeed   = 0.006;
     // float minspeed   = 0.002;
     if (m_position[0] < -square_radius * margin)

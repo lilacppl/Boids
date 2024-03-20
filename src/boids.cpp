@@ -184,10 +184,10 @@ void Boids::separation(float avoid_factor)
 
 void Boids::food()
 {
-    float bias_x      = -0.03;
-    float bias_y      = 0.06;
-    float food_dist   = 0.1;
-    float food_factor = 1.0;
+    float bias_x      = -0.3;
+    float bias_y      = 0.4;
+    float food_dist   = 0.3;
+    float food_factor = 0.1;
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
         float distance = 0;
@@ -201,6 +201,6 @@ void Boids::food()
         {
             b.m_speed[0] += (bias_x - b.m_speed[0]) * food_factor;
             b.m_speed[1] += (bias_y - b.m_speed[1]) * food_factor;
-        } 
+        }
     }
 }
