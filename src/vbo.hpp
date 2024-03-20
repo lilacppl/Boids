@@ -5,12 +5,14 @@
 #include <iostream>
 #include <vector>
 #include "doctest/doctest.h"
-#include "glfw/src/internal.h"
+#include "../glimac/common.hpp"
+#include "../glimac/sphere_vertices.hpp"
 #include "glm/ext/scalar_constants.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 #include "vertex3d.hpp"
+
 
 class VBO {
 private:
@@ -18,7 +20,7 @@ private:
 
 public:
     VBO();
-    VBO(std::vector<Vertex3D> vertices);
+    VBO(std::vector<glimac::ShapeVertex> vertices);
     ~VBO();
     VBO(const VBO& other)            = delete;
     VBO& operator=(const VBO& other) = delete;
@@ -34,11 +36,12 @@ VBO::VBO()
     glGenBuffers(1, &m_vbo);
 }
 
-VBO::VBO(std::vector<Vertex3D> vertices)
+VBO::VBO(std::vector<glimac::ShapeVertex> vertices)
 {
     glGenBuffers(1, &m_vbo);
     bind();
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex3D), vertices.data(), GL_STATIC_DRAW);
+    debind();
 }
 
 VBO::~VBO()
