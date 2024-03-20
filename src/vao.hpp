@@ -11,6 +11,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 #include "vertex3d.hpp"
+#include "vbo.hpp"
 
 class VAO {
 private:
@@ -26,7 +27,7 @@ public:
 
     void bind();
     void debind();
-    void vertex_attrib(const GLuint* pos1, const GLuint* pos2, const GLuint* pos3);
+    void vertex_attrib();
 };
 
 VAO::VAO()
@@ -66,15 +67,19 @@ void VAO::debind()
     glBindVertexArray(0);
 }
 
-void vertex_attrib(const GLuint* pos1, const GLuint* pos2, const GLuint* pos3)
+void VAO::vertex_attrib()
 {
+    static constexpr GLuint pos1 = 0;
+    static constexpr GLuint pos2 = 1;
+    static constexpr GLuint pos3 = 2;
+
     // Activation attribut
-    glEnableVertexAttribArray(*pos1);
-    glEnableVertexAttribArray(*pos2);
-    glEnableVertexAttribArray(*pos3);
+    glEnableVertexAttribArray(pos1);
+    glEnableVertexAttribArray(pos2);
+    glEnableVertexAttribArray(pos3);
 
     // on spécifie les attributs du vertex
-    glVertexAttribPointer(*pos1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), nullptr);
-    glVertexAttribPointer(*pos2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, normal)));
-    glVertexAttribPointer(*pos3, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, texCoords)));
+    glVertexAttribPointer(pos1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), nullptr);
+    glVertexAttribPointer(pos2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, normal)));
+    glVertexAttribPointer(pos3, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, texCoords)));
 }
