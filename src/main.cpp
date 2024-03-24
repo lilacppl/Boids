@@ -30,10 +30,10 @@ int main()
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-    const p6::Shader shader = p6::load_shader(
-        "../shaders/3D.vs.glsl",
-        "../shaders/normal.fs.glsl"
-    );
+    // const p6::Shader shader = p6::load_shader(
+    //     "shaders/3D.vs.glsl",
+    //     "shaders/normal.fs.glsl"
+    // );
 
     const std::vector<glimac::ShapeVertex> vertices = glimac::sphere_vertices(1.f, 32, 16); // création des vertices de la sphere
 
@@ -62,4 +62,6 @@ int main()
     };
     // Should be done last. It starts the infinite loop.
     ctx.start();
+
+    // bug dans le vertex shader : matrice pas passée
 }
