@@ -63,5 +63,5 @@ int main()
     // Should be done last. It starts the infinite loop.
     ctx.start();
 
-    // bug dans le vertex shader : matrice pas passée
+
 }
