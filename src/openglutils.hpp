@@ -2,37 +2,42 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "glimac/common.hpp"
-#include "glimac/freefly_camera.hpp"
-#include "glimac/sphere_vertices.hpp"
+#include <string>
+#include "../glimac/common.hpp"
+#include "../glimac/freefly_camera.hpp"
+#include "../glimac/sphere_vertices.hpp"
 #include "p6/p6.h"
-#include "vao.hpp"
-#include "vbo.hpp"
+// #include "vao.hpp"
+// #include "vbo.hpp"
 
 class OpenGLUtils {
 public:
-    static void loadShader(string vs, string fs)
+    static p6::Shader loadShader(std::string vs, std::string fs)
     {
-        const p6::Shader shader = p6::load_shader(
+        // const p6::Shader shader = p6::load_shader(
+        //     "vs",
+        //     "fs"
+        // );
+        return p6::load_shader(
             "vs",
             "fs"
         );
     }
 
-    static const img::Image loadTexture(string name)
+    static const img::Image loadTexture(std::string name)
     {
         name = "assets/" + name;
-        return p6_load_image_buffer(name.c_str());
+        return p6::load_image_buffer(name.c_str());
     }
 
-    static VBO VaoandVbo(std::vector<glimac::ShapeVertex> vertices)
-    {
-        return VBO vbo(vertices);
-    }
+    // static VBO VaoandVbo(std::vector<glimac::ShapeVertex> vertices)
+    // {
+    //     return vbo(vertices);
+    // }
 
-    static Gluint texture(img::Image img)
+    static GLuint texture(img::Image img)
     {
-        Gluint text;
+        GLuint text;
         glGenTextures(1, &text);
         glBindTexture(GL_TEXTURE_2D, text);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, img.data());
@@ -42,7 +47,7 @@ public:
         glBindTexture(GL_TEXTURE_2D, 0);
         return text;
     }
-    static void multiText(Gluint text1, Gluint text2, std::vector<glimac::ShapeVertex> vertices)
+    static void multiText(GLuint text1, GLuint text2, std::vector<glimac::ShapeVertex> vertices, p6::Shader shader)
     {
         // à mettre dans le rendu
         glActiveTexture(GL_TEXTURE0);
@@ -53,9 +58,9 @@ public:
         // Récupère la location de la deuxième texture dans le shader
         GLint uCloudTextureLocation = glGetUniformLocation(shader.id(), "CloudTextureCoordinate");
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, txture2);
+        glBindTexture(GL_TEXTURE_2D, text1);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, txture3);
+        glBindTexture(GL_TEXTURE_2D, text2);
         // Indique à OpenGL qu'il doit aller chercher sur l'unité de texture 0
         // pour lire dans la texture uEarthTexture
         glUniform1i(uEarthLocation, 0);

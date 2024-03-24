@@ -4,15 +4,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
-#include "doctest/doctest.h"
 #include "../glimac/common.hpp"
 #include "../glimac/sphere_vertices.hpp"
+#include "doctest/doctest.h"
 #include "glm/ext/scalar_constants.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 #include "vertex3d.hpp"
-
 
 class VBO {
 private:

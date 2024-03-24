@@ -5,14 +5,14 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../glimac/common.hpp"
 #include "glm/gtx/transform.hpp"
-#include "p6/p6.h"
+// #include "p6/p6.h"
 #include "vao.hpp"
-#include "vbo.hpp"
+// #include "vbo.hpp"
 
 // plus tard : soit faire une classe sphere soit l'inclure dans la classe boid
 // penser au fait qu'on aura plusieurs shader -> faire des struct (ou classes du cp)
 
-void init_vao_vbo(const std::vector<glimac::ShapeVertex>  &vertices)
+void init_vao_vbo(const std::vector<glimac::ShapeVertex>& vertices)
 {
     VBO vbo(vertices);
     VAO vao;

@@ -1,4 +1,4 @@
-
+#pragma once
 #include <cstdlib>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -9,8 +9,8 @@
 #include "boid3d.hpp"
 #include "p6/p6.h"
 #include "scene.hpp"
-#include "vao.hpp"
-#include "vbo.hpp"
+// #include "vao.hpp"
+// #include "vbo.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "boids.hpp"
