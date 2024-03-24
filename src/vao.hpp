@@ -11,7 +11,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 #include "vertex3d.hpp"
-#include "vbo.hpp"
+
 
 class VAO {
 private:
