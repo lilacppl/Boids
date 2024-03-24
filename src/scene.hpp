@@ -17,6 +17,7 @@ class Scene {
 private:
     ImguiVariables m_imguiVariables;
     Boids          m_first_boids;
+    Cube m_cube;
 
 public:
     Scene() = default;

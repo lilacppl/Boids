@@ -9,8 +9,8 @@
 #include "boid3d.hpp"
 #include "p6/p6.h"
 #include "scene.hpp"
-// #include "vao.hpp"
-// #include "vbo.hpp"
+#include "vao.hpp"
+#include "vbo.hpp"
 
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "boids.hpp"
@@ -45,6 +45,9 @@ int main()
     vbo.debind();
     vao.debind();
 
+    // Cube cube;
+    // cube.initCube();
+
     // Scene scene;
     // scene.InitializeClasses();
     std::string text = "Hello";
@@ -56,12 +59,11 @@ int main()
         shader.use();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-        draw_sphere(&shader, vertices, &ctx);
+        OpenGLUtils::draw_sphere(&shader, vertices, &ctx);
+        // cube.DrawCube(&ctx);
         // scene.update(ctx)
         vao.debind();
     };
     // Should be done last. It starts the infinite loop.
     ctx.start();
-
-
 }

@@ -17,8 +17,8 @@ private:
     img::Image                       m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
     img::Image                       m_secondtexture = OpenGLUtils::loadTexture("CloupMap.jpg");
     p6::Shader                       m_shader        = p6::Shader("3D.vs.glsl", "normal.fs.glsl");
-    // GLuint                           m_vbo;
-    // GLuint                           m_vao;
+    VBO                              m_vbo;
+    VAO                              m_vao;
 
 public:
     void initCube() // création d"un cube
@@ -69,16 +69,17 @@ public:
             {glm::vec3(0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(0, 0, 1), glm::vec2(1, 1)},
             {glm::vec3(-0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(0, 0, 1), glm::vec2(1, 0)},
         };
-        // m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
-        // m_secondtexture = OpenGLUtils::loadTexture("CloudMap.jpg");
-        // m_shader        = OpenGLUtils::loadShader("3D.vs.glsl", "normal.fs.glsl");
-        // init_vao_vbo(m_vertices);
+        // m_vbo(m_vertices); //faire un nouveau constructeur pour le vbo
+        //  m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
+        //  m_secondtexture = OpenGLUtils::loadTexture("CloudMap.jpg");
+        //  m_shader        = OpenGLUtils::loadShader("3D.vs.glsl", "normal.fs.glsl");
+        OpenGLUtils::init_vao_vbo(m_vertices);
         // GLuint text1 = OpenGLUtils::texture(m_firsttexture);
     }
     void DrawCube(auto ctx)
     {
         m_shader.use();
         glEnable(GL_DEPTH_TEST);
-        draw_sphere(&m_shader, m_vertices, &ctx);
+        OpenGLUtils::draw_sphere(&m_shader, m_vertices, &ctx);
     }
 };

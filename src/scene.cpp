@@ -6,8 +6,9 @@ void Scene::InitializeClasses()
     m_imguiVariables = imguivars;
     Boids boids2(m_imguiVariables.GetBoidsNumber()); // crée un flock de Boids de taille n
     m_first_boids = boids2;
-    Cube cube;
-    cube.initCube();
+    // Cube cube;
+    // m_cube = cube;
+    // m_cube.initCube();
 }
 
 void Scene::update(p6::Context& ctx)
