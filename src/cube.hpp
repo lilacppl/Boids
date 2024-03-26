@@ -16,32 +16,16 @@ private:
     std::vector<glimac::ShapeVertex> m_vertices;
     // img::Image                       m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
     // img::Image                       m_secondtexture = OpenGLUtils::loadTexture("CloupMap.jpg");
-    p6::Shader m_shader = p6::load_shader(
-        "../shaders/3D.vs.glsl",
-        "../shaders/normal.fs.glsl"
-    );
-    VBO m_vbo;
-    VAO m_vao;
+    p6::Shader m_shader = p6::load_shader("../shaders/3D.vs.glsl", "../shaders/normal.fs.glsl");
+    VBO        m_vbo;
+    VAO        m_vao;
 
 public:
     Cube()
-        : m_size(1.0f)
+        : m_size(5.0f)
     {
         initCube(); // Initialisation du cube
     }
-
-    // Cube& operator=(const Cube& other) {
-    //     if (this != &other) {
-    //         m_size = other.m_size;
-    //         m_vertices = other.m_vertices;
-    //         m_firsttexture = other.m_firsttexture;
-    //         m_secondtexture = other.m_secondtexture;
-    //         m_shader = other.m_shader;
-    //         m_vbo = other.m_vbo;
-    //         m_vao = other.m_vao;
-    //     }
-    //     return *this;
-    // }
 
     void initCube() // création d"un cube
     {
@@ -96,12 +80,13 @@ public:
         //  m_secondtexture = OpenGLUtils::loadTexture("CloudMap.jpg");
         //  m_shader        = OpenGLUtils::loadShader("3D.vs.glsl", "normal.fs.glsl");
         OpenGLUtils::init_vao(m_vao, m_vbo, m_vertices);
+        // m_shader = p6::load_shader("../shaders/3D.vs.glsl", "../shaders/normal.fs.glsl");//essayer  de changer le shader ici ??
         // GLuint text1 = OpenGLUtils::texture(m_firsttexture);
     }
-    void DrawCube(p6::Context& ctx)
+    void DrawCube(p6::Context& ctx, glm::mat4& viewmatrix)
     {
         m_shader.use();
         glEnable(GL_DEPTH_TEST);
-        OpenGLUtils::draw_cube(&m_shader, m_vertices, &ctx, m_vao);
+        OpenGLUtils::draw_cube(&m_shader, m_vertices, &ctx, m_vao, viewmatrix);
     }
 };

@@ -45,7 +45,8 @@ int main()
     // vbo.debind();
     // vao.debind();
 
-    Scene       scene;
+    Scene scene;
+    scene.Init(ctx);
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
