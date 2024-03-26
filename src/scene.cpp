@@ -11,9 +11,6 @@ void Scene::Init(p6::Context& ctx)
     // m_imguiVariables = imguivars;
     // Boids boids2(m_imguiVariables.GetBoidsNumber()); // crée un flock de Boids de taille n
     // m_first_boids = boids2;
-    // Cube cube();
-    // m_cube = cube();
-    // // cube.initCube();
     m_camera.eventManager(ctx);
 }
 

@@ -10,10 +10,6 @@
 #include "imguivariables.hpp"
 
 class Scene {
-    // mettre les objets de la scene ici ?
-    // camera par exemple ?
-    // cube..
-    // etc
 private:
     ImguiVariables m_imguiVariables;
     Boids          m_first_boids;

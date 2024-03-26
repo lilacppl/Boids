@@ -35,7 +35,7 @@ public:
     //     return vbo(vertices);
     // }
 
-    static GLuint texture(img::Image img)
+    static GLuint texture(img::Image& img)
     {
         GLuint text;
         glGenTextures(1, &text);
@@ -47,6 +47,7 @@ public:
         glBindTexture(GL_TEXTURE_2D, 0);
         return text;
     }
+
     static void multiText(GLuint text1, GLuint text2, std::vector<glimac::ShapeVertex> vertices, p6::Shader shader)
     {
         // à mettre dans le rendu
@@ -112,7 +113,7 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
-    static void draw_cube(const p6::Shader* shader, const std::vector<glimac::ShapeVertex> vertices, auto ctx, VAO& vao, glm::mat4 viewMatrix)
+    static void draw_cube(const p6::Shader* shader, const std::vector<glimac::ShapeVertex> vertices, auto ctx, VAO& vao, glm::mat4 viewMatrix, GLuint& text)
     {
         // recuperation des matrices du shader
         GLint     uMVPMatrixLocation    = glGetUniformLocation(shader->id(), "uMVPMatrix");
@@ -128,6 +129,10 @@ public:
         glUniformMatrix4fv(uMVMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(uNormalMatrixLocation, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         vao.bind();
+        glActiveTexture(GL_TEXTURE0);
+        GLint uEarthLocation = glGetUniformLocation(shader->id(), "TextureCoordinate");
+        glBindTexture(GL_TEXTURE_2D, text);
+        glUniform1i(uEarthLocation, 0);
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 };
