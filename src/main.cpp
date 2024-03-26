@@ -35,34 +35,29 @@ int main()
         "../shaders/normal.fs.glsl"
     );
 
-    const std::vector<glimac::ShapeVertex> vertices = glimac::sphere_vertices(1.f, 32, 16); // création des vertices de la sphere
+    // const std::vector<glimac::ShapeVertex> vertices = glimac::sphere_vertices(1.f, 32, 16); // création des vertices de la sphere
 
-    VBO vbo(vertices);
-    VAO vao;
-    vao.bind();
-    vbo.bind();
-    vao.vertex_attrib();
-    vbo.debind();
-    vao.debind();
+    // VBO vbo(vertices);
+    // VAO vao;
+    // vao.bind();
+    // vbo.bind();
+    // vao.vertex_attrib();
+    // vbo.debind();
+    // vao.debind();
 
-    // Cube cube;
-    // cube.initCube();
-
-    // Scene scene;
-    // scene.InitializeClasses();
+    Scene       scene;
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
     // Declare your infinite update loop.
     ctx.update = [&]() {
-        vao.bind();
-        shader.use();
+        // vao.bind();
+        // shader.use();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-        OpenGLUtils::draw_sphere(&shader, vertices, &ctx);
-        // cube.DrawCube(&ctx);
-        // scene.update(ctx)
-        vao.debind();
+        // OpenGLUtils::draw_sphere(&shader, vertices, &ctx);
+        scene.update(ctx);
+        // vao.debind();
     };
     // Should be done last. It starts the infinite loop.
     ctx.start();

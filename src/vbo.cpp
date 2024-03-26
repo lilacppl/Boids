@@ -5,6 +5,13 @@ VBO::VBO()
     glGenBuffers(1, &m_vbo);
 }
 
+void VBO::buffer(std::vector<glimac::ShapeVertex> vertices)
+{
+    bind();
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glimac::ShapeVertex), vertices.data(), GL_STATIC_DRAW);
+    debind();
+}
+
 VBO::VBO(std::vector<glimac::ShapeVertex> vertices)
 {
     glGenBuffers(1, &m_vbo);

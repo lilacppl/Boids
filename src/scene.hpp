@@ -17,10 +17,10 @@ class Scene {
 private:
     ImguiVariables m_imguiVariables;
     Boids          m_first_boids;
-    Cube m_cube;
+    Cube           m_cube;
 
 public:
-    Scene() = default;
+    Scene();
     void InitializeClasses();
     void update(p6::Context& ctx);
 };

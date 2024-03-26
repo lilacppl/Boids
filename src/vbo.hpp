@@ -11,7 +11,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
+#include "vao.hpp"
 #include "vertex3d.hpp"
+
 
 class VBO {
 private:
@@ -19,6 +21,7 @@ private:
 
 public:
     VBO();
+    void buffer(std::vector<glimac::ShapeVertex> vertices);
     VBO(std::vector<glimac::ShapeVertex> vertices);
     ~VBO();
     VBO(const VBO& other)            = delete;
@@ -28,5 +31,5 @@ public:
 
     void bind();
     void debind();
+    friend class VAO;
 };
-

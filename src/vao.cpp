@@ -47,9 +47,11 @@ void VAO::vertex_attrib()
     glEnableVertexAttribArray(pos1);
     glEnableVertexAttribArray(pos2);
     glEnableVertexAttribArray(pos3);
+    // glBindBuffer(GL_ARRAY_BUFFER, vbo.m_vbo);
 
     // on spécifie les attributs du vertex
-    glVertexAttribPointer(pos1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), nullptr);
+    // glVertexAttribPointer(pos1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), nullptr);
+    glVertexAttribPointer(pos1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, position)));
     glVertexAttribPointer(pos2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, normal)));
     glVertexAttribPointer(pos3, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::ShapeVertex), (const GLvoid*)(offsetof(glimac::ShapeVertex, texCoords)));
 }

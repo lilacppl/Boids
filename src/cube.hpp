@@ -14,16 +14,38 @@ class Cube {
 private:
     float                            m_size;
     std::vector<glimac::ShapeVertex> m_vertices;
-    img::Image                       m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
-    img::Image                       m_secondtexture = OpenGLUtils::loadTexture("CloupMap.jpg");
-    p6::Shader                       m_shader        = p6::Shader("3D.vs.glsl", "normal.fs.glsl");
-    VBO                              m_vbo;
-    VAO                              m_vao;
+    // img::Image                       m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
+    // img::Image                       m_secondtexture = OpenGLUtils::loadTexture("CloupMap.jpg");
+    p6::Shader m_shader = p6::load_shader(
+        "../shaders/3D.vs.glsl",
+        "../shaders/normal.fs.glsl"
+    );
+    VBO m_vbo;
+    VAO m_vao;
 
 public:
+    Cube()
+        : m_size(1.0f)
+    {
+        initCube(); // Initialisation du cube
+    }
+
+    // Cube& operator=(const Cube& other) {
+    //     if (this != &other) {
+    //         m_size = other.m_size;
+    //         m_vertices = other.m_vertices;
+    //         m_firsttexture = other.m_firsttexture;
+    //         m_secondtexture = other.m_secondtexture;
+    //         m_shader = other.m_shader;
+    //         m_vbo = other.m_vbo;
+    //         m_vao = other.m_vao;
+    //     }
+    //     return *this;
+    // }
+
     void initCube() // création d"un cube
     {
-        m_size     = 1.0;
+        // m_size     = 1.0;
         m_vertices = {
             // face arriere
             {glm::vec3(-0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(1, 0, 0), glm::vec2(1, 0)},
@@ -73,13 +95,13 @@ public:
         //  m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
         //  m_secondtexture = OpenGLUtils::loadTexture("CloudMap.jpg");
         //  m_shader        = OpenGLUtils::loadShader("3D.vs.glsl", "normal.fs.glsl");
-        OpenGLUtils::init_vao_vbo(m_vertices);
+        OpenGLUtils::init_vao(m_vao, m_vbo, m_vertices);
         // GLuint text1 = OpenGLUtils::texture(m_firsttexture);
     }
-    void DrawCube(auto ctx)
+    void DrawCube(p6::Context& ctx)
     {
         m_shader.use();
         glEnable(GL_DEPTH_TEST);
-        OpenGLUtils::draw_sphere(&m_shader, m_vertices, &ctx);
+        OpenGLUtils::draw_cube(&m_shader, m_vertices, &ctx, m_vao);
     }
 };
