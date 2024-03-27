@@ -1,19 +1,18 @@
-#ifndef FREEFLY_CAMERA_HPP
-#define FREEFLY_CAMERA_HPP
 #pragma once
 #include <p6/p6.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp> // pour glm::pi
-#include "common.hpp"
+// #include "common.hpp"
+
 #include "cube.hpp"
 
-
-class FreeflyCamera {
+class Arpenteur {
 private:
     glm::vec3 m_Position;
     float     m_Phi;
     float     m_Theta;
+    glm::vec3 m_cameraPosition;
 
     glm::vec3 m_FrontVector;
     glm::vec3 m_LeftVector;
@@ -43,7 +42,7 @@ private:
     }
 
 public:
-    FreeflyCamera()
+    Arpenteur()
         : m_Position(glm::vec3(0.0f)), m_Phi(glm::pi<float>()), m_Theta(0.0f)
     {
         computeDirectionVectors();
@@ -158,5 +157,3 @@ public:
             rotateLeft(-10 * m_sensi);
     }
 };
-
-#endif // FREEFLY_CAMERA_HPP

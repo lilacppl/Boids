@@ -12,29 +12,6 @@
 
 class OpenGLUtils {
 public:
-    static p6::Shader loadShader(std::string vs, std::string fs)
-    {
-        // const p6::Shader shader = p6::load_shader(
-        //     "vs",
-        //     "fs"
-        // );
-        return p6::load_shader(
-            vs,
-            fs
-        );
-    }
-
-    static const img::Image loadTexture(std::string name)
-    {
-        name = "assets/" + name;
-        return p6::load_image_buffer(name.c_str());
-    }
-
-    // static VBO VaoandVbo(std::vector<glimac::ShapeVertex> vertices)
-    // {
-    //     return vbo(vertices);
-    // }
-
     static GLuint texture(img::Image& img)
     {
         GLuint text;
