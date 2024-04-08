@@ -8,6 +8,7 @@
 #include "cube.hpp"
 #include "doctest/doctest.h"
 #include "imguivariables.hpp"
+#include "arpenteur.hpp"
 
 class Scene {
 private:

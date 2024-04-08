@@ -10,15 +10,17 @@
 
 // #include "p6/p6.h"
 
-class Cube {
+class Cube { // Mesh
 private:
     float                            m_size;
-    std::vector<glimac::ShapeVertex> m_vertices;
-    img::Image                       m_texture = p6::load_image_buffer("../assets/text2.png");
-    p6::Shader m_shader = p6::load_shader("../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl");
+    std::vector<glimac::ShapeVertex> m_vertices; // a faire : stocker les vertices en dehors : on veut faire mesh(vertices) pour générer le mesh, cela économise de la place, mais on est obligé de stocker une size de vertices quand meme
+
+    img::Image m_texture = p6::load_image_buffer("../assets/cube_texture.jpg");
+    p6::Shader m_shader  = p6::load_shader("../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl");
     VBO        m_vbo;
     VAO        m_vao;
-    GLuint     m_texture_uint;
+    GLuint     m_texture_uint; // a faire : classe texture qui marche comme les vao et vbo pour qu'on puisse suppr une texture
+    int        m_vertices_size;
 
 public:
     Cube()
@@ -27,9 +29,15 @@ public:
         initCube(); // Initialisation du cube
     }
 
-    void initCube() // création d"un cube
+    // Mesh(std::vector<glimac::ShapeVertex> vertices)
+    //  {
+    //       OpenGLUtils::init_vao(m_vao, m_vbo, vertices);
+    // m_vertices_size = vertices.size();
+    //   m_texture_uint = OpenGLUtils::texture(m_texture);
+    // }
+
+    void initCube() // création d'un cube
     {
-        // m_size     = 1.0;
         m_vertices = {
             // face arriere
             {glm::vec3(-0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(1, 0, 0), glm::vec2(1, 0)},
@@ -75,13 +83,10 @@ public:
             {glm::vec3(0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(0, 0, 1), glm::vec2(1, 1)},
             {glm::vec3(-0.5f * m_size, 0.5f * m_size, -0.5f * m_size), glm::vec3(0, 0, 1), glm::vec2(1, 0)},
         };
-        // m_vbo(m_vertices); //faire un nouveau constructeur pour le vbo
-        //  m_firsttexture  = OpenGLUtils::loadTexture("text2.png");
-        //  m_secondtexture = OpenGLUtils::loadTexture("CloudMap.jpg");
-        // m_shader = OpenGLUtils::loadShader("3D.vs.glsl", "normal.fs.glsl");
+
         OpenGLUtils::init_vao(m_vao, m_vbo, m_vertices);
         // m_shader = p6::load_shader("../shaders/3D.vs.glsl", "../shaders/normal.fs.glsl");//essayer  de changer le shader ici ??
-        m_texture = p6::load_image_buffer("../assets/text.png");
+        // m_texture = p6::load_image_buffer("../assets/text.png");
 
         m_texture_uint = OpenGLUtils::texture(m_texture);
     }
