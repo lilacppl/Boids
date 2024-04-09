@@ -9,6 +9,7 @@
 #include "p6/p6.h"
 // #include "vao.hpp"
 // #include "vbo.hpp"
+#include "tiny_obj_loader.h"
 
 class OpenGLUtils {
 public:
@@ -122,8 +123,8 @@ public:
         glm::mat4 ProjMatrix            = glm::perspective(glm::radians(70.f), ctx->aspect_ratio(), 0.1f, 100.f);
         glm::mat4 MVMatrix              = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
         glm::mat4 NormalMatrix          = glm::transpose(glm::inverse(MVMatrix));
-        //éventuellement rajouter un scale avec la m_size de l'objet.
-        glm::mat4 MVPMatrix             = ProjMatrix * viewMatrix;
+        // éventuellement rajouter un scale avec la m_size de l'objet.
+        glm::mat4 MVPMatrix = ProjMatrix * viewMatrix;
 
         // envoi des matrices vers le GPU
         glUniformMatrix4fv(uMVPMatrixLocation, 1, GL_FALSE, glm::value_ptr(MVPMatrix));

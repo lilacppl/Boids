@@ -46,4 +46,6 @@ struct Vertices {
         {glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0, 0, 1), glm::vec2(1, 1)},
         {glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 0, 1), glm::vec2(1, 0)},
     };
+
+    std::vector<glimac::ShapeVertex> fish = {}; // mettre les vertices des boids ici
 };

@@ -22,4 +22,5 @@ void Scene::update(p6::Context& ctx)
     m_cube.DrawMesh(ctx, viewMatrix);
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});
     // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_imguiVariables.GetSquareRadius(), m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed());
+    
 }
