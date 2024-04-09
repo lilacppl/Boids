@@ -6,8 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp> // pour glm::pi
 #include "common.hpp"
-#include "cube.hpp"
-
+#include "mesh.hpp"
 
 class FreeflyCamera {
 private:
