@@ -60,11 +60,24 @@ void Program::debind()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-// A metter avant le draw dans la boucle
+// A mettre avant le draw dans la boucle
 void Program::use()
 {
+    // Texture
+    m_Program.use();
     glActiveTexture(GL_TEXTURE0 + m_index);
     glBindTexture(GL_TEXTURE_2D, m_name);
     m_uTexture = glGetUniformLocation(m_Program.id(), "uTexture");
     glUniform1i(m_uTexture, m_index);
+
+    // Variables uniformes
+    // const glm::mat4 globalMVMatrix = glm::translate(glm::mat4{1.f}, {0.f, 0.f, -5.f});
+    // const glm::mat4 earthMVMatrix  = glm::rotate(globalMVMatrix, ctx.time(), {0.f, 1.f, 0.f});
+    // glm::mat4       projMatrix     = glm::inverse(view) * glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
+
+    // envoi des matrices vers le GPU
+    // glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(earthMVMatrix));
+    // glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(earthMVMatrix))));
+    // glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(projMatrix * earthMVMatrix));
 }
+// INTEGRER LA VIEWMATRIX ET CTX DANS LA CLASSE
