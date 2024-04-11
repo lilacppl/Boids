@@ -6,11 +6,10 @@
 #include "../glimac/freefly_camera.hpp"
 #include "arpenteur.hpp"
 #include "boids.hpp"
-#include "mesh.hpp"
 #include "doctest/doctest.h"
 #include "imguivariables.hpp"
+#include "mesh.hpp"
 #include "vertices.hpp"
-
 
 class Scene {
 private:
@@ -18,8 +17,8 @@ private:
     Vertices       m_vertices;
     Boids          m_first_boids;
     Mesh           m_cube;
+    Mesh           m_fish;
     FreeflyCamera  m_camera;
-
 
 public:
     Scene();

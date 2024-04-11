@@ -1,6 +1,13 @@
 #pragma once
 #include <iostream>
+#include <vector>
+#include "../glimac/common.hpp"
+#include "glm/glm.hpp"
 
+// fonction permettant de remplir l'attribut fish de vertices avec les vertex issus d'un .obj placé dans assets
+std::vector<glimac::ShapeVertex> tiny_vertice();
+
+// Contient les vertex du cube de base ainsi que des boids/poissons
 struct Vertices {
     std::vector<glimac::ShapeVertex> cube = {
         {glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(1, 0, 0), glm::vec2(1, 0)},
@@ -47,5 +54,5 @@ struct Vertices {
         {glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 0, 1), glm::vec2(1, 0)},
     };
 
-    std::vector<glimac::ShapeVertex> fish = {}; // mettre les vertices des boids ici
+    std::vector<glimac::ShapeVertex> fish = tiny_vertice();
 };
