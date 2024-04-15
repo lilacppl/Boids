@@ -124,16 +124,16 @@ int main()
 
     const p6::Shader shader = p6::load_shader(
         "../shaders/3D.vs.glsl",
-        "../shaders/normal.fs.glsl"
+        "../shaders/text3D.fs.glsl"
     );
 
-    Scene scene;
+    Scene scene(ctx);
     scene.Init(ctx);
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
     // img::Image img = p6::load_image_buffer("../assets/untitled.mtl");
-    const std::string& str = "../assets";
+    //const std::string& str = "../assets";
     img::Image         img = p6::load_image_buffer("../assets/text.png");
     OpenGLUtils::texture(img);
 

@@ -21,7 +21,7 @@ private:
     FreeflyCamera  m_camera;
 
 public:
-    Scene();
+    Scene(p6::Context& ctx);
     void Init(p6::Context& ctx);
     void update(p6::Context& ctx);
 };

@@ -6,9 +6,9 @@
 // #include "../glimac/freefly_camera.hpp"
 // #include "../glimac/sphere_vertices.hpp"
 #include "boid3d.hpp"
+#include "iprogram.hpp"
 #include "openglutils.hpp"
-
-// #include "p6/p6.h"
+#include "p6/p6.h"
 
 class Mesh { // Mesh
 private:
@@ -28,8 +28,10 @@ public:
     // {
     //     initCube(); // Initialisation du cube
     // }
+    Program m_program;
 
     Mesh(std::vector<glimac::ShapeVertex>& vertices)
+        : m_program("../assets/CloudMap.jpg", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl")
     {
         OpenGLUtils::init_vao(m_vao, m_vbo, vertices);
         m_vertices_size = vertices.size();
