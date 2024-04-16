@@ -5,13 +5,13 @@
 glm::vec3 calculate_rotation(glm::vec3 speed)
 {
     return glm::vec3{
-        atan2(speed[2], sqrt(speed[0] * speed[0] + speed[1] * speed[2])), atan2(speed[1], speed[0]), 0.0f
+        atan2(-speed[1], speed[2]), atan2(speed[0], speed[2]), 0
     };
 }
 
 std::default_random_engine            gen;
 std::uniform_real_distribution<float> distrib_pos(-2.0f, 2.0f);
-std::uniform_real_distribution<float> distrib_speed(0.03f, 0.08f);
+std::uniform_real_distribution<float> distrib_speed(0.05f, 0.1f);
 std::vector<int>                      rand_speed{-1, 1};
 std::uniform_int_distribution<int>    distrib_int(0, 1);
 
@@ -51,8 +51,8 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
     // if (m_position[1] + m_radius > square_radius)
     //     m_position[1] = -m_position[1];
 
-    float margin     = 0.95;
-    float turnfactor = 0.002;
+    float margin     = 0.98;
+    float turnfactor = 0.01;
     // float maxspeed   = 0.006;
     // float minspeed   = 0.002;
     if (m_position[0] < -square_radius * margin)
