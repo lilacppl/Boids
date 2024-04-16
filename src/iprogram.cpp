@@ -32,7 +32,7 @@ void Program::debind()
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position)
+void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value)
 {
     // Texture
     m_Program.use();
@@ -50,8 +50,9 @@ void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position)
 
     glm::mat4 MVMatrix = glm::translate(glm::mat4{1.f}, position);
 
+    MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-    glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix;
+    glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix * MVMatrix;
 
     // envoi des matrices
     glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));

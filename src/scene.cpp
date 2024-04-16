@@ -20,7 +20,7 @@ void Scene::update(p6::Context& ctx)
     m_camera.eventUpdate();
     glm::mat4 viewMatrix = m_camera.getViewMatrix();
     glm::vec3 position(0.f, 0.f, -5.f);
-    m_cube.DrawMesh(ctx, viewMatrix, 10., m_cube_program, position);
+    m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10);
     // m_fish.DrawMesh(ctx, viewMatrix, 0.5, m_fish_program);
     m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 100, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), m_fish, viewMatrix, m_fish_program);
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});
