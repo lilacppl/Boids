@@ -32,7 +32,7 @@ void Program::debind()
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(glm::mat4& viewmatrix, p6::Context& ctx)
+void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position)
 {
     // Texture
     m_Program.use();
@@ -44,8 +44,12 @@ void Program::use(glm::mat4& viewmatrix, p6::Context& ctx)
     // // glUniform1i(m_uTexture, m_index);
     // glUniform1i(m_uTexture, 0);
 
-    glm::mat4 ProjMatrix   = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
-    glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
+    glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
+    // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
+    std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
+
+    glm::mat4 MVMatrix = glm::translate(glm::mat4{1.f}, position);
+
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
     glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix;
 

@@ -26,11 +26,12 @@ int Boids::NumberOfBoids() const
     return (m_boids.size());
 }
 
-void Boids::draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed)
+void Boids::draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program)
 {
     for (auto& i : m_boids)
     {
-        i.draw(ctx);
+        // i.draw(ctx);
+        i.draw(ctx, mesh, viewmatrix, program);
         i.move(square_radius, maxspeed, minspeed);
     }
 }
@@ -75,13 +76,13 @@ std::vector<Boid> Boids::other_boids(const Boid& active_boid)
     return others;
 }
 
-void Boids::update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed)
+void Boids::update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program)
 {
     alignement(neighbor_dist);
     cohesion(neighbor_dist);
     separation(avoid_factor);
     changeSize(boids_number);
-    draw(ctx, square_radius, maxspeed, minspeed);
+    draw(ctx, square_radius, maxspeed, minspeed, mesh, viewmatrix, program);
 }
 
 void Boids::alignement(float neighbor_dist)
@@ -91,7 +92,7 @@ void Boids::alignement(float neighbor_dist)
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
-        glm::vec4 sum(0, 0, 0, 0);
+        glm::vec3 sum(0, 0, 0);
         int       neighboring_boids = 0;
         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
         {
@@ -126,7 +127,7 @@ void Boids::cohesion(float neighbor_dist)
 
     for (auto& b : m_boids) // on boucle sur chaque boid
     {
-        glm::vec4 sum(0, 0, 0, 0); // somme des positions
+        glm::vec3 sum(0, 0, 0); // somme des positions
         int       neighboring_boids = 0;
         for (auto& other_b : other_boids(b)) // pour chaque autre boid existant :
         {

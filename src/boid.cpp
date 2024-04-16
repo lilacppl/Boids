@@ -13,21 +13,24 @@ std::uniform_real_distribution<double> distrib_speed(-0.005, 0.005);
 std::vector<int>                       rand_speed{-1, 1};
 
 Boid::Boid()
-    : m_position(glm::vec4{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen),0}), m_speed(glm::vec4{distrib_speed(gen), distrib_speed(gen),distrib_speed(gen), 0}), m_radius(0.01) {}
+    : m_position(glm::vec3{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen)}), m_speed(glm::vec3{distrib_speed(gen), distrib_speed(gen), distrib_speed(gen)}), m_radius(0.01) {}
 
-glm::vec4 Boid::get_position() const
+glm::vec3 Boid::get_position() const
 {
     return m_position;
 }
-glm::vec4 Boid::get_speed() const
+glm::vec3 Boid::get_speed() const
 {
     return m_speed;
 }
 
-void Boid::draw(p6::Context& ctx)
+void Boid::draw(p6::Context& ctx, Mesh& mesh, glm::mat4 viewMatrix, Program& program)
 {
-    ctx.fill = {1, 1, 1, 0.5};
-    ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
+    // ctx.fill = {1, 1, 1, 0.5};
+    // ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
+    glm::vec3 position = get_position();
+    // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
+    mesh.DrawMesh(ctx, viewMatrix, 1, program, position);
 }
 
 void Boid::move(float square_radius, float maxspeed, float minspeed)
@@ -75,6 +78,6 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
         m_speed[1] = (m_speed[1] / speed) * minspeed;
     }
 
-    glm::vec4 new_pos = m_speed + m_position;
+    glm::vec3 new_pos = m_speed + m_position;
     m_position        = new_pos;
 }

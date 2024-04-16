@@ -34,6 +34,6 @@ public:
     void bind();
     void debind();
     void getUniformLocations();
-    void use(glm::mat4& viewmatrix, p6::Context& ctx);
+    void use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position);
     void useText();
 };
