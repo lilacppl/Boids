@@ -48,8 +48,7 @@ void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, 
     // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
     std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
 
-    glm::mat4 MVMatrix = glm::translate(glm::mat4{1.f}, position);
-
+    glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, position);
     MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
     glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix * MVMatrix;
