@@ -13,5 +13,5 @@ void main() {
     // FragColor = vec4(txt+cloudtxt);
     FragColor = vec4(txt);
 
-    FragColor.a = 0.6; //transparence
+    // FragColor.a = 0.6; //transparence
 }

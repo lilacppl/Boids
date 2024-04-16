@@ -114,7 +114,7 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
-    static void draw_mesh(const p6::Shader* shader, const int vertices_size, auto ctx, VAO& vao, glm::mat4 viewMatrix, GLuint& text)
+    static void draw_mesh(const p6::Shader* shader, const int vertices_size, auto ctx, VAO& vao, glm::mat4 viewMatrix, GLuint& text, float scale)
     {
         // recuperation des matrices du shader
         GLint     uMVPMatrixLocation    = glGetUniformLocation(shader->id(), "uMVPMatrix");
@@ -122,8 +122,13 @@ public:
         GLint     uNormalMatrixLocation = glGetUniformLocation(shader->id(), "uNormalMatrix");
         glm::mat4 ProjMatrix            = glm::perspective(glm::radians(70.f), ctx->aspect_ratio(), 0.1f, 100.f);
         glm::mat4 MVMatrix              = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
-        glm::mat4 NormalMatrix          = glm::transpose(glm::inverse(MVMatrix));
+
         // éventuellement rajouter un scale avec la m_size de l'objet.
+        MVMatrix                        = glm::scale(MVMatrix, glm::vec3{scale}); // ça marche pas
+
+        glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+
         glm::mat4 MVPMatrix = ProjMatrix * viewMatrix;
 
         // envoi des matrices vers le GPU

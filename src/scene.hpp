@@ -8,6 +8,7 @@
 #include "boids.hpp"
 #include "doctest/doctest.h"
 #include "imguivariables.hpp"
+#include "iprogram.hpp"
 #include "mesh.hpp"
 #include "vertices.hpp"
 
@@ -19,6 +20,8 @@ private:
     Mesh           m_cube;
     Mesh           m_fish;
     FreeflyCamera  m_camera;
+    Program        m_fish_program;
+    Program        m_cube_program;
 
 public:
     Scene();

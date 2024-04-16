@@ -7,8 +7,8 @@
 #include "boid.hpp"
 #include "doctest/doctest.h"
 #include "imguivariables.hpp"
+#include "iprogram.hpp"
 #include "p6/p6.h"
-
 
 // ensemble des Boids
 
@@ -17,6 +17,8 @@ private:
     std::vector<Boid> m_boids; // vecteur de Boid
     // String m_type;
     ImguiVariables m_variables;
+
+    // Program m_program; // du coup on met le programme ici ??
 
 public:
     Boids() = default;

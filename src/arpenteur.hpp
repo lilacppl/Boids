@@ -12,11 +12,13 @@ private:
     glm::vec3 m_Position;
     float     m_Phi;
     float     m_Theta;
-    glm::vec3 m_cameraPosition;
+    // glm::vec3 m_cameraPosition;
 
     glm::vec3 m_FrontVector;
     glm::vec3 m_LeftVector;
     glm::vec3 m_UpVector;
+    // Mesh m_arpenteur;
+
     bool      m_moveForward  = false;
     bool      m_moveBackward = false;
     bool      m_moveLeft     = false;
