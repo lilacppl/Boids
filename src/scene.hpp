@@ -24,6 +24,7 @@ private:
     Program        m_cube_program;
 
 public:
+    // Scene(p6::Context& ctx);
     Scene();
     void Init(p6::Context& ctx);
     void update(p6::Context& ctx);

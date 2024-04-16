@@ -26,6 +26,7 @@ private:
     GLint      uMVPMatrix;
     GLint      uMVMatrix;
     GLint      uNormalMatrix;
+    // p6::Context m_ctx;
 
 public:
     Program(std::string texture_path, std::string vs_path, std::string fs_path);

@@ -1,6 +1,8 @@
 #version 330 core
 
 in vec2 vTexCoords;
+in vec3 vNormal_vs;
+in vec3 vPosition_vs;
 uniform sampler2D TextureCoordinate;
 // uniform sampler2D CloudTextureCoordinate;
 

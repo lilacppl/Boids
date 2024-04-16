@@ -92,3 +92,47 @@ void water_level(long long int& temps, std::vector<int> event_time_table, int& n
         // baisser l'eau
     }
 }
+
+void markov_suivant(int actual_state, glm::vec4 v)
+{
+    float a = rand01();
+    if (a < v[0])
+    {
+        actual_state = 0;
+    }
+    else if (a < v[0] + v[1])
+    {
+        actual_state = 1;
+    }
+    else if (a < v[0] + v[1] + v[2])
+    {
+        actual_state = 2;
+    }
+    else if (a < v[0] + v[1] + v[2] + v[3])
+    {
+        actual_state = 3;
+    }
+    else
+    {
+        actual_state = 4;
+    }
+}
+
+void chaine_markov(int actual_state, glm::mat4 matrice)
+{
+    switch (actual_state)
+    {
+    case 0:
+        markov_suivant(actual_state, matrice[0]);
+        break;
+    case 1:
+        markov_suivant(actual_state, matrice[1]);
+        break;
+    case 2:
+        markov_suivant(actual_state, matrice[2]);
+        break;
+    case 3:
+        markov_suivant(actual_state, matrice[3]);
+        break;
+    }
+}
