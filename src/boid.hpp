@@ -1,13 +1,16 @@
 #pragma once
 
 #include <cstdlib>
+// #include <winuser.h>
+#include <cmath>
+#include <cstdlib>
 #include <iostream>
+#include <random>
 #include <vector>
 #include "doctest/doctest.h"
 #include "glm/fwd.hpp"
 #include "iprogram.hpp"
 #include "mesh.hpp"
-#include "p6/p6.h"
 
 class Boid {
 private:
@@ -16,6 +19,7 @@ private:
 public:
     glm::vec3 m_speed;
     glm::vec3 m_position;
+    glm::vec3 m_direction;
     Boid();
     glm::vec3 get_position() const;
     glm::vec3 get_speed() const;
