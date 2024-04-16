@@ -22,7 +22,7 @@ void Scene::update(p6::Context& ctx)
     glm::vec3 position(0.f, 0.f, -5.f);
     m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0});
     // m_fish.DrawMesh(ctx, viewMatrix, 0.5, m_fish_program);
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 2.5f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), m_fish, viewMatrix, m_fish_program);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), m_fish, viewMatrix, m_fish_program);
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});
     // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_imguiVariables.GetSquareRadius(), m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed());
 }
