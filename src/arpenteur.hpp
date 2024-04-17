@@ -68,7 +68,7 @@ public:
     {
         // eventManager(ctx);
         m_camera.updatePosition(m_position, m_Phi);
-        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, m_position);
+        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1);
     }
 
     glm::mat4 getViewMatrix() const

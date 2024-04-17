@@ -24,5 +24,5 @@ public:
     glm::vec3 get_position() const;
     glm::vec3 get_speed() const;
     void      move(float square_radius, float maxspeed, float minspeed);
-    void      draw(p6::Context& ctx, Mesh& mesh, glm::mat4 viewMatrix, Program& program);
+    void      draw(p6::Context& ctx, Mesh& mesh, const glm::mat4 viewMatrix, Program& program);
 };

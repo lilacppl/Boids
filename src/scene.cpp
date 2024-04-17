@@ -20,7 +20,7 @@ void Scene::update(p6::Context& ctx)
     m_imguiVariables.UpdateValues();
     glm::mat4 viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
-    m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0});
+    m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10);
     m_arpenteur.update(ctx, m_fish_program);
     m_arpenteur.eventUpdate();
     // m_fish.DrawMesh(ctx, viewMatrix, 0.5, m_fish_program);
