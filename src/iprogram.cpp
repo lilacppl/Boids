@@ -20,20 +20,21 @@ void Program::getUniformLocations()
     uMVPMatrix    = glGetUniformLocation(m_Program.id(), "uMVPMatrix");
     uMVMatrix     = glGetUniformLocation(m_Program.id(), "uMVMatrix");
     uNormalMatrix = glGetUniformLocation(m_Program.id(), "uNormalMatrix");
+    m_uTexture    = glGetUniformLocation(m_Program.id(), "TextureCoordinate");
     // mettre aussi ici les lumieres
 }
 
-void Program::bind()
+void Program::bind() const
 {
     glBindTexture(GL_TEXTURE_2D, m_name);
 }
-void Program::debind()
+void Program::debind() const
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
+void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
 {
     // Texture
     m_Program.use();
@@ -70,21 +71,21 @@ void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, 
     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 }
 // A mettre avant le draw dans la boucle
-void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value)
+void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value)
 {
     // Texture
     m_Program.use();
     // glActiveTexture(GL_TEXTURE0 + m_index);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_name);
-    m_uTexture = glGetUniformLocation(m_Program.id(), "TextureCoordinate");
+
     // std::cerr << m_uTexture << std::endl;
     // // glUniform1i(m_uTexture, m_index);
     // glUniform1i(m_uTexture, 0);
 
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
     // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
-    std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
+    // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
 
     glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, position);
     MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
@@ -97,7 +98,7 @@ void Program::use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, 
     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 }
 
-void Program::useText()
+void Program::useText() const
 {
     // glUniform1i(m_uTexture, m_index);
     glUniform1i(m_uTexture, 0);

@@ -11,6 +11,7 @@
 #include "iprogram.hpp"
 #include "mesh.hpp"
 #include "vertices.hpp"
+#include "arpenteur.hpp"
 
 class Scene {
 private:
@@ -19,9 +20,10 @@ private:
     Boids          m_first_boids;
     Mesh           m_cube;
     Mesh           m_fish;
-    FreeflyCamera  m_camera;
+    // FreeflyCamera  m_camera;
     Program        m_fish_program;
     Program        m_cube_program;
+    Arpenteur m_arpenteur;
 
 public:
     // Scene(p6::Context& ctx);
