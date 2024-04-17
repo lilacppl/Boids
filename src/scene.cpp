@@ -23,6 +23,7 @@ void Scene::update(p6::Context& ctx)
     glm::vec3 position2(0.f, -5.f, 0.f);
     m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10);
     m_seaweed.DrawMesh(ctx, viewMatrix, m_fish_program, position2, 0.5);
+    // m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0}, 0.5f);
     m_arpenteur.update(ctx, m_fish_program);
     m_arpenteur.eventUpdate();
     // m_fish.DrawMesh(ctx, viewMatrix, 0.5, m_fish_program);

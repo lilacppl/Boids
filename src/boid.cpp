@@ -36,7 +36,7 @@ void Boid::draw(p6::Context& ctx, Mesh& mesh, const glm::mat4 viewMatrix, Progra
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
     glm::vec3 reel_pos{0.0, 0.0, -5.0};
     reel_pos += position;
-    mesh.DrawMesh(ctx, viewMatrix, program, reel_pos, .1f, m_direction, .1f);
+    mesh.DrawMesh(ctx, viewMatrix, program, reel_pos, .1f, m_direction, 1.0f);
 }
 
 void Boid::move(float square_radius, float maxspeed, float minspeed)
