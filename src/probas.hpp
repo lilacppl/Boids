@@ -12,6 +12,10 @@
 #include <thread>
 #include <vector>
 #include "doctest/doctest.h"
+#include "glm/glm.hpp"
+
+// Matrice de passage pour chaîne de Markov
+glm::mat4 mat{{1 / 2, 1 / 6, 1 / 6, 1 / 6}, {1 / 4, 1 / 8, 1 / 4, 3 / 8}, {1 / 6, 1 / 6, 1 / 2, 1 / 6}, {1 / 4, 3 / 8, 1 / 4, 1 / 8}};
 
 // Structure pour stocker le temps de début ( à mettre juste avant la boucle)
 struct Timer {
@@ -80,17 +84,22 @@ double loi_normale()
     return z1;
 }
 
-void water_level(long long int& temps, std::vector<int> event_time_table, int& number_events)
+bool water_level(long long int& temps, std::vector<int> event_time_table, int& number_events)
 {
     if (temps % 60000 == 0)
     {
         number_events    = loi_de_poisson(2);
         event_time_table = events_times();
     }
-    if (std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end())
-    {
-        // baisser l'eau
-    }
+    return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
+    //     if (std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end())
+    // {
+    //     return true;
+    // }
+    // else
+    // {
+    //     return false;
+    // }
 }
 
 void markov_suivant(int actual_state, glm::vec4 v)
@@ -118,21 +127,21 @@ void markov_suivant(int actual_state, glm::vec4 v)
     }
 }
 
-void chaine_markov(int actual_state, glm::mat4 matrice)
+void chaine_markov(int actual_state)
 {
     switch (actual_state)
     {
     case 0:
-        markov_suivant(actual_state, matrice[0]);
+        markov_suivant(actual_state, mat[0]);
         break;
     case 1:
-        markov_suivant(actual_state, matrice[1]);
+        markov_suivant(actual_state, mat[1]);
         break;
     case 2:
-        markov_suivant(actual_state, matrice[2]);
+        markov_suivant(actual_state, mat[2]);
         break;
     case 3:
-        markov_suivant(actual_state, matrice[3]);
+        markov_suivant(actual_state, mat[3]);
         break;
     }
 }
