@@ -1,4 +1,5 @@
 #include "iprogram.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
@@ -33,7 +34,7 @@ void Program::debind() const
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, const glm::vec3& position, const float scale_value) const
+void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, const glm::vec3& position, const float scale_value, glm::vec3 direction) const
 {
     // Texture
     m_Program.use();
@@ -49,9 +50,11 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, const glm::vec3
     // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
 
-    glm::mat4 MVMatrix = glm::translate(glm::mat4{1.f}, position);
-
+    glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, position);
     MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
+    MVMatrix               = glm::rotate(MVMatrix, direction[0], glm::vec3{1, 0, 0});
+    MVMatrix               = glm::rotate(MVMatrix, direction[1], glm::vec3{0, 1, 0});
+    MVMatrix               = glm::rotate(MVMatrix, direction[2], glm::vec3{0, 0, 1});
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
     glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix * MVMatrix;
 

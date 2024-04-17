@@ -38,10 +38,10 @@ public:
         // m_texture_uint  = OpenGLUtils::texture(m_texture);
     }
 
-    void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix,Program& program,const glm::vec3& position,const float scale_value)
+    void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, const glm::vec3& position, const float scale_value, glm::vec3 direction)
     {
         program.getUniformLocations();
-        program.use(viewmatrix, ctx, position, scale_value);
+        program.use(viewmatrix, ctx, position, scale_value, direction);
         // glEnable(GL_DEPTH_TEST);
         m_vao.bind();
         program.bind();

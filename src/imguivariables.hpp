@@ -11,8 +11,8 @@ private:
     int   m_boids_number  = 30;
     float m_neighbor_dist = 0.15f;
     float m_avoid_factor  = 0.02f;
-    float m_max_speed     = 0.006f;
-    float m_min_speed     = 0.002f;
+    float m_max_speed     = 0.05f;
+    float m_min_speed     = 0.03f;
 
 public:
     ImguiVariables() = default;
