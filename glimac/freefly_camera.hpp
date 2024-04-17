@@ -43,9 +43,12 @@ private:
 
 public:
     FreeflyCamera()
-        : m_Position(glm::vec3(0.0f)), m_Phi(glm::pi<float>()), m_Theta(0.0f)
+        : m_Position(glm::vec3(5, 0, 0)), m_Phi(glm::pi<float>()), m_Theta(0.0f)
     {
-        computeDirectionVectors();
+        // computeDirectionVectors();
+        m_FrontVector = glm::vec3(-1, 0, 0);
+        m_LeftVector  = glm::vec3(0, -1, 0);
+        m_UpVector    = glm::vec3(0, 0, 1);
     }
     // Méthode pour déplacer la caméra le long du vecteur Left
     void moveLeft(float t)
