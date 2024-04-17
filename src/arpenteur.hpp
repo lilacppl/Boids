@@ -143,7 +143,7 @@ public:
             else if (key.logical == " ")
                 m_moveUp = true;
             else if (key.logical == "w")
-                m_moveUp = true;
+                m_moveDown = true;
             else if (key.logical == "a")
                 m_rotateLeft = true;
             else if (key.logical == "e")

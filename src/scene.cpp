@@ -1,7 +1,7 @@
 #include "scene.hpp"
 
 Scene::Scene()
-    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl")
+    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_seaweed(m_vertices.seaweed)
 {
 }
 
@@ -20,7 +20,9 @@ void Scene::update(p6::Context& ctx)
     m_imguiVariables.UpdateValues();
     glm::mat4 viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
+    glm::vec3 position2(0.f, -5.f, 0.f);
     m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10);
+    m_seaweed.DrawMesh(ctx, viewMatrix, m_fish_program, position2, 0.5);
     m_arpenteur.update(ctx, m_fish_program);
     m_arpenteur.eventUpdate();
     // m_fish.DrawMesh(ctx, viewMatrix, 0.5, m_fish_program);

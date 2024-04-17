@@ -4,10 +4,10 @@
 #include "glm/glm.hpp"
 #include "tiny_obj_loader.h"
 
-std::vector<glimac::ShapeVertex> tiny_vertice()
+std::vector<glimac::ShapeVertex> tiny_vertice(const std::string inputfile)
 {
     // load obj
-    std::string              inputfile = "../assets/fish_color.obj";
+    // std::string              inputfile = "../assets/fish_color.obj";
     tinyobj::ObjReaderConfig reader_config;
     reader_config.mtl_search_path = "../assets"; // Path to material files
 
