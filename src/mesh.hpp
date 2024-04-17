@@ -29,6 +29,7 @@ public:
     //     initCube(); // Initialisation du cube
     // }
     Program m_program;
+    float   m_scale_down = 1; // Pour le cube, lorsqu'il rapetisse, la valeur change
 
     Mesh(std::vector<glimac::ShapeVertex>& vertices)
         : m_program("../assets/CloudMap.jpg", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl")
@@ -38,10 +39,21 @@ public:
         // m_texture_uint  = OpenGLUtils::texture(m_texture);
     }
 
-    void DrawMesh(p6::Context& ctx, glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value, glm::vec3 direction)
+    void DrawMesh(p6::Context& ctx, glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
     {
         program.getUniformLocations();
-        program.use(viewmatrix, ctx, position, scale_value, direction);
+        program.use(viewmatrix, ctx, position, scale_value, direction, scale_down);
+        // glEnable(GL_DEPTH_TEST);
+        m_vao.bind();
+        program.bind();
+        program.useText();
+        glDrawArrays(GL_TRIANGLES, 0, m_vertices_size);
+        // OpenGLUtils::draw_mesh(&m_shader, m_vertices_size, &ctx, m_vao, viewmatrix, m_texture_uint, scale);
+    }
+        void DrawMesh(p6::Context& ctx, glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value)
+    {
+        program.getUniformLocations();
+        program.use(viewmatrix, ctx, position, scale_value);
         // glEnable(GL_DEPTH_TEST);
         m_vao.bind();
         program.bind();

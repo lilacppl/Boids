@@ -34,6 +34,7 @@ public:
     void bind();
     void debind();
     void getUniformLocations();
-    void use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction);
+    void use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down);
+    void use(glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value);
     void useText();
 };
