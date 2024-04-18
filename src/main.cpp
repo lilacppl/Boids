@@ -139,6 +139,7 @@ int main()
     OpenGLUtils::texture(img);
 
     // Declare your infinite update loop.
+    Timer chrono;
     ctx.update = [&]() {
         // vao.bind();
         shader.use();

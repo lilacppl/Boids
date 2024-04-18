@@ -15,6 +15,7 @@
 #include "doctest/doctest.h"
 #include "glm/glm.hpp"
 
+
 // Matrice de passage pour chaîne de Markov
 glm::mat4 mat{{1 / 2, 1 / 6, 1 / 6, 1 / 6}, {1 / 4, 1 / 8, 1 / 4, 3 / 8}, {1 / 6, 1 / 6, 1 / 2, 1 / 6}, {1 / 4, 3 / 8, 1 / 4, 1 / 8}};
 

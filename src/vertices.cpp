@@ -2,6 +2,7 @@
 #include "glm/gtx/transform.hpp"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "glm/glm.hpp"
+#include "p6/p6.h"
 #include "tiny_obj_loader.h"
 
 // return un verteur de vertex
