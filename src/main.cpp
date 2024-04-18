@@ -149,6 +149,7 @@ int main()
         glEnable(GL_DEPTH_TEST);
         // OpenGLUtils::draw_sphere(&shader, vertices, &ctx);
         scene.update(ctx);
+        scene.draw(ctx);
         // vao.debind();
         // OpenGLUtils::draw_cube(&shader, vertices, &ctx, vao, viewMatrix, num);
     };
