@@ -5,7 +5,7 @@
 glm::vec3 calculate_rotation(glm::vec3 speed)
 {
     return glm::vec3{
-        atan2(-speed[1], speed[2]), atan2(speed[0], speed[2]), 0
+        atan2(-speed[2], speed[0]), atan2(-speed[1], speed[0]), 0
     };
 }
 

@@ -8,6 +8,7 @@
 #include "boid3d.hpp"
 #include "img/src/Image.h"
 #include "p6/p6.h"
+#include "probas.hpp"
 #include "scene.hpp"
 #include "vao.hpp"
 #include "vbo.hpp"

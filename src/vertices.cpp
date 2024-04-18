@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 #include "tiny_obj_loader.h"
 
+// return un verteur de vertex
 std::vector<glimac::ShapeVertex> tiny_vertice(const std::string inputfile)
 {
     // load obj
