@@ -46,3 +46,46 @@ std::vector<glimac::ShapeVertex> tiny_vertice(const std::string inputfile)
     }
     return vertices;
 }
+
+img::Image loadTextureFromMTL(const std::string& mtlFilePath, const std::string& objFilePath)
+{
+    tinyobj::MaterialFileReader materialReader(mtlFilePath);
+    tinyobj::ObjReaderConfig    readerConfig;
+    readerConfig.mtl_search_path = mtlFilePath.substr(0, mtlFilePath.find_last_of("/\\") + 1); // Chemin pour la recherche des fichiers MTL
+
+    tinyobj::ObjReader reader;
+    if (!reader.ParseFromFile(objFilePath, readerConfig))
+    {
+        if (!reader.Error().empty())
+        {
+            std::cerr << "TinyObjReader: " << reader.Error();
+        }
+        exit(1);
+    }
+
+    auto materials = reader.GetMaterials();
+
+    // Parcourir les matériaux et extraire le nom de la texture
+    std::string textureFilePath;
+    for (const auto& material : materials)
+    {
+        if (!material.diffuse_texname.empty())
+        {
+            textureFilePath = readerConfig.mtl_search_path + material.diffuse_texname;
+            break;
+        }
+    }
+
+    // Charger l'image à partir du fichier de texture
+    if (!textureFilePath.empty())
+    {
+    }
+    else
+    {
+        std::cerr << "No texture defined in the MTL file." << std::endl;
+        exit(1);
+    }
+    img::Image textureImage = p6::load_image_buffer(textureFilePath);
+
+    return textureImage;
+}
