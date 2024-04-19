@@ -12,6 +12,7 @@
 #include "mesh.hpp"
 #include "objectsvector.hpp"
 #include "vertices.hpp"
+#include "probas.hpp"
 
 class Scene {
 private:
