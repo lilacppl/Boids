@@ -1,5 +1,6 @@
 #include "iprogram.hpp"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/gtc/random.hpp"
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
@@ -21,7 +22,13 @@ void Program::getUniformLocations()
     uMVMatrix     = glGetUniformLocation(m_Program.id(), "uMVMatrix");
     uNormalMatrix = glGetUniformLocation(m_Program.id(), "uNormalMatrix");
     m_uTexture    = glGetUniformLocation(m_Program.id(), "TextureCoordinate");
-    // mettre aussi ici les lumieres
+
+    m_uKd             = glGetUniformLocation(m_Program.id(), "uKd");
+    m_uKs             = glGetUniformLocation(m_Program.id(), "uKs");
+    m_uShininess      = glGetUniformLocation(m_Program.id(), "uShininess");
+    m_uLightDir_vs    = glGetUniformLocation(m_Program.id(), "uLightDir_vs");
+    m_uLightPos_vs    = glGetUniformLocation(m_Program.id(), "uLightPos_vs");
+    m_uLightIntensity = glGetUniformLocation(m_Program.id(), "uLightIntensity");
 }
 
 void Program::bind() const
@@ -38,13 +45,8 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& posi
 {
     // Texture
     m_Program.use();
-    // glActiveTexture(GL_TEXTURE0 + m_index);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_name);
-    m_uTexture = glGetUniformLocation(m_Program.id(), "TextureCoordinate");
-    // std::cerr << m_uTexture << std::endl;
-    // // glUniform1i(m_uTexture, m_index);
-    // glUniform1i(m_uTexture, 0);
 
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
     // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
@@ -70,23 +72,16 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& posi
     glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 }
+
 // A mettre avant le draw dans la boucle
 void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value)
 {
     // Texture
     m_Program.use();
-    // glActiveTexture(GL_TEXTURE0 + m_index);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_name);
 
-    // std::cerr << m_uTexture << std::endl;
-    // // glUniform1i(m_uTexture, m_index);
-    // glUniform1i(m_uTexture, 0);
-
-    glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
-    // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
-    // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
-
+    glm::mat4 ProjMatrix   = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
     glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, position);
     MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
@@ -96,10 +91,46 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& posi
     glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
     glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+    LightVarToShader(viewmatrix);
+}
+
+void ::Program::LightVarToShader(const glm::mat4& viewmatrix)
+{
+    glUniform3f(m_uKd, 1., 1., 1.); // lumiere blanche
+    glUniform3f(m_uKs, 0., 0., 1.); // reflets bleus
+    glUniform1f(m_uShininess, randomShininess());
+    glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
+    glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, 10, 90).x, lightPos_vs(viewmatrix, 10, 90).y, lightPos_vs(viewmatrix, 10, 90).z);
+    glUniform3f(m_uLightIntensity, 8., 8., 8.);
 }
 
 void Program::useText() const
 {
-    // glUniform1i(m_uTexture, m_index);
     glUniform1i(m_uTexture, 0);
+}
+
+// a relier éventuellement aux maths
+
+float randomShininess()
+{
+    return glm::linearRand(10.0f, 100.0f);
+}
+
+float randomIntensityValue()
+{
+    return glm::linearRand(0.5f, 1.5f);
+}
+
+glm::vec3 lightDir_vs(const glm::mat4& viewmatrix)
+{
+    glm::vec4 lightDir(1.0f, 1.0f, 1.0f, 1.0f);
+    return glm::vec3(viewmatrix * lightDir);
+}
+
+glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const float angle)
+{
+    // faire éventuellement tourner une light
+    float     x = radius * cos(angle);
+    glm::vec4 lightPos(x, 0, 1, 1.0f);
+    return glm::vec3(viewmatrix * lightPos);
 }
