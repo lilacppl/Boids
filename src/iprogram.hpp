@@ -26,7 +26,14 @@ private:
     GLint      uMVPMatrix;
     GLint      uMVMatrix;
     GLint      uNormalMatrix;
-    // p6::Context m_ctx;
+
+    // pour la lumiere
+    GLint m_uKd;
+    GLint m_uKs;
+    GLint m_uShininess;
+    GLint m_uLightDir_vs;
+    GLint m_uLightIntensity;
+    GLint m_uLightPos_vs;
 
 public:
     Program(std::string texture_path, std::string vs_path, std::string fs_path);
@@ -38,4 +45,13 @@ public:
     void use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down);
     void use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value);
     void useText() const;
+    void LightVarToShader(const glm::mat4& viewmatrix);
 };
+
+float randomShininess();
+
+float randomIntensityValue();
+
+glm::vec3 lightDir_vs(const glm::mat4& viewmatrix);
+
+glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const float angle);
