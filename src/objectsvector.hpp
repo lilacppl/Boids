@@ -13,14 +13,14 @@ struct SceneObjectVector {
         ObjectPositionScale(glm::vec3(0.0f, -5.f, 3.0f), 0.3f)
     }; // liste des algues sur forme de vector contenant position et scale
 
-    void drawSceneObjOfSameMesh(std::vector<ObjectPositionScale> list, Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, const glm::vec3& arpenteur_position) const
+    void drawSceneObjOfSameMesh(std::vector<ObjectPositionScale> list, Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program) const
     {
         for (const auto& obj : list)
         {
             // Récupérer la position et l'échelle de l'objet
             glm::vec3 position = obj.getPosition();
             float     scale    = obj.getScale();
-            mesh.DrawMesh(ctx, viewmatrix, program, position, scale, arpenteur_position);
+            mesh.DrawMesh(ctx, viewmatrix, program, position, scale, glm::vec3(0, 0, 0), 1.);
         }
     }
 

@@ -17,7 +17,7 @@ private:
     glm::vec3 m_FrontVector;
     glm::vec3 m_LeftVector;
     glm::vec3 m_UpVector;
-    float     m_distance = 1.f;
+    float     m_distance = 0.7f;
 
 public:
     ArpenteurCamera()
