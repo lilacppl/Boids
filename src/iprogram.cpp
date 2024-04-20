@@ -158,5 +158,5 @@ void Program::set_image(const std::string path)
 void Program::set_texture()
 {
     chaine_markov(m_actual_state);
-    //set_image(textures[m_actual_state]);
+    set_image(textures[m_actual_state]);
 }
