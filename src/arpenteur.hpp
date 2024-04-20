@@ -106,39 +106,29 @@ public:
 
     void cubeLimit(const float square_radius)
     {
-        float     margin     = 0.95;
-        float     turnfactor = 0.05;
-        glm::vec3 speed;
-        // float maxspeed   = 0.006;
-        // float minspeed   = 0.002;
-        if (m_position[0] < -square_radius * margin)
+        float margin = 1.0;
+        if (m_position[0] < -square_radius)
         {
-            speed.x += turnfactor;
             m_position.x *= -1;
         }
         if (m_position[0] > square_radius * margin)
         {
-            speed.x -= turnfactor;
             m_position.x *= -1;
         }
         if (m_position[1] < -square_radius * margin)
         {
-            speed.y += turnfactor;
             m_position.y *= -1;
         }
         if (m_position[1] > square_radius * margin)
         {
-            speed.y -= turnfactor;
             m_position.y *= -1;
         }
         if (m_position[2] < -square_radius * margin)
         {
-            speed.z += turnfactor;
             m_position.z *= -1;
         }
         if (m_position[2] > square_radius * margin)
         {
-            speed.z -= turnfactor;
             m_position.z *= -1;
         }
         // m_position += speed;
