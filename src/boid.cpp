@@ -17,7 +17,7 @@ std::vector<int>                      rand_speed{-1, 1};
 std::uniform_int_distribution<int>    distrib_int(0, 1);
 
 Boid::Boid()
-    : m_radius(0.01f), m_speed(glm::vec3{loi_normale(0.04f, 0.01f), loi_normale(0.04f, 0.01f), loi_normale(0.04f, 0.01f)}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
+    : m_radius(0.01f), m_speed(glm::vec3{loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one()}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
 {}
 
 glm::vec3 Boid::get_position() const
@@ -36,9 +36,7 @@ void Boid::draw(p6::Context& ctx, Mesh& mesh, const glm::mat4 viewMatrix, Progra
     // ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
     glm::vec3 position = get_position();
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
-    glm::vec3 reel_pos{0.0, 0.0, -5.0};
-    reel_pos += position;
-    mesh.DrawMesh(ctx, viewMatrix, program, reel_pos, .1f, m_direction, 1.0f);
+    mesh.DrawMesh(ctx, viewMatrix, program, position, .1f, m_direction, 1.0f);
 }
 
 void Boid::move(float square_radius, float maxspeed, float minspeed)
@@ -53,8 +51,8 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
     // if (m_position[1] + m_radius > square_radius)
     //     m_position[1] = -m_position[1];
 
-    float margin     = 0.95;
-    float turnfactor = 0.05;
+    float margin     = 0.90;
+    float turnfactor = 0.001;
     // float maxspeed   = 0.006;
     // float minspeed   = 0.002;
     if (m_position[0] < -square_radius * margin)
