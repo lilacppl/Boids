@@ -20,7 +20,7 @@ void Scene::update(p6::Context& ctx)
     m_imguiVariables.UpdateValues();
     m_viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
-    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, 10);
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, 10, m_arpenteur.getArpenteurPosition());
     // m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0}, 0.5f);
     m_arpenteur.update(ctx, m_arpenteur_program);
     m_arpenteur.eventUpdate();
@@ -32,5 +32,5 @@ void Scene::update(p6::Context& ctx)
 
 void Scene::draw(p6::Context& ctx)
 {
-    m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program);
+    m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program, m_arpenteur.getArpenteurPosition());
 }

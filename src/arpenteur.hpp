@@ -61,7 +61,11 @@ public:
         : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
     {
         // computeDirectionVectors();
-        m_camera.updatePosition(m_position, m_Phi);
+        m_camera.updatePosition(m_position, 0);
+    }
+    glm::vec3 getArpenteurPosition()
+    {
+        return m_position;
     }
 
     void update(p6::Context& ctx, Program& program)
@@ -69,7 +73,7 @@ public:
         // eventManager(ctx);
         m_camera.updatePosition(m_position, m_Phi);
         cubeLimit(4.0);
-        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1);
+        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, m_position);
     }
 
     glm::mat4 getViewMatrix() const
