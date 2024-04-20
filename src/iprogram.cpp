@@ -1,6 +1,7 @@
 #include "iprogram.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/random.hpp"
+#include "probas.hpp"
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
@@ -96,8 +97,8 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& posi
 
 void ::Program::LightVarToShader(const glm::mat4& viewmatrix)
 {
-    glUniform3f(m_uKd, 1., 1., 1.); // lumiere blanche
-    glUniform3f(m_uKs, 0., 0., 1.); // reflets bleus
+    glUniform3f(m_uKd, rand01(), rand01(), rand01()); // lumiere blanche
+    // glUniform3f(m_uKs, 0., 0., 1.);                   // reflets bleus
     glUniform1f(m_uShininess, randomShininess());
     glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
     glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, 10, 90).x, lightPos_vs(viewmatrix, 10, 90).y, lightPos_vs(viewmatrix, 10, 90).z);
@@ -113,7 +114,7 @@ void Program::useText() const
 
 float randomShininess()
 {
-    return glm::linearRand(10.0f, 100.0f);
+    return glm::linearRand(10.0f, 100.0f); //a relier aux maths
 }
 
 float randomIntensityValue()

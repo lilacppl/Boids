@@ -61,7 +61,7 @@ public:
         : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
     {
         // computeDirectionVectors();
-        m_camera.updatePosition(m_position, 0.);
+        m_camera.updatePosition(m_position, m_Phi);
     }
 
     void update(p6::Context& ctx, Program& program)

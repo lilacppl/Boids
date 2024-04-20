@@ -11,7 +11,9 @@
 #include "iprogram.hpp"
 #include "mesh.hpp"
 #include "objectsvector.hpp"
+#include "probas.hpp"
 #include "vertices.hpp"
+
 
 class Scene {
 private:
@@ -31,6 +33,7 @@ private:
     Mesh              m_seaweed;
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
+    Timer             m_chrono;
 
 public:
     // Scene(p6::Context& ctx);
