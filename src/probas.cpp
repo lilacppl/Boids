@@ -17,9 +17,21 @@ double rand01()
 }
 
 // renvoie une variable uniforme sur [min,max]
-double uniform(const int min, const int max)
+double uniform(const double min, const double max)
 {
     return (max - min) * rand01() + min;
+}
+
+int plus_one()
+{
+    if (rand01() < 0.5)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 // renvoie un nombre d'évènements suivant une loi de poisson de paramètre lambda
@@ -54,16 +66,15 @@ std::vector<int> events_times(int poisson, long long int temps_ecoule)
 }
 
 // loi normale pour la hauteur de l'eau
-double loi_normale()
+float loi_normale(float esperance, float ecart_type)
 {
-    float esperance  = 3;
-    float ecart_type = 2;
     // variable aléatoire uniforme entre 0 et 1
     double u1 = rand01();
     double u2 = rand01();
     // densité de probabilité d'une loi normale centrée réduite
     double z1     = sqrt(-2 * log(u1)) * cos(2 * M_PI * u2);
     double sample = esperance + ecart_type * z1;
+    // std::cout << 1 / (ecart_type / sqrt(2 * 3.14)) * exp((-1 / 2) * pow((((rand01() * 100 - 50) - esperance) / ecart_type), 2)) << std::endl;
     return sample;
 }
 
@@ -76,7 +87,7 @@ bool water_level(long long int temps, std::vector<int>& event_time_table, int& n
     return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
 }
 
-void markov_suivant(int& actual_state, glm::vec4 v)
+void markov_suivant(int& actual_state, const glm::vec4 v)
 {
     float a = rand01();
     if (a < v[0])
@@ -101,7 +112,7 @@ void markov_suivant(int& actual_state, glm::vec4 v)
     }
 }
 
-void chaine_markov(int actual_state)
+void chaine_markov(int& actual_state)
 {
     switch (actual_state)
     {
@@ -118,4 +129,9 @@ void chaine_markov(int actual_state)
         markov_suivant(actual_state, mat[3]);
         break;
     }
+}
+
+bool texture_markov(Timer chrono)
+{
+    return tempsEcoule(chrono) % 30000;
 }

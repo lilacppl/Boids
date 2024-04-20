@@ -5,7 +5,7 @@
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
-    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}
+    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0)
 {
     // Création de la texture
     glGenTextures(1, &m_name);
@@ -148,4 +148,15 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const flo
     // glm::vec4 lightPos(x, 0, 1, 1.0f);
     glm::vec4 lightPos(position, 1.0f);
     return glm::vec3(viewmatrix * lightPos);
+}
+
+void Program::set_image(const std::string path)
+{
+    m_image = p6::load_image_buffer(path);
+}
+
+void Program::set_texture()
+{
+    chaine_markov(m_actual_state);
+    //set_image(textures[m_actual_state]);
 }

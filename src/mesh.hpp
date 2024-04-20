@@ -44,6 +44,7 @@ public:
     void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
     {
         program.getUniformLocations();
+
         program.use(viewmatrix, ctx, position, scale_value, direction, scale_down);
         // glEnable(GL_DEPTH_TEST);
         m_vao.bind();

@@ -1,4 +1,5 @@
 #include "scene.hpp"
+#include "probas.hpp"
 
 Scene::Scene()
     : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed(m_vertices.seaweed)
@@ -24,6 +25,10 @@ void Scene::update(p6::Context& ctx)
     // m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0}, 0.5f);
     m_arpenteur.update(ctx, m_arpenteur_program);
     m_arpenteur.eventUpdate();
+    if (texture_markov(m_chrono))
+    {
+        m_fish.m_program.set_texture();
+    }
     m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
 
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});

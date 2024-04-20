@@ -12,6 +12,7 @@
 #include "glm/ext/scalar_constants.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "img/src/Image.h"
 #include "p6/p6.h"
 #include "vbo.hpp"
 #include "vertex3d.hpp"
@@ -38,8 +39,9 @@ private:
     GLint m_uLightPos_vs;
 
 public:
+    int m_actual_state; // état de départ pour Markov
     Program(std::string texture_path, std::string vs_path, std::string fs_path);
-    ~Program() = default; // jsp si yen a besoin
+    ~Program() = default; // jsp si yen a besoin sisi c bien
     void bind() const;
     void debind() const;
     void getUniformLocations();
@@ -48,6 +50,8 @@ public:
     // void use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, const glm::vec3& arpenteur_position);
     void useText() const;
     void LightVarToShader(const glm::mat4& viewmatrix);
+    void set_image(const std::string path);
+    void set_texture();
 };
 
 float randomShininess();

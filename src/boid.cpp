@@ -1,5 +1,6 @@
 
 #include "boid.hpp"
+#include "probas.hpp"
 // #include <bits/stdc++.h>
 
 glm::vec3 calculate_rotation(glm::vec3 speed)
@@ -16,13 +17,14 @@ std::vector<int>                      rand_speed{-1, 1};
 std::uniform_int_distribution<int>    distrib_int(0, 1);
 
 Boid::Boid()
-    : m_position(glm::vec3{distrib_pos(gen), distrib_pos(gen), distrib_pos(gen)}), m_speed(glm::vec3{rand_speed[distrib_int(gen)] * distrib_speed(gen), rand_speed[distrib_int(gen)] * distrib_speed(gen), rand_speed[distrib_int(gen)] * distrib_speed(gen)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f}), m_radius(0.01f)
+    : m_radius(0.01f), m_speed(glm::vec3{loi_normale(0.04f, 0.01f), loi_normale(0.04f, 0.01f), loi_normale(0.04f, 0.01f)}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
 {}
 
 glm::vec3 Boid::get_position() const
 {
     return m_position;
 }
+
 glm::vec3 Boid::get_speed() const
 {
     return m_speed;
