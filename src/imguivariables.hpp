@@ -13,6 +13,7 @@ private:
     float m_avoid_factor  = 0.02f;
     float m_max_speed     = 0.05f;
     float m_min_speed     = 0.03f;
+    float m_lod_value     = 3.f;
 
 public:
     ImguiVariables() = default;
@@ -23,4 +24,5 @@ public:
     float GetAvoidFactor() const { return m_avoid_factor; }
     float GetMaxSpeed() const { return m_max_speed; }
     float GetMinSpeed() const { return m_min_speed; }
+    float GetLodValue() const { return m_lod_value; }
 };

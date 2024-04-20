@@ -30,6 +30,7 @@ public:
     // }
     Program m_program;
     float   m_scale_down = 1; // Pour le cube, lorsqu'il rapetisse, la valeur change
+    Mesh(const Mesh&)    = delete;
 
     Mesh(std::vector<glimac::ShapeVertex>& vertices)
         : m_program("../assets/CloudMap.jpg", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl")
