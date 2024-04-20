@@ -20,11 +20,11 @@ void Scene::update(p6::Context& ctx)
     m_imguiVariables.UpdateValues();
     m_viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
-    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, 10);
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, 10, glm::vec3(0, 0, 0), 1.);
     // m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0}, 0.5f);
     m_arpenteur.update(ctx, m_arpenteur_program);
     m_arpenteur.eventUpdate();
-    // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), m_fish, m_viewMatrix, m_fish_program);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
 
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});
     // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_imguiVariables.GetSquareRadius(), m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed());
@@ -33,4 +33,12 @@ void Scene::update(p6::Context& ctx)
 void Scene::draw(p6::Context& ctx)
 {
     m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program);
+}
+
+Mesh& Scene::returnFishMeshUsingLodValue()
+{
+    if (m_imguiVariables.GetLodValue() < 2.0f)
+        return m_fish;
+    if (m_imguiVariables.GetLodValue() > 2.0f)
+        return m_cube;
 }

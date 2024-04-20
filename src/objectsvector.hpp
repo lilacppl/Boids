@@ -20,7 +20,7 @@ struct SceneObjectVector {
             // Récupérer la position et l'échelle de l'objet
             glm::vec3 position = obj.getPosition();
             float     scale    = obj.getScale();
-            mesh.DrawMesh(ctx, viewmatrix, program, position, scale);
+            mesh.DrawMesh(ctx, viewmatrix, program, position, scale, glm::vec3(0, 0, 0), 1.);
         }
     }
 

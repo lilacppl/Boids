@@ -44,32 +44,34 @@ private:
     float m_sensi        = 10.f;
     float m_speed        = 0.1f;
 
-    // void computeDirectionVectors()
-    // {
-    //     float cosPhi   = cos(m_Phi);
-    //     float sinPhi   = sin(m_Phi);
-    //     float cosTheta = cos(m_Theta);
-    //     float sinTheta = sin(m_Theta);
-
-    //     m_FrontVector = glm::vec3(cosTheta * sinPhi, sinTheta, cosTheta * cosPhi);
-    //     m_LeftVector  = glm::vec3(sin(m_Phi + glm::pi<float>() / 2), 0, cos(m_Phi + glm::pi<float>() / 2));
-    //     m_UpVector    = glm::cross(m_FrontVector, m_LeftVector);
-    // }
+    void computeDirectionVectors()
+    {
+        float cosPhi  = cos(m_Phi);
+        float sinPhi  = sin(m_Phi);
+        m_FrontVector = glm::vec3(cosPhi, 0.0, sinPhi);
+        m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
+    }
 
 public:
     Arpenteur()
         : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
     {
         // computeDirectionVectors();
-        m_camera.updatePosition(m_position, 0.);
+        m_camera.updatePosition(m_position, 0);
+    }
+    glm::vec3 getArpenteurPosition()
+    {
+        return m_position;
     }
 
     void update(p6::Context& ctx, Program& program)
     {
         // eventManager(ctx);
         m_camera.updatePosition(m_position, m_Phi);
+        // std::cout << m_position.x << std::endl;
         cubeLimit(4.0);
-        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1);
+        // m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, m_position);
+        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1.);
     }
 
     glm::mat4 getViewMatrix() const
@@ -101,6 +103,12 @@ public:
     void rotateLeft(float degrees)
     {
         m_Phi += glm::radians(degrees);
+        computeDirectionVectors();
+        // glm::vec4 positionTemp = glm::vec4(m_position, 0);
+        // positionTemp += glm::rotate(glm::mat4(1), (p6::degrees_to_radians(m_Phi)).value, glm::vec3(0, 1, 0)) * glm::vec4(0, 0, 0, 0);
+        // m_position = glm::vec3(positionTemp.x, positionTemp.y, positionTemp.z);
+        // m_LeftVector = glm::vec3(cos(m_Phi + glm::pi<float>() / 2), sin(m_Phi + glm::pi<float>() / 2), 0);
+
         // computeDirectionVectors();
     }
 
