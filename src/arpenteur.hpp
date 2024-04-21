@@ -13,7 +13,7 @@ class Arpenteur {
 private:
     glm::vec3 m_position;
     Vertices  m_vertices;
-    float     m_Phi;
+    float     m_Phi = 0.0f;
     float     m_Theta;
 
     // juste position rotation
@@ -48,7 +48,7 @@ private:
     {
         float cosPhi  = cos(m_Phi);
         float sinPhi  = sin(m_Phi);
-        m_FrontVector = glm::vec3(cosPhi, 0.0, sinPhi);
+        m_FrontVector = glm::vec3(1.0 * (-cosPhi), 0.0, 1.0 * sinPhi);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
     }
 
