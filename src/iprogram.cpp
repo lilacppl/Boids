@@ -150,13 +150,14 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const flo
     return glm::vec3(viewmatrix * lightPos);
 }
 
-void Program::set_image(const std::string path)
-{
-    m_image = p6::load_image_buffer(path);
-}
-
 void Program::set_texture()
 {
     chaine_markov(m_actual_state);
-    set_image(textures[m_actual_state]);
+    m_image = p6::load_image_buffer(textures[m_actual_state]);
+    glGenTextures(1, &m_name);
+    glBindTexture(GL_TEXTURE_2D, m_name);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.data());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

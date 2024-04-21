@@ -22,7 +22,7 @@ static std::vector<int> event_time_table;
 static glm::mat4 mat{{1 / 2, 1 / 6, 1 / 6, 1 / 6}, {1 / 4, 1 / 8, 1 / 4, 3 / 8}, {1 / 6, 1 / 6, 1 / 2, 1 / 6}, {1 / 4, 3 / 8, 1 / 4, 1 / 8}};
 
 // vecteur des textures pour poissons
-static const std::vector<std::string> textures{"../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png"};
+static const std::vector<std::string> textures{"../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png","../assets/fish_color.png"};
 
 // Structure pour stocker le temps de début ( à mettre juste avant la boucle)
 struct Timer {
