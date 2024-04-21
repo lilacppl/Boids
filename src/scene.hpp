@@ -13,7 +13,6 @@
 #include "objectsvector.hpp"
 #include "probas.hpp"
 #include "vertices.hpp"
-#include "probas.hpp"
 
 class Scene {
 private:
@@ -22,16 +21,19 @@ private:
     Boids          m_first_boids;
     Mesh           m_cube;
     Mesh           m_fish;
-    // std::vector<Mesh> m_fish_models;
+    Mesh           m_fishlow;
+    // MeshVec        m_fish_models;
 
     // FreeflyCamera  m_camera;
     Program m_fish_program;
     Program m_cube_program;
     Program m_arpenteur_program;
     Program m_seaweed_program;
+    Program m_stone_program;
     // std::vector<Program> programs ; //a faire
     Arpenteur         m_arpenteur;
     Mesh              m_seaweed;
+    // Mesh              m_stone;
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;

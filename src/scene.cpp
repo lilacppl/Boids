@@ -2,8 +2,10 @@
 #include "probas.hpp"
 
 Scene::Scene()
-    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed(m_vertices.seaweed)
+    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fishlow(m_vertices.fishlow), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_stone_program("./assets/steletext.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_seaweed(m_vertices.seaweed)
 {
+    // Mesh mesh1(m_vertices.fish);
+    // m_fish_models.push_back(mesh1);
 }
 
 void Scene::Init(p6::Context& ctx)
@@ -13,6 +15,9 @@ void Scene::Init(p6::Context& ctx)
     // Boids boids2(m_imguiVariables.GetBoidsNumber()); // crée un flock de Boids de taille n
     // m_first_boids = boids2;
     // m_camera.eventManager(ctx);
+    // Mesh meh1(m_vertices.fish);
+    // m_fish_models.push_back(meh1);
+    // m_fish_models.push_back(m_vertices.fishlow);
     m_arpenteur.eventManager(ctx);
 }
 
@@ -29,7 +34,7 @@ void Scene::update(p6::Context& ctx)
     {
         m_fish.m_program.set_texture();
     }
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), m_fish, m_viewMatrix, m_fish_program);
 
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});
     // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_imguiVariables.GetSquareRadius(), m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed());
@@ -38,12 +43,15 @@ void Scene::update(p6::Context& ctx)
 void Scene::draw(p6::Context& ctx)
 {
     m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program);
+    // m_objects.drawSceneObjOfSameMesh(m_objects.stone, m_stone, ctx, m_viewMatrix, m_stone_program);
 }
 
 Mesh& Scene::returnFishMeshUsingLodValue()
 {
     if (m_imguiVariables.GetLodValue() < 2.0f)
-        return m_fish;
+        return m_fishlow;
     if (m_imguiVariables.GetLodValue() > 2.0f)
+        return m_fish;
+    else
         return m_cube;
 }

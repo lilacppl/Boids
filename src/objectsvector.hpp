@@ -12,6 +12,9 @@ struct SceneObjectVector {
         ObjectPositionScale(glm::vec3(0.0f, -5.f, 1.0f), 0.9f),
         ObjectPositionScale(glm::vec3(0.0f, -5.f, 3.0f), 0.3f)
     }; // liste des algues sur forme de vector contenant position et scale
+    std::vector<ObjectPositionScale> stone = {
+        ObjectPositionScale(glm::vec3(3.0f, -5.f, 2.0f), 0.5f)
+    };
 
     void drawSceneObjOfSameMesh(std::vector<ObjectPositionScale> list, Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program) const
     {
