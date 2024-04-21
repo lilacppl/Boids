@@ -154,7 +154,6 @@ void Program::set_texture()
 {
     chaine_markov(m_actual_state);
     m_image = p6::load_image_buffer(textures[m_actual_state]);
-    glGenTextures(1, &m_name);
     glBindTexture(GL_TEXTURE_2D, m_name);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.data());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
