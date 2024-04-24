@@ -13,7 +13,6 @@
 #include "objectsvector.hpp"
 #include "probas.hpp"
 #include "vertices.hpp"
-#include "probas.hpp"
 
 class Scene {
 private:
@@ -24,11 +23,11 @@ private:
     Mesh           m_fish;
     // std::vector<Mesh> m_fish_models;
 
-    // FreeflyCamera  m_camera;
-    Program m_fish_program;
-    Program m_cube_program;
-    Program m_arpenteur_program;
-    Program m_seaweed_program;
+    FreeflyCamera m_camera;
+    Program       m_fish_program;
+    Program       m_cube_program;
+    Program       m_arpenteur_program;
+    Program       m_seaweed_program;
     // std::vector<Program> programs ; //a faire
     Arpenteur         m_arpenteur;
     Mesh              m_seaweed;
@@ -38,9 +37,17 @@ private:
 
 public:
     // Scene(p6::Context& ctx);
+    int m_actual_state = 0;
     Scene();
-    void  Init(p6::Context& ctx);
-    void  update(p6::Context& ctx);
-    void  draw(p6::Context& ctx);
-    Mesh& returnFishMeshUsingLodValue();
+    void     Init(p6::Context& ctx);
+    void     update(p6::Context& ctx);
+    void     draw(p6::Context& ctx);
+    Mesh&    returnFishMeshUsingLodValue();
+    Program& markov_program();
 };
+
+// static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");
+// static Program m_p1(textures[1], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");
+// static Program m_p2(textures[2], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");
+// static Program m_p3(textures[3], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");
+// static Program m_p4(textures[4], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");

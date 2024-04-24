@@ -133,5 +133,8 @@ void chaine_markov(int& actual_state)
 
 bool texture_markov(Timer chrono)
 {
-    return tempsEcoule(chrono) % 30000;
+    if (tempsEcoule(chrono) % 30000)
+        return true;
+    else
+        return false;
 }
