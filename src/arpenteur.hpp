@@ -48,22 +48,27 @@ private:
 
     void computeDirectionVectors()
     {
-        float cosPhi  = cos(m_Phi);
-        float sinPhi  = sin(m_Phi);
-        m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        float cosPhi = cos(m_Phi);
+        float sinPhi = sin(m_Phi);
+        // m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
+        m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
+
+        // Ajoute le résultat à m_FrontVector
+        // m_FrontVector = rotatedFrontVector;
+        std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
         m_FrontVector = glm::normalize(m_FrontVector);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
         m_LeftVector  = glm::normalize(m_LeftVector);
         // m_LeftVector = glm::vec3(-cos(m_Phi + M_PI / 2), 0.0, sin(m_Phi + M_PI / 2));
-        std::cout
-            << m_Phi << std::endl;
+        // std::cout
+        //     << m_Phi << std::endl;
     }
 
 public:
     Arpenteur()
         : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
     {
-        // computeDirectionVectors();
         m_camera.updatePosition(m_position, 0);
     }
     glm::vec3 getArpenteurPosition()
@@ -71,13 +76,10 @@ public:
         return m_position;
     }
 
-    void update(p6::Context& ctx, Program& program)
+    void update(const p6::Context& ctx, const Program& program)
     {
-        // eventManager(ctx);
         m_camera.updatePosition(m_position, m_Phi);
-        // std::cout << m_position.x << std::endl;
-        cubeLimit(4.0);
-        // m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, m_position);
+        handleMapBounds(4.0);
         m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1.);
     }
 
@@ -110,10 +112,10 @@ public:
     void rotateLeft(float degrees)
     {
         m_Phi += glm::radians(degrees);
-        computeDirectionVectors();
+        // computeDirectionVectors();
     }
 
-    void cubeLimit(const float square_radius)
+    void handleMapBounds(const float square_radius)
     {
         float margin = 1.0;
         if (m_position[0] < -square_radius)
@@ -140,7 +142,6 @@ public:
         {
             m_position.z *= -1;
         }
-        
     }
 
     void eventManager(p6::Context& ctx)
@@ -163,7 +164,7 @@ public:
             else if (key.logical == "e")
                 m_rotateRight = true;
         };
-       
+
         // Gestionnaire d'événements de touche relâchée
         ctx.key_released = [&](p6::Key key) {
             if (key.logical == "z")

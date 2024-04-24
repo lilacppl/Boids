@@ -16,7 +16,7 @@ struct SceneObjectVector {
         ObjectPositionScale(glm::vec3(3.0f, -5.f, 2.0f), 0.5f)
     };
 
-    void drawSceneObjOfSameMesh(std::vector<ObjectPositionScale> list, Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program) const
+    void drawSceneObjOfSameMesh(const std::vector<ObjectPositionScale> list, const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program) const
     {
         for (const auto& obj : list)
         {

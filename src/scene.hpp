@@ -42,8 +42,8 @@ public:
     int m_actual_state = 0;
     Scene();
     void     Init(p6::Context& ctx);
-    void     update(p6::Context& ctx);
-    void     draw(p6::Context& ctx);
+    void     update(const p6::Context& ctx);
+    void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
     Program& markov_program();
 };

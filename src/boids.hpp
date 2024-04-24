@@ -22,19 +22,19 @@ private:
 
 public:
     Boids() = default;
-    Boids(std::vector<Boid> vec);
+    Boids(const std::vector<Boid> vec);
     Boids(const int number);
     std::vector<Boid> getVect() const; // get le vector de Boids
-    int               NumberOfBoids() const;
-    Boid              getBoid(int id);
+    int               numberOfBoids() const;
+    Boid              getBoid(const int id);
     void              addBoid(const Boid& boid);
     void              deleteBoid();
     void              changeSize(const int boids_number);
-    void              draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program); // dessine tous les Boids
-    void              alignement(float neighbor_dist);
-    void              cohesion(float neighbor_dist);
-    void              separation(float avoid_factor);
+    void              draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program); // dessine tous les Boids
+    void              alignement(const float neighbor_dist);
+    void              cohesion(const float neighbor_dist);
+    void              separation(const float avoid_factor);
     // void              update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed); // contient draw, alignement ... pour tout regrouper
-    void              update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program);
+    void              update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program);
     std::vector<Boid> other_boids(const Boid& b);
 };
