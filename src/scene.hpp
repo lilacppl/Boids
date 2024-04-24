@@ -22,6 +22,8 @@ private:
     Mesh           m_cube;
     Mesh           m_fish;
     Mesh           m_fishlow;
+    Mesh           m_fishverylow;
+    Mesh           m_shark;
     // MeshVec        m_fish_models;
 
     // FreeflyCamera m_camera;
@@ -29,6 +31,7 @@ private:
     Program m_cube_program;
     Program m_arpenteur_program;
     Program m_seaweed_program;
+    Program m_shark_program;
     // std::vector<Program> programs ; //a faire
     Arpenteur m_arpenteur;
     Mesh      m_seaweed;
@@ -36,22 +39,21 @@ private:
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
-    int m_current_time;
+    int               m_current_time;
 
 public:
     // Scene(p6::Context& ctx);
     int m_actual_state = 0;
 
 public:
-
     Scene();
     void     Init(p6::Context& ctx);
     void     update(const p6::Context& ctx);
     void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
     Program& markovProgram();
-    int getState();
-    void setState(int a);
+    int      getState();
+    void     setState(int a);
 };
 
 // static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");

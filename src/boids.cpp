@@ -26,12 +26,12 @@ int Boids::numberOfBoids() const
     return (m_boids.size());
 }
 
-void Boids::draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program, float& height)
+void Boids::draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program, float& height, const int& time)
 {
     for (auto& i : m_boids)
     {
         // i.draw(ctx);
-        i.draw(ctx, mesh, viewmatrix, program);
+        i.draw(ctx, mesh, viewmatrix, program, time);
         i.move(square_radius, maxspeed, minspeed, height);
     }
 }
@@ -76,13 +76,13 @@ std::vector<Boid> Boids::otherBoids(const Boid& active_boid)
     return others;
 }
 
-void Boids::update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program,float & height)
+void Boids::update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program, float& height, const int& time)
 {
     alignement(neighbor_dist);
     cohesion(neighbor_dist);
     separation(avoid_factor);
     changeSize(boids_number);
-    draw(ctx, square_radius, maxspeed, minspeed, mesh, viewmatrix, program,height);
+    draw(ctx, square_radius, maxspeed, minspeed, mesh, viewmatrix, program, height, time);
 }
 
 void Boids::alignement(const float neighbor_dist)

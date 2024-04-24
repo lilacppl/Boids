@@ -24,7 +24,7 @@ public:
     glm::vec3 getPosition() const;
     glm::vec3 getSpeed() const;
     void      move(float square_radius, float maxspeed, float minspeed, float height);
-    void      draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMatrix, const Program& program) const;
+    void      draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMatrix, const Program& program, const int& time) const;
 };
 
 glm::vec3 calculateRotation(const glm::vec3 speed);

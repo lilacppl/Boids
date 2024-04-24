@@ -47,10 +47,10 @@ public:
     void debind() const;
     void getUniformLocations();
     // void use(const glm::mat4& viewmatrix, p6::Context& ctx, const glm::vec3& position, const float scale_value, glm::vec3 direction) const;
-    void use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down) const;
+    void use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down, const int& time) const;
     // void use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, const glm::vec3& arpenteur_position);
     void useText() const;
-    void LightVarToShader(const glm::mat4& viewmatrix) const;
+    void LightVarToShader(const glm::mat4& viewmatrix, const int& time) const;
     void setTexture();
 
     // rajouter une fonction qui libere les textures etc a la fin
@@ -62,4 +62,4 @@ float randomIntensityValue();
 
 glm::vec3 lightDir_vs(const glm::mat4& viewmatrix);
 
-glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const float angle, const glm::vec3& position);
+glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const int& time);

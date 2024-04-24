@@ -80,11 +80,11 @@ public:
         return m_position;
     }
 
-    void update(const p6::Context& ctx, const Program& program, float height)
+    void update(const p6::Context& ctx, const Program& program, const float height, const int& time)
     {
         m_camera.updatePosition(m_position, m_Phi);
         handleMapBounds(4.0, height);
-        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1.);
+        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1., time);
     }
 
     glm::mat4 getViewMatrix() const

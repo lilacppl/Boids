@@ -16,13 +16,13 @@ glm::vec3 Boid::getSpeed() const
     return m_speed;
 }
 
-void Boid::draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMatrix, const Program& program) const
+void Boid::draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMatrix, const Program& program, const int& time) const
 {
     // ctx.fill = {1, 1, 1, 0.5};
     // ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
     glm::vec3 position = getPosition();
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
-    mesh.DrawMesh(ctx, viewMatrix, program, position, .1f, m_direction, 1.0f);
+    mesh.DrawMesh(ctx, viewMatrix, program, position, .1f, m_direction, 1.0f, time);
 }
 
 void Boid::move(float square_radius, float maxspeed, float minspeed, float height)

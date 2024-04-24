@@ -45,7 +45,7 @@ void Program::debind() const
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down) const
+void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down, const int& time) const
 {
     // Texture
     m_Program.use();
@@ -79,10 +79,10 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
     glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
     glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-    LightVarToShader(viewmatrix);
+    LightVarToShader(viewmatrix, time);
 }
 
-void Program::LightVarToShader(const glm::mat4& viewmatrix) const
+void Program::LightVarToShader(const glm::mat4& viewmatrix, const int& time) const
 {
     glUniform3f(m_uKd, 1., 1., 1.);  // lumiere blanche
     glUniform3f(m_uKs, 0., 0., 1.);  // reflets bleus
@@ -90,7 +90,7 @@ void Program::LightVarToShader(const glm::mat4& viewmatrix) const
     glUniform3f(m_uKs, 1., 1., 1.);  // reflets bleus
     glUniform1f(m_uShininess, 100.);
     glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
-    glUniform3f(m_uLightPos_vs, 0., 0., 0.);
+    glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, time).x, lightPos_vs(viewmatrix, time).y, lightPos_vs(viewmatrix, time).z);
     glUniform3f(m_uLightIntensity, 8., 8., 8.);
 }
 
@@ -118,13 +118,22 @@ glm::vec3 lightDir_vs(const glm::mat4& viewmatrix) // lumiere directionnelle : s
     return glm::vec3(viewmatrix * lightDir);
 }
 
-glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const float angle, const glm::vec3& position) // position de la lumiere ponctuelle
+glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const int& time) // position de la lumiere ponctuelle
 {
     // faire éventuellement tourner une light
-    float x = radius * cos(angle);
+    float     radius           = 5.0;
+    float     rotationSpeed    = 0.005;
+    float     translationSpeed = 0.1;
+    float     angle            = time * rotationSpeed;
+    float     translation      = time * translationSpeed;
+    float     x                = radius * cos(angle);
+    float     z                = radius * sin(angle);
+    float     y                = translation;
+    glm::vec4 lightPos(x, 1, z, 1.0f);
+    // float x = 2 * cos(0.005 * time);
 
-    // glm::vec4 lightPos(x, 0, 1, 1.0f);
-    glm::vec4 lightPos(position, 1.0f);
+    // glm::vec4 lightPos(x, x, 0, 1.0f);
+    // glm::vec4 lightPos(position, 1.0f);
     return glm::vec3(viewmatrix * lightPos);
 }
 
