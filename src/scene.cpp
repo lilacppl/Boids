@@ -1,11 +1,10 @@
 #include "scene.hpp"
+#include <vector>
 #include "probas.hpp"
 
 Scene::Scene()
-    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fishlow(m_vertices.fishlow), m_fish_program("../assets/fish_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_stone_program("./assets/steletext.png", "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_seaweed(m_vertices.seaweed)
+    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fish_program(textures[0], "../shaders/3D.vs.glsl", "../shaders/text3D.fs.glsl"), m_cube_program("../assets/cube_texture.jpg", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed(m_vertices.seaweed)
 {
-    // Mesh mesh1(m_vertices.fish);
-    // m_fish_models.push_back(mesh1);
 }
 
 void Scene::Init(p6::Context& ctx)
@@ -21,6 +20,26 @@ void Scene::Init(p6::Context& ctx)
     m_arpenteur.eventManager(ctx);
 }
 
+// Program& Scene::markov_program()
+// {
+//     switch (m_actual_state)
+//     {
+//     case 0:
+//         return m_p0;
+//         break;
+//     case 1:
+//         return m_p1;
+//         break;
+//     case 2:
+//         return m_p2;
+//         break;
+//     case 3:
+//         return m_p3;
+//         break;
+//     }
+//     return m_p4;
+// }
+
 void Scene::update(p6::Context& ctx)
 {
     m_imguiVariables.UpdateValues();
@@ -30,10 +49,10 @@ void Scene::update(p6::Context& ctx)
     // m_cube.DrawMesh(ctx, viewMatrix, m_cube_program, position, 10, glm::vec3{0, 0, 0}, 0.5f);
     m_arpenteur.update(ctx, m_arpenteur_program);
     m_arpenteur.eventUpdate();
-    if (texture_markov(m_chrono))
-    {
-        m_fish.m_program.set_texture();
-    }
+    // if (texture_markov(m_chrono))
+    // {
+    //     // m_fish_program = markov_program();
+    // }
     m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
 
     // ctx.square((p6::Center{}), p6::Radius{m_imguiVariables.GetSquareRadius()});

@@ -41,6 +41,7 @@ private:
 public:
     int m_actual_state = 0; // état de départ pour Markov
     Program(std::string texture_path, std::string vs_path, std::string fs_path);
+
     ~Program() = default; // jsp si yen a besoin sisi c bien
     void bind() const;
     void debind() const;

@@ -1,4 +1,5 @@
 #pragma once
+// #include <corecrt_math_defines.h>
 #include <p6/p6.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
@@ -6,6 +7,7 @@
 // #include "common.hpp"
 
 #include "arpenteurcamera.hpp"
+#include "glm/ext/quaternion_geometric.hpp"
 #include "mesh.hpp"
 #include "vertices.hpp"
 
@@ -48,8 +50,13 @@ private:
     {
         float cosPhi  = cos(m_Phi);
         float sinPhi  = sin(m_Phi);
-        m_FrontVector = glm::vec3(1.0 * (-cosPhi), 0.0, 1.0 * sinPhi);
+        m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        m_FrontVector = glm::normalize(m_FrontVector);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
+        m_LeftVector  = glm::normalize(m_LeftVector);
+        // m_LeftVector = glm::vec3(-cos(m_Phi + M_PI / 2), 0.0, sin(m_Phi + M_PI / 2));
+        std::cout
+            << m_Phi << std::endl;
     }
 
 public:
