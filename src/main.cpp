@@ -2,7 +2,6 @@
 #include "doctest/doctest.h"
 #include "scene.hpp"
 
-
 int main()
 {
     // Run the tests
@@ -17,14 +16,14 @@ int main()
         "../shaders/3D.vs.glsl",
         "../shaders/text3D.fs.glsl"
     );
-
-    Scene scene;
+    Scene      scene;
     scene.Init(ctx);
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
     // Declare your infinite update loop.
     ctx.update = [&]() {
+
         // vao.bind();
         shader.use();
         glClearColor(0.0f, 0.0f, 0.4f, 0.0f);

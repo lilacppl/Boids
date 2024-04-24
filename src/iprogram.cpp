@@ -118,6 +118,7 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const flo
 {
     // faire éventuellement tourner une light
     float x = radius * cos(angle);
+
     // glm::vec4 lightPos(x, 0, 1, 1.0f);
     glm::vec4 lightPos(position, 1.0f);
     return glm::vec3(viewmatrix * lightPos);

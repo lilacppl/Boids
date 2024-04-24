@@ -52,6 +52,9 @@ void Scene::update(const p6::Context& ctx)
     // {
     //     // m_fish_program = markov_program();
     // }
+    m_current_time = tempsEcoule(m_chrono);
+    std::cout << m_current_time << std::endl;
+
     m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
 }
 
