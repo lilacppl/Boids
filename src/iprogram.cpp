@@ -103,7 +103,7 @@ float randomShininess()
 
 float randomIntensityValue()
 {
-    return glm::linearRand(0.5f, 1.5f);
+    return loiExponentielle(0.1f, 2.0f,1.5);
 }
 
 glm::vec3 lightDir_vs(const glm::mat4& viewmatrix) // lumiere directionnelle : soleil
