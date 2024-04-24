@@ -30,7 +30,7 @@ void Mesh::InitMeshVboVao(const std::vector<glimac::ShapeVertex>& vertices)
     m_vao.bind();
     m_vbo.buffer(vertices);
     m_vbo.bind();
-    m_vao.vertex_attrib();
+    m_vao.vertexAttrib();
     m_vbo.debind();
     m_vao.debind();
 }

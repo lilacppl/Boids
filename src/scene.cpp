@@ -20,7 +20,7 @@ void Scene::Init(p6::Context& ctx)
     m_arpenteur.eventManager(ctx);
 }
 
-// Program& Scene::markov_program()
+// Program& Scene::markovProgram()
 // {
 //     switch (m_actual_state)
 //     {
@@ -42,10 +42,16 @@ void Scene::Init(p6::Context& ctx)
 
 void Scene::update(const p6::Context& ctx)
 {
+    //taille du cube
+    float cube_scale   = 10.0; 
+    //hauteur du cube (appliquée en plus de la taille globale cube_scale)
+    float height_scale = 1.0;
+    //hauteur de la partie en y positifs du cube
+    float height       = cube_scale * height_scale / 2;
     m_imguiVariables.UpdateValues();
     m_viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
-    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, 10, glm::vec3(0, 0, 0), 1.);
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, cube_scale, glm::vec3(0, 0, 0), height_scale);
     m_arpenteur.update(ctx, m_arpenteur_program);
     m_arpenteur.eventUpdate();
     // if (texture_markov(m_chrono))
@@ -55,7 +61,7 @@ void Scene::update(const p6::Context& ctx)
     m_current_time = tempsEcoule(m_chrono);
     std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), 5.0f, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), cube_scale / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height);
 }
 
 void Scene::draw(const p6::Context& ctx) const
@@ -72,4 +78,14 @@ Mesh& Scene::returnFishMeshUsingLodValue()
         return m_fish;
     else
         return m_cube;
+}
+
+int Scene::getState()
+{
+    return m_actual_state;
+}
+
+void Scene::setState(int a)
+{
+    m_actual_state = a;
 }

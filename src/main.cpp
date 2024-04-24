@@ -1,3 +1,4 @@
+#include "probas.hpp"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
 #include "scene.hpp"
@@ -21,7 +22,7 @@ int main()
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
-    // Declare your infinite update loop.
+
     ctx.update = [&]() {
 
         // vao.bind();

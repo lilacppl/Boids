@@ -27,5 +27,5 @@ public:
 
     void bind() const;
     void debind();
-    void vertex_attrib();
+    void vertexAttrib();
 };

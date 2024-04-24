@@ -45,6 +45,8 @@ public:
         glm::vec3 target = arpenteurPosition; // point qu'elle regarde
         glm::vec3 up     = m_UpVector;        // vecteur vertical
 
+        //return glm::lookAt(eye, target, up);
         return glm::lookAt(eye, target, up);
+
     }
 };

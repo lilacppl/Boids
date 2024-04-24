@@ -22,7 +22,7 @@ double uniform(const double min, const double max)
     return (max - min) * rand01() + min;
 }
 
-int plus_one()
+int plusOne()
 {
     if (rand01() < 0.5)
     {
@@ -36,7 +36,7 @@ int plus_one()
 
 // renvoie un nombre d'évènements suivant une loi de poisson de paramètre lambda
 // lambda : nombre moyen d'évènement par intervalle de temps
-int loi_de_poisson(const double lambda)
+int loiDePoisson(const double lambda)
 {
     int    k = 0;
     double p = exp(-lambda);
@@ -52,7 +52,7 @@ int loi_de_poisson(const double lambda)
 }
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> events_times(const int poisson, const long long int temps_ecoule)
+std::vector<int> eventsTimes(const int poisson, const long long int temps_ecoule)
 {
     std::vector<int> events;
     for (int i = 0; i < poisson; ++i)
@@ -66,7 +66,7 @@ std::vector<int> events_times(const int poisson, const long long int temps_ecoul
 }
 
 // loi normale pour la hauteur de l'eau
-float loi_normale(const float esperance, const float ecart_type)
+float loiNormale(const float esperance, const float ecart_type)
 {
     // variable aléatoire uniforme entre 0 et 1
     double u1 = rand01();
@@ -78,16 +78,16 @@ float loi_normale(const float esperance, const float ecart_type)
     return sample;
 }
 
-bool water_level(const long long int temps, std::vector<int>& event_time_table, const int& number_events)
+bool waterLevel(const long long int temps, std::vector<int>& event_time_table, const int& number_events)
 {
     if (temps % 60000 == 0)
     {
-        event_time_table = events_times(number_events, temps);
+        event_time_table = eventsTimes(number_events, temps);
     }
     return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
 }
 
-void markov_suivant(int& actual_state, const glm::vec4 v)
+void markovSuivant(int& actual_state, const glm::vec4 v)
 {
     float a = rand01();
     if (a < v[0])
@@ -112,29 +112,58 @@ void markov_suivant(int& actual_state, const glm::vec4 v)
     }
 }
 
-void chaine_markov(int& actual_state)
+void chaineMarkov(int& actual_state)
 {
     switch (actual_state)
     {
     case 0:
-        markov_suivant(actual_state, mat[0]);
+        markovSuivant(actual_state, mat[0]);
         break;
     case 1:
-        markov_suivant(actual_state, mat[1]);
+        markovSuivant(actual_state, mat[1]);
         break;
     case 2:
-        markov_suivant(actual_state, mat[2]);
+        markovSuivant(actual_state, mat[2]);
         break;
     case 3:
-        markov_suivant(actual_state, mat[3]);
+        markovSuivant(actual_state, mat[3]);
         break;
     }
 }
 
-bool texture_markov(const Timer chrono)
+bool textureMarkov(const Timer chrono)
 {
     if (tempsEcoule(chrono) % 30000)
         return true;
     else
         return false;
+}
+
+double loiBeta(float alpha, float beta)
+{
+    float x, y;
+    do
+    {
+        float u = rand01();
+        float v = rand01();
+
+        x = std::pow(u, 1.0f / alpha);
+        y = std::pow(v, 1.0f / beta);
+    } while (x + y > 1.0f);
+
+    return (2.0f * x / (x + y)) - 1.0f;
+}
+
+double betaReduite()
+{
+    return loiBeta(2.0, 2.0) / 1.6 + 1.0;
+}
+
+double loiExponentielle(double min, double max, double lambda)
+{
+    // génération d'un float selon loi exponentielle avec la méthode de l'inverse
+    // de la fonction de répartition
+    double u1 = rand01();
+    double u2 = -log(1 - u1) / lambda;
+    return min + (max - min) * u2;
 }

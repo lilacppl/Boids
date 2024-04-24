@@ -1,16 +1,9 @@
 
 #include "boid.hpp"
 #include "probas.hpp"
-// #include <bits/stdc++.h>
-
-// std::default_random_engine            gen;
-// std::uniform_real_distribution<float> distrib_pos(-2.0f, 2.0f);
-// std::uniform_real_distribution<float> distrib_speed(0.03f, 0.05f);
-// std::vector<int>                      rand_speed{-1, 1};
-// std::uniform_int_distribution<int>    distrib_int(0, 1);
 
 Boid::Boid()
-    : m_radius(0.01f), m_speed(glm::vec3{loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one()}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
+    : m_radius(0.01f), m_speed(glm::vec3{loiNormale(0.035f, 0.01f) * plusOne(), loiNormale(0.035f, 0.01f) * plusOne(), loiNormale(0.035f, 0.01f) * plusOne()}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
 {}
 
 glm::vec3 Boid::getPosition() const
@@ -32,12 +25,10 @@ void Boid::draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMa
     mesh.DrawMesh(ctx, viewMatrix, program, position, .1f, m_direction, 1.0f);
 }
 
-void Boid::move(float square_radius, float maxspeed, float minspeed)
+void Boid::move(float square_radius, float maxspeed, float minspeed, float height)
 {
-    float margin     = 0.90;
-    float turnfactor = 0.001;
-    // float maxspeed   = 0.006;
-    // float minspeed   = 0.002;
+    float margin     = 0.88;
+    float turnfactor = 0.003;
     if (m_position[0] < -square_radius * margin)
     {
         m_speed[0] += turnfactor;
@@ -50,7 +41,7 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
     {
         m_speed[1] += turnfactor;
     }
-    if (m_position[1] > square_radius * margin)
+    if (m_position[1] > height * margin)
     {
         m_speed[1] -= turnfactor;
     }

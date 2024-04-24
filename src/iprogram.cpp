@@ -62,6 +62,10 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
     MVMatrix = glm::rotate(MVMatrix, direction[1], glm::vec3{0, 1, 0});
     MVMatrix = glm::rotate(MVMatrix, direction[2], glm::vec3{0, 0, 1});
     MVMatrix = glm::scale(MVMatrix, glm::vec3{scale_value});
+    MVMatrix = glm::scale(MVMatrix, glm::vec3{1.0, scale_down, 1.0});
+    if (scale_down != 1.0)
+        MVMatrix = glm::translate(MVMatrix, glm::vec3{0.0, -scale_down * scale_value / 2, 0.0});
+
     if (scale_down != 1) // je crois que cv tt le temps rentrer dedans car c un float donc jamais egal a 1
     {
         MVMatrix = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
@@ -99,7 +103,7 @@ void Program::useText() const
 
 float randomShininess()
 {
-    return glm::linearRand(10.0f, 100.0f); // a relier aux maths
+    return betaReduite();
 }
 
 float randomIntensityValue()
@@ -124,9 +128,9 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const float radius, const flo
     return glm::vec3(viewmatrix * lightPos);
 }
 
-void Program::set_texture()
+void Program::setTexture()
 {
-    chaine_markov(m_actual_state);
+    chaineMarkov(m_actual_state);
     // m_image = p6::load_image_buffer(textures[m_actual_state]);
     // glBindTexture(GL_TEXTURE_2D, m_name);
     // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.data());

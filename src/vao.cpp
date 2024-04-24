@@ -37,7 +37,7 @@ void VAO::debind()
     glBindVertexArray(0);
 }
 
-void VAO::vertex_attrib()
+void VAO::vertexAttrib()
 {
     static constexpr GLuint pos1 = 0;
     static constexpr GLuint pos2 = 1;

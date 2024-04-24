@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 
 // fonction permettant de remplir l'attribut fish de vertices avec les vertex issus d'un .obj placé dans assets
-std::vector<glimac::ShapeVertex> tiny_vertice(const std::string inputfile);
+std::vector<glimac::ShapeVertex> tinyVertice(const std::string inputfile);
 
 // Contient les vertex du cube de base ainsi que des boids/poissons
 struct Vertices {
@@ -54,8 +54,7 @@ struct Vertices {
         {glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 0, 1), glm::vec2(1, 0)},
     };
 
-    std::vector<glimac::ShapeVertex> fish    = tiny_vertice("./assets/fish_color.obj");
-    std::vector<glimac::ShapeVertex> seaweed = tiny_vertice("./assets/algue.obj");
-    // std::vector<glimac::ShapeVertex> stone   = tiny_vertice("./assets/stele2.obj");
-    std::vector<glimac::ShapeVertex> fishlow = tiny_vertice("./assets/poissonopenglow.obj");
+    std::vector<glimac::ShapeVertex> fish    = tinyVertice("./assets/fish_color.obj");
+    std::vector<glimac::ShapeVertex> seaweed = tinyVertice("./assets/algue.obj");
+    std::vector<glimac::ShapeVertex> fishlow = tinyVertice("./assets/poissonopenglow.obj");
 };

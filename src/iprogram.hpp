@@ -51,7 +51,7 @@ public:
     // void use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, const glm::vec3& arpenteur_position);
     void useText() const;
     void LightVarToShader(const glm::mat4& viewmatrix) const;
-    void set_texture();
+    void setTexture();
 
     // rajouter une fonction qui libere les textures etc a la fin
 };

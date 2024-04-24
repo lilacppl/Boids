@@ -37,19 +37,23 @@ long long int tempsEcoule(const Timer& timer);
 // renvoie une variable réelle uniforme entre 0 et 1
 double rand01();
 double uniform(const double min, const double max);
-int    plus_one();
+int    plusOne();
 
 // renvoie un nombre d'évènements suivant une loi de poisson de paramètre lambda
 // lambda : nombre moyen d'évènement par intervalle de temps
-int loi_de_poisson(const double lambda);
+int loiDePoisson(const double lambda);
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> events_times(const int poisson, const long long int temps_ecoule);
+std::vector<int> eventsTimes(const int poisson, const long long int temps_ecoule);
 // loi normale pour la hauteur de l'eau
-float loi_normale(const float esperance,const float ecart_type);
+float loiNormale(const float esperance,const float ecart_type);
 
-bool water_level(const long long int& temps, std::vector<int> event_time_table,const int& number_events);
+bool waterLevel(const long long int& temps, std::vector<int> event_time_table,const int& number_events);
 
-void markov_suivant(int& actual_state, const glm::vec4 v);
-void chaine_markov(int& actual_state);
-bool texture_markov(const Timer chrono);
+void markovSuivant(int& actual_state, const glm::vec4 v);
+void chaineMarkov(int& actual_state);
+bool textureMarkov(const Timer chrono);
+double loiExponentielle(double min, double max, double lambda);
+double loiBeta(float alpha,float beta);
+double betaReduite();
+

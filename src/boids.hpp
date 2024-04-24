@@ -30,11 +30,11 @@ public:
     void              addBoid(const Boid& boid);
     void              deleteBoid();
     void              changeSize(const int boids_number);
-    void              draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program); // dessine tous les Boids
+    void              draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program, float& height); // dessine tous les Boids
     void              alignement(const float neighbor_dist);
     void              cohesion(const float neighbor_dist);
     void              separation(const float avoid_factor);
     // void              update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed); // contient draw, alignement ... pour tout regrouper
-    void              update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program);
-    std::vector<Boid> other_boids(const Boid& b);
+    void              update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program,float &height);
+    std::vector<Boid> otherBoids(const Boid& b);
 };

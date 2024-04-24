@@ -6,10 +6,8 @@
 #include "tiny_obj_loader.h"
 
 // return un verteur de vertex
-std::vector<glimac::ShapeVertex> tiny_vertice(const std::string inputfile)
+std::vector<glimac::ShapeVertex> tinyVertice(const std::string inputfile)
 {
-    // load obj
-    // std::string              inputfile = "../assets/fish_color.obj";
     tinyobj::ObjReaderConfig reader_config;
     reader_config.mtl_search_path = "../assets"; // Path to material files
 

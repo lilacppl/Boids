@@ -52,17 +52,21 @@ private:
         float sinPhi = sin(m_Phi);
         // m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
         glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
-        m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
+        // m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
 
         // Ajoute le résultat à m_FrontVector
         // m_FrontVector = rotatedFrontVector;
-        std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
+        // std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
+
+        m_FrontVector = glm::vec3(1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
         m_FrontVector = glm::normalize(m_FrontVector);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
-        m_LeftVector  = glm::normalize(m_LeftVector);
+        // m_LeftVector  = glm::vec3(glm::cos(m_Phi + (p6::PI / 2)), 0, glm::sin(m_Phi + (p6::PI / 2)));
+        m_LeftVector = glm::normalize(m_LeftVector);
+
         // m_LeftVector = glm::vec3(-cos(m_Phi + M_PI / 2), 0.0, sin(m_Phi + M_PI / 2));
-        // std::cout
-        //     << m_Phi << std::endl;
+        std::cout
+            << m_Phi << std::endl;
     }
 
 public:
@@ -112,7 +116,7 @@ public:
     void rotateLeft(float degrees)
     {
         m_Phi += glm::radians(degrees);
-        // computeDirectionVectors();
+        computeDirectionVectors();
     }
 
     void handleMapBounds(const float square_radius)

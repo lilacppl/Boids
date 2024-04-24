@@ -41,12 +41,17 @@ private:
 public:
     // Scene(p6::Context& ctx);
     int m_actual_state = 0;
+
+public:
+
     Scene();
     void     Init(p6::Context& ctx);
     void     update(const p6::Context& ctx);
     void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
-    Program& markov_program();
+    Program& markovProgram();
+    int getState();
+    void setState(int a);
 };
 
 // static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");
