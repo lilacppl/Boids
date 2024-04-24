@@ -80,10 +80,10 @@ public:
         return m_position;
     }
 
-    void update(const p6::Context& ctx, const Program& program)
+    void update(const p6::Context& ctx, const Program& program, float height)
     {
         m_camera.updatePosition(m_position, m_Phi);
-        handleMapBounds(4.0);
+        handleMapBounds(4.0, height);
         m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1.);
     }
 
@@ -119,7 +119,7 @@ public:
         computeDirectionVectors();
     }
 
-    void handleMapBounds(const float square_radius)
+    void handleMapBounds(const float square_radius, float height)
     {
         float margin = 1.0;
         if (m_position[0] < -square_radius)
@@ -134,7 +134,7 @@ public:
         {
             m_position.y = square_radius - 0.1;
         }
-        if (m_position[1] > square_radius * margin)
+        if (m_position[1] > height * margin)
         {
             m_position.y *= -1;
         }

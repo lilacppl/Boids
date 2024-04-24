@@ -52,7 +52,7 @@ void Scene::update(const p6::Context& ctx)
     m_viewMatrix = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
     m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, cube_scale, glm::vec3(0, 0, 0), height_scale);
-    m_arpenteur.update(ctx, m_arpenteur_program);
+    m_arpenteur.update(ctx, m_arpenteur_program, height);
     m_arpenteur.eventUpdate();
     // if (texture_markov(m_chrono))
     // {
