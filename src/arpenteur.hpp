@@ -111,12 +111,6 @@ public:
     {
         m_Phi += glm::radians(degrees);
         computeDirectionVectors();
-        // glm::vec4 positionTemp = glm::vec4(m_position, 0);
-        // positionTemp += glm::rotate(glm::mat4(1), (p6::degrees_to_radians(m_Phi)).value, glm::vec3(0, 1, 0)) * glm::vec4(0, 0, 0, 0);
-        // m_position = glm::vec3(positionTemp.x, positionTemp.y, positionTemp.z);
-        // m_LeftVector = glm::vec3(cos(m_Phi + glm::pi<float>() / 2), sin(m_Phi + glm::pi<float>() / 2), 0);
-
-        // computeDirectionVectors();
     }
 
     void cubeLimit(const float square_radius)
@@ -146,35 +140,9 @@ public:
         {
             m_position.z *= -1;
         }
-        // m_position += speed;
+        
     }
 
-    // // Méthode pour tourner la caméra verticalement autour de l'axe Left
-    // void rotateUp(float degrees)
-    // {
-    //     m_Theta += glm::radians(degrees);
-    //     computeDirectionVectors();
-    // }
-
-    // void eventManager(p6::Context& ctx)
-    // {
-    //     if (ctx.key_is_pressed(GLFW_KEY_O))
-    //         moveFront(0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_L))
-    //         moveFront(-0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_K))
-    //         moveLeft(0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_A))
-    //     {
-    //         moveLeft(-0.2);
-    //         std::cout << "tourne";
-    //     }
-
-    //     if (ctx.key_is_pressed(GLFW_KEY_N))
-    //         m_Phi -= 0.3;
-    //     if (ctx.key_is_pressed(GLFW_KEY_B))
-    //         m_Phi += 0.3;
-    // }
     void eventManager(p6::Context& ctx)
     {
         ctx.key_pressed = [&](p6::Key key) {
@@ -195,16 +163,7 @@ public:
             else if (key.logical == "e")
                 m_rotateRight = true;
         };
-        // ctx.mouse_pressed = [&](p6::MouseButton mouse) {
-        //     if (mouse.button == p6::Button::Left)
-        //     {
-        //         m_rotateLeft = true;
-        //     }
-        //     else if (mouse.button == p6::Button::Right)
-        //     {
-        //         m_rotateRight = true;
-        //     }
-        // };
+       
         // Gestionnaire d'événements de touche relâchée
         ctx.key_released = [&](p6::Key key) {
             if (key.logical == "z")
@@ -224,10 +183,6 @@ public:
             else if (key.logical == "e")
                 m_rotateRight = false;
         };
-        // ctx.mouse_released = [&](p6::MouseButton mouse) {
-        //     m_rotateLeft  = false;
-        //     m_rotateRight = false;
-        // };
     }
 
     void eventUpdate()

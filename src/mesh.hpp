@@ -5,9 +5,8 @@
 // #include "../glimac/common.hpp"
 // #include "../glimac/freefly_camera.hpp"
 // #include "../glimac/sphere_vertices.hpp"
-#include "boid3d.hpp"
 #include "iprogram.hpp"
-#include "openglutils.hpp"
+// #include "openglutils.hpp"
 #include "p6/p6.h"
 
 class Mesh { // Mesh
@@ -29,15 +28,16 @@ public:
 
     Mesh(std::vector<glimac::ShapeVertex>& vertices)
     {
-        OpenGLUtils::init_vao(m_vao, m_vbo, vertices);
+        // OpenGLUtils::init_vao(m_vao, m_vbo, vertices);
+        InitMeshVboVao(vertices);
         m_vertices_size = vertices.size();
         // m_texture_uint  = OpenGLUtils::texture(m_texture);
     }
 
     // void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, const glm::vec3& position, const float scale_value, glm::vec3 direction)
-    void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
+    void DrawMesh(const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down) const
     {
-        program.getUniformLocations();
+        // program.getUniformLocations();
 
         program.use(viewmatrix, ctx, position, scale_value, direction, scale_down);
         // glEnable(GL_DEPTH_TEST);
@@ -47,15 +47,14 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, m_vertices_size);
         // OpenGLUtils::draw_mesh(&m_shader, m_vertices_size, &ctx, m_vao, viewmatrix, m_texture_uint, scale);
     }
-    // void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, glm::vec3& position, float scale_value, const glm::vec3& arpenteur_position)
-    // {
-    //     program.getUniformLocations();
-    //     program.use(viewmatrix, ctx, position, scale_value, arpenteur_position);
-    //     // glEnable(GL_DEPTH_TEST);
-    //     m_vao.bind();
-    //     program.bind();
-    //     program.useText();
-    //     glDrawArrays(GL_TRIANGLES, 0, m_vertices_size);
-    //     // OpenGLUtils::draw_mesh(&m_shader, m_vertices_size, &ctx, m_vao, viewmatrix, m_texture_uint, scale);
-    // }
+
+    void InitMeshVboVao(std::vector<glimac::ShapeVertex>& vertices)
+    {
+        m_vao.bind();
+        m_vbo.buffer(vertices);
+        m_vbo.bind();
+        m_vao.vertex_attrib();
+        m_vbo.debind();
+        m_vao.debind();
+    }
 };

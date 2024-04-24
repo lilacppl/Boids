@@ -11,7 +11,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 #include "vbo.hpp"
-#include "vertex3d.hpp"
+// #include "vertex3d.hpp"
 
 class VAO {
 private:
@@ -25,7 +25,7 @@ public:
     VAO(VAO&& other) noexcept;
     VAO& operator=(VAO&& other) noexcept;
 
-    void bind();
+    void bind() const;
     void debind();
     void vertex_attrib();
 };
