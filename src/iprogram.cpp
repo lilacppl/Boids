@@ -56,21 +56,16 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
     // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
 
-    glm::mat4 MVMatrix = glm::translate(glm::mat4{1.f}, position);
+    glm::mat4 MVMatrix = glm::mat4{1.f};
+    MVMatrix           = glm::translate(MVMatrix, glm::vec3{0.0, -(1.0 - scale_down) * scale_value / 2.0, 0.0});
+    MVMatrix           = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
+    MVMatrix           = glm::translate(glm::mat4{1.f}, position);
+
     // On oriente le poisson pour qu'il regarde dans la direction du déplacement
     MVMatrix = glm::rotate(MVMatrix, direction[0], glm::vec3{1, 0, 0});
     MVMatrix = glm::rotate(MVMatrix, direction[1], glm::vec3{0, 1, 0});
     MVMatrix = glm::rotate(MVMatrix, direction[2], glm::vec3{0, 0, 1});
     MVMatrix = glm::scale(MVMatrix, glm::vec3{scale_value});
-    MVMatrix = glm::scale(MVMatrix, glm::vec3{1.0, scale_down, 1.0});
-    if (scale_down != 1.0)
-        MVMatrix = glm::translate(MVMatrix, glm::vec3{0.0, -scale_down * scale_value / 2, 0.0});
-
-    if (scale_down != 1) // je crois que cv tt le temps rentrer dedans car c un float donc jamais egal a 1
-    {
-        MVMatrix = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
-        // MVMatrix = glm::translate(MVMatrix, glm::vec3{0.0f, 1 * (1.0f - scale_down), 0.0f});
-    }
 
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
     glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix * MVMatrix;

@@ -36,22 +36,24 @@ private:
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
-    int m_current_time;
+    int               m_current_time = 0;
+    int               m_actual_state = 0;
+    std::vector<int>  m_events_tables{};
+    const float       m_cube_size   = 10.0f;
+    float             m_cube_hscale = 0.3f;
 
 public:
     // Scene(p6::Context& ctx);
-    int m_actual_state = 0;
 
 public:
-
     Scene();
     void     Init(p6::Context& ctx);
     void     update(const p6::Context& ctx);
     void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
     Program& markovProgram();
-    int getState();
-    void setState(int a);
+    int      getState();
+    void     setState(int a);
 };
 
 // static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");

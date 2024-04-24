@@ -52,16 +52,17 @@ int loiDePoisson(const double lambda)
 }
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> eventsTimes(const int poisson, const long long int temps_ecoule)
+std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule)
 {
     std::vector<int> events;
     for (int i = 0; i < poisson; ++i)
     {
         // Utiliser une distribution uniforme pour déterminer le moment de l'événement
         double time_fraction = rand01();
-        int    time          = static_cast<int>(time_fraction * 60000);
+        int    time          = static_cast<int>(time_fraction * 4000);
         events.push_back(time + temps_ecoule);
     }
+    // std::cout<<events[0]<< ", temps  "<<temps_ecoule<<std::endl;
     return events;
 }
 
@@ -76,15 +77,6 @@ float loiNormale(const float esperance, const float ecart_type)
     double sample = esperance + ecart_type * z1;
     // std::cout << 1 / (ecart_type / sqrt(2 * 3.14)) * exp((-1 / 2) * pow((((rand01() * 100 - 50) - esperance) / ecart_type), 2)) << std::endl;
     return sample;
-}
-
-bool waterLevel(const long long int temps, std::vector<int>& event_time_table, const int& number_events)
-{
-    if (temps % 60000 == 0)
-    {
-        event_time_table = eventsTimes(number_events, temps);
-    }
-    return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
 }
 
 void markovSuivant(int& actual_state, const glm::vec4 v)

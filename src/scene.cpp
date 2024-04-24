@@ -18,6 +18,7 @@ void Scene::Init(p6::Context& ctx)
     // m_fish_models.push_back(meh1);
     // m_fish_models.push_back(m_vertices.fishlow);
     m_arpenteur.eventManager(ctx);
+    m_events_tables = eventsTimes(2, 0);
 }
 
 // Program& Scene::markovProgram()
@@ -42,16 +43,20 @@ void Scene::Init(p6::Context& ctx)
 
 void Scene::update(const p6::Context& ctx)
 {
-    //taille du cube
-    float cube_scale   = 10.0; 
-    //hauteur du cube (appliquée en plus de la taille globale cube_scale)
-    float height_scale = 1.0;
-    //hauteur de la partie en y positifs du cube
-    float height       = cube_scale * height_scale / 2;
+    // std::cout<<m_current_time<<std::endl;
+    if (niveauEau(m_current_time, m_events_tables, 2)) // POUR POISSON c'est cette condition
+    {
+        m_events_tables = eventsTimes(2, m_current_time);
+        // hauteur du cube (appliquée en plus de la taille globale cube_scale)
+        m_cube_hscale = uniform(0.3f, 1.0f);
+        std::cout << "true" << std::endl;
+    }
+    // hauteur de la partie en y positifs du cube
+    float height = m_cube_size * m_cube_hscale / 2;
     m_imguiVariables.UpdateValues();
     m_viewMatrix = m_arpenteur.getViewMatrix();
-    glm::vec3 position(0.f, 0.f, 0.f);
-    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, cube_scale, glm::vec3(0, 0, 0), height_scale);
+    glm::vec3 position(0.f, 0.0f, 0.f);
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale);
     m_arpenteur.update(ctx, m_arpenteur_program, height);
     m_arpenteur.eventUpdate();
     // if (texture_markov(m_chrono))
@@ -59,9 +64,8 @@ void Scene::update(const p6::Context& ctx)
     //     // m_fish_program = markov_program();
     // }
     m_current_time = tempsEcoule(m_chrono);
-    std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), cube_scale / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height);
 }
 
 void Scene::draw(const p6::Context& ctx) const
