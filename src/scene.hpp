@@ -21,16 +21,18 @@ private:
     Boids          m_first_boids;
     Mesh           m_cube;
     Mesh           m_fish;
-    // std::vector<Mesh> m_fish_models;
+    Mesh           m_fishlow;
+    // MeshVec        m_fish_models;
 
-    FreeflyCamera m_camera;
-    Program       m_fish_program;
-    Program       m_cube_program;
-    Program       m_arpenteur_program;
-    Program       m_seaweed_program;
+    // FreeflyCamera m_camera;
+    Program m_fish_program;
+    Program m_cube_program;
+    Program m_arpenteur_program;
+    Program m_seaweed_program;
     // std::vector<Program> programs ; //a faire
-    Arpenteur         m_arpenteur;
-    Mesh              m_seaweed;
+    Arpenteur m_arpenteur;
+    Mesh      m_seaweed;
+    // Mesh              m_stone;
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
@@ -40,8 +42,8 @@ public:
     int m_actual_state = 0;
     Scene();
     void     Init(p6::Context& ctx);
-    void     update(p6::Context& ctx);
-    void     draw(p6::Context& ctx);
+    void     update(const p6::Context& ctx);
+    void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
     Program& markov_program();
 };

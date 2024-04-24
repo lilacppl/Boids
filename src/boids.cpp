@@ -21,12 +21,12 @@ std::vector<Boid> Boids::getVect() const
     return (boids);
 }
 
-int Boids::NumberOfBoids() const
+int Boids::numberOfBoids() const
 {
     return (m_boids.size());
 }
 
-void Boids::draw(p6::Context& ctx, float square_radius, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program)
+void Boids::draw(const p6::Context& ctx, const float square_radius, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program)
 {
     for (auto& i : m_boids)
     {
@@ -46,17 +46,17 @@ void Boids::deleteBoid()
 }
 void Boids::changeSize(const int boids_number)
 {
-    if (boids_number > this->NumberOfBoids())
+    if (boids_number > this->numberOfBoids())
     {
-        for (unsigned int i = 0; i < (boids_number - NumberOfBoids()); i++)
+        for (unsigned int i = 0; i < (boids_number - numberOfBoids()); i++)
         {
             Boid newboid;
             this->addBoid(newboid);
         }
     }
-    else if (boids_number < this->NumberOfBoids())
+    else if (boids_number < this->numberOfBoids())
     {
-        for (unsigned int i = 0; i < (NumberOfBoids() - boids_number); i++)
+        for (unsigned int i = 0; i < (numberOfBoids() - boids_number); i++)
         {
             this->deleteBoid();
         }
@@ -68,7 +68,7 @@ std::vector<Boid> Boids::other_boids(const Boid& active_boid)
     std::vector<Boid> others;
     for (Boid& boid : m_boids)
     {
-        if (boid.get_position() != active_boid.get_position() && boid.get_speed() != active_boid.get_speed())
+        if (boid.getPosition() != active_boid.getPosition() && boid.getSpeed() != active_boid.getSpeed())
         {
             others.push_back(boid);
         }
@@ -76,7 +76,7 @@ std::vector<Boid> Boids::other_boids(const Boid& active_boid)
     return others;
 }
 
-void Boids::update(p6::Context& ctx, int boids_number, float square_radius, float neighbor_dist, float avoid_factor, float maxspeed, float minspeed, Mesh& mesh, glm::mat4 viewmatrix, Program& program)
+void Boids::update(const p6::Context& ctx, const int boids_number, const float square_radius, const float neighbor_dist, const float avoid_factor, const float maxspeed, const float minspeed, const Mesh& mesh, const glm::mat4 viewmatrix, const Program& program)
 {
     alignement(neighbor_dist);
     cohesion(neighbor_dist);
@@ -85,7 +85,7 @@ void Boids::update(p6::Context& ctx, int boids_number, float square_radius, floa
     draw(ctx, square_radius, maxspeed, minspeed, mesh, viewmatrix, program);
 }
 
-void Boids::alignement(float neighbor_dist)
+void Boids::alignement(const float neighbor_dist)
 {
     // float neighbordist    = 0.15; // Field of vision
     float matching_factor = 0.01;
@@ -99,12 +99,12 @@ void Boids::alignement(float neighbor_dist)
             float distance = 0;
             for (int i = 0; i < 3; i++)
             {
-                distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
+                distance += (b.getPosition()[i] - other_b.getPosition()[i]) * (b.getPosition()[i] - other_b.getPosition()[i]);
             }
             distance = std::sqrt(distance);
             if (distance < neighbor_dist) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
             {
-                sum += other_b.get_speed();
+                sum += other_b.getSpeed();
                 neighboring_boids++;
             }
         }
@@ -120,7 +120,7 @@ void Boids::alignement(float neighbor_dist)
     }
 }
 
-void Boids::cohesion(float neighbor_dist)
+void Boids::cohesion(const float neighbor_dist)
 {
     // float neighbordist     = 0.15; // Field of vision
     float centering_factor = 0.01;
@@ -134,12 +134,12 @@ void Boids::cohesion(float neighbor_dist)
             float distance = 0;
             for (int i = 0; i < 3; i++)
             {
-                distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
+                distance += (b.getPosition()[i] - other_b.getPosition()[i]) * (b.getPosition()[i] - other_b.getPosition()[i]);
             }
             distance = std::sqrt(distance);
             if (distance < neighbor_dist) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme
             {
-                sum += other_b.get_speed();
+                sum += other_b.getSpeed();
                 neighboring_boids++;
             }
         }
@@ -154,7 +154,7 @@ void Boids::cohesion(float neighbor_dist)
     }
 }
 
-void Boids::separation(float avoid_factor)
+void Boids::separation(const float avoid_factor)
 {
     float neighborprotect = 0.09;
     // float avoidfactor     = 0.02;
@@ -168,7 +168,7 @@ void Boids::separation(float avoid_factor)
             float distance = 0;
             for (int i = 0; i < 3; i++)
             {
-                distance += (b.get_position()[i] - other_b.get_position()[i]) * (b.get_position()[i] - other_b.get_position()[i]);
+                distance += (b.getPosition()[i] - other_b.getPosition()[i]) * (b.getPosition()[i] - other_b.getPosition()[i]);
             }
             distance = std::sqrt(distance);
             if (distance < neighborprotect) // si l'autre boid est assez proche, on ajoute sa vitesse à la somme

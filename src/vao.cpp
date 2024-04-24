@@ -27,7 +27,7 @@ VAO& VAO::operator=(VAO&& other) noexcept // Move assignment operator
     return *this; // move assignment must return a reference to this, so we do it
 }
 
-void VAO::bind()
+void VAO::bind() const
 {
     glBindVertexArray(m_vao);
 }

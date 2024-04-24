@@ -23,7 +23,7 @@ public:
     ArpenteurCamera()
         : m_Position(glm::vec3(0, 0, 0)), m_Phi(glm::pi<float>()), m_Theta(0.0f)
     {
-        m_FrontVector = glm::vec3(1, 0, 0);
+        m_FrontVector = glm::vec3(-1, 0, 0);
         m_LeftVector  = glm::vec3(0, 0, 1);
         m_UpVector    = glm::vec3(0, 1, 0);
     }
@@ -32,7 +32,9 @@ public:
     {
         glm::vec4 positionTemp = glm::vec4(arpenteurPos.x, arpenteurPos.y, arpenteurPos.z, 0);
         positionTemp += (glm::rotate(glm::mat4(1), (p6::degrees_to_radians(arpenteurRotation)).value, glm::vec3(0, 1, 0)) * glm::vec4(m_distance, m_distance / 2, 0, 0));
+        // positionTemp += (glm::rotate(glm::mat4(1), (p6::degrees_to_radians(0)).value, glm::vec3(0, 1, 0)) * glm::vec4(m_distance, m_distance / 2, 0, 0));
         m_Position = glm::vec3(positionTemp.x, positionTemp.y, positionTemp.z);
+        m_Phi      = arpenteurRotation;
         // std::cout << "Position: (" << m_Position.x << ", " << m_Position.y << ", " << m_Position.z << ")" << std::endl;
     }
 

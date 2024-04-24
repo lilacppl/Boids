@@ -41,15 +41,15 @@ int    plus_one();
 
 // renvoie un nombre d'évènements suivant une loi de poisson de paramètre lambda
 // lambda : nombre moyen d'évènement par intervalle de temps
-int loi_de_poisson(double lambda);
+int loi_de_poisson(const double lambda);
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> events_times();
+std::vector<int> events_times(const int poisson, const long long int temps_ecoule);
 // loi normale pour la hauteur de l'eau
-float loi_normale(float esperance, float ecart_type);
+float loi_normale(const float esperance,const float ecart_type);
 
-bool water_level(long long int& temps, std::vector<int> event_time_table, int& number_events);
+bool water_level(const long long int& temps, std::vector<int> event_time_table,const int& number_events);
 
 void markov_suivant(int& actual_state, const glm::vec4 v);
 void chaine_markov(int& actual_state);
-bool texture_markov(Timer chrono);
+bool texture_markov(const Timer chrono);

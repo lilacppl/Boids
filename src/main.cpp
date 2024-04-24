@@ -1,25 +1,7 @@
-#pragma once
-#include <cstdlib>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <vector>
-#include "../glimac/sphere_vertices.hpp"
-#include "boid3d.hpp"
-#include "img/src/Image.h"
-#include "p6/p6.h"
-#include "probas.hpp"
-#include "scene.hpp"
-#include "vao.hpp"
-#include "vbo.hpp"
-
-// #define TINYOBJLOADER_IMPLEMENTATION
-// #include "tiny_obj_loader.h"
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "boids.hpp"
 #include "doctest/doctest.h"
-#include "imguivariables.hpp"
-#include "openglutils.hpp"
+#include "scene.hpp"
+
 
 int main()
 {
@@ -41,9 +23,6 @@ int main()
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
-    img::Image img = p6::load_image_buffer("../assets/text.png");
-    OpenGLUtils::texture(img);
-
     // Declare your infinite update loop.
     ctx.update = [&]() {
         // vao.bind();

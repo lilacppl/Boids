@@ -7,7 +7,7 @@ private:
     float     scale;
 
 public:
-    ObjectPositionScale(const glm::vec3& pos, float scl)
+    ObjectPositionScale(const glm::vec3& pos,const float scl)
         : position(pos), scale(scl) {}
 
     glm::vec3 getPosition() const

@@ -1,5 +1,5 @@
 #pragma once
-#include <corecrt_math_defines.h>
+// #include <corecrt_math_defines.h>
 #include <p6/p6.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
@@ -48,22 +48,27 @@ private:
 
     void computeDirectionVectors()
     {
-        float cosPhi  = cos(m_Phi);
-        float sinPhi  = sin(m_Phi);
-        m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        float cosPhi = cos(m_Phi);
+        float sinPhi = sin(m_Phi);
+        // m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
+        m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
+
+        // Ajoute le résultat à m_FrontVector
+        // m_FrontVector = rotatedFrontVector;
+        std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
         m_FrontVector = glm::normalize(m_FrontVector);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
         m_LeftVector  = glm::normalize(m_LeftVector);
         // m_LeftVector = glm::vec3(-cos(m_Phi + M_PI / 2), 0.0, sin(m_Phi + M_PI / 2));
-        std::cout
-            << m_Phi << std::endl;
+        // std::cout
+        //     << m_Phi << std::endl;
     }
 
 public:
     Arpenteur()
         : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
     {
-        // computeDirectionVectors();
         m_camera.updatePosition(m_position, 0);
     }
     glm::vec3 getArpenteurPosition()
@@ -71,13 +76,10 @@ public:
         return m_position;
     }
 
-    void update(p6::Context& ctx, Program& program)
+    void update(const p6::Context& ctx, const Program& program)
     {
-        // eventManager(ctx);
         m_camera.updatePosition(m_position, m_Phi);
-        // std::cout << m_position.x << std::endl;
-        cubeLimit(4.0);
-        // m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, m_position);
+        handleMapBounds(4.0);
         m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1.);
     }
 
@@ -110,16 +112,10 @@ public:
     void rotateLeft(float degrees)
     {
         m_Phi += glm::radians(degrees);
-        computeDirectionVectors();
-        // glm::vec4 positionTemp = glm::vec4(m_position, 0);
-        // positionTemp += glm::rotate(glm::mat4(1), (p6::degrees_to_radians(m_Phi)).value, glm::vec3(0, 1, 0)) * glm::vec4(0, 0, 0, 0);
-        // m_position = glm::vec3(positionTemp.x, positionTemp.y, positionTemp.z);
-        // m_LeftVector = glm::vec3(cos(m_Phi + glm::pi<float>() / 2), sin(m_Phi + glm::pi<float>() / 2), 0);
-
         // computeDirectionVectors();
     }
 
-    void cubeLimit(const float square_radius)
+    void handleMapBounds(const float square_radius)
     {
         float margin = 1.0;
         if (m_position[0] < -square_radius)
@@ -146,35 +142,8 @@ public:
         {
             m_position.z *= -1;
         }
-        // m_position += speed;
     }
 
-    // // Méthode pour tourner la caméra verticalement autour de l'axe Left
-    // void rotateUp(float degrees)
-    // {
-    //     m_Theta += glm::radians(degrees);
-    //     computeDirectionVectors();
-    // }
-
-    // void eventManager(p6::Context& ctx)
-    // {
-    //     if (ctx.key_is_pressed(GLFW_KEY_O))
-    //         moveFront(0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_L))
-    //         moveFront(-0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_K))
-    //         moveLeft(0.2);
-    //     if (ctx.key_is_pressed(GLFW_KEY_A))
-    //     {
-    //         moveLeft(-0.2);
-    //         std::cout << "tourne";
-    //     }
-
-    //     if (ctx.key_is_pressed(GLFW_KEY_N))
-    //         m_Phi -= 0.3;
-    //     if (ctx.key_is_pressed(GLFW_KEY_B))
-    //         m_Phi += 0.3;
-    // }
     void eventManager(p6::Context& ctx)
     {
         ctx.key_pressed = [&](p6::Key key) {
@@ -195,16 +164,7 @@ public:
             else if (key.logical == "e")
                 m_rotateRight = true;
         };
-        // ctx.mouse_pressed = [&](p6::MouseButton mouse) {
-        //     if (mouse.button == p6::Button::Left)
-        //     {
-        //         m_rotateLeft = true;
-        //     }
-        //     else if (mouse.button == p6::Button::Right)
-        //     {
-        //         m_rotateRight = true;
-        //     }
-        // };
+
         // Gestionnaire d'événements de touche relâchée
         ctx.key_released = [&](p6::Key key) {
             if (key.logical == "z")
@@ -224,10 +184,6 @@ public:
             else if (key.logical == "e")
                 m_rotateRight = false;
         };
-        // ctx.mouse_released = [&](p6::MouseButton mouse) {
-        //     m_rotateLeft  = false;
-        //     m_rotateRight = false;
-        // };
     }
 
     void eventUpdate()

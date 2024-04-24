@@ -3,54 +3,37 @@
 #include "probas.hpp"
 // #include <bits/stdc++.h>
 
-glm::vec3 calculate_rotation(glm::vec3 speed)
-{
-    return glm::vec3{
-        atan2(-speed[2], speed[0]), atan2(-speed[1], speed[0]), 0
-    };
-}
-
-std::default_random_engine            gen;
-std::uniform_real_distribution<float> distrib_pos(-2.0f, 2.0f);
-std::uniform_real_distribution<float> distrib_speed(0.03f, 0.05f);
-std::vector<int>                      rand_speed{-1, 1};
-std::uniform_int_distribution<int>    distrib_int(0, 1);
+// std::default_random_engine            gen;
+// std::uniform_real_distribution<float> distrib_pos(-2.0f, 2.0f);
+// std::uniform_real_distribution<float> distrib_speed(0.03f, 0.05f);
+// std::vector<int>                      rand_speed{-1, 1};
+// std::uniform_int_distribution<int>    distrib_int(0, 1);
 
 Boid::Boid()
     : m_radius(0.01f), m_speed(glm::vec3{loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one(), loi_normale(0.04f, 0.01f) * plus_one()}), m_position(glm::vec3{uniform(-2.0, 2.0), uniform(-2.0, 2.0), uniform(-2.0, 2.0)}), m_direction(glm::vec3{0.0f, 0.0f, 0.0f})
 {}
 
-glm::vec3 Boid::get_position() const
+glm::vec3 Boid::getPosition() const
 {
     return m_position;
 }
 
-glm::vec3 Boid::get_speed() const
+glm::vec3 Boid::getSpeed() const
 {
     return m_speed;
 }
 
-void Boid::draw(p6::Context& ctx, Mesh& mesh, const glm::mat4 viewMatrix, Program& program)
+void Boid::draw(const p6::Context& ctx, const Mesh& mesh, const glm::mat4 viewMatrix, const Program& program) const
 {
     // ctx.fill = {1, 1, 1, 0.5};
     // ctx.square(p6::Center{get_position()}, p6::Radius{0.01f});
-    glm::vec3 position = get_position();
+    glm::vec3 position = getPosition();
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
     mesh.DrawMesh(ctx, viewMatrix, program, position, .1f, m_direction, 1.0f);
 }
 
 void Boid::move(float square_radius, float maxspeed, float minspeed)
 {
-    // if (m_position[0] - m_radius < -square_radius)
-    //     m_position[0] = square_radius * 2 + m_position[0];
-    // if (m_position[0] + m_radius > square_radius)
-    //     m_position[0] = -m_position[0];
-
-    // if (m_position[1] - m_radius < -square_radius)
-    //     m_position[1] = square_radius * 2 + m_position[1];
-    // if (m_position[1] + m_radius > square_radius)
-    //     m_position[1] = -m_position[1];
-
     float margin     = 0.90;
     float turnfactor = 0.001;
     // float maxspeed   = 0.006;
@@ -96,5 +79,12 @@ void Boid::move(float square_radius, float maxspeed, float minspeed)
 
     glm::vec3 new_pos = m_speed + m_position;
     m_position        = new_pos;
-    m_direction       = calculate_rotation(m_position);
+    m_direction       = calculateRotation(m_position);
+}
+
+glm::vec3 calculateRotation(const glm::vec3 speed)
+{
+    return glm::vec3{
+        atan2(-speed[2], speed[0]), atan2(-speed[1], speed[0]), 0
+    };
 }

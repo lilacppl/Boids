@@ -14,6 +14,7 @@ Program::Program(std::string texture_path, std::string vs_path, std::string fs_p
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, 0);
+    getUniformLocations();
 }
 
 void Program::getUniformLocations()
@@ -44,7 +45,7 @@ void Program::debind() const
 }
 
 // A mettre avant le draw dans la boucle
-void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, glm::vec3 direction, float scale_down)
+void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down) const
 {
     // Texture
     m_Program.use();
@@ -77,43 +78,15 @@ void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& posi
     LightVarToShader(viewmatrix);
 }
 
-// // A mettre avant le draw dans la boucle
-// void Program::use(const glm::mat4& viewmatrix, p6::Context& ctx, glm::vec3& position, float scale_value, const glm::vec3& arpenteur_position)
-// {
-//     // Texture
-//     m_Program.use();
-//     glActiveTexture(GL_TEXTURE0);
-//     glBindTexture(GL_TEXTURE_2D, m_name);
-
-//     glm::mat4 ProjMatrix   = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
-//     glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, position);
-//     MVMatrix               = glm::scale(MVMatrix, glm::vec3{scale_value});
-//     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-//     glm::mat4 MVPMatrix    = ProjMatrix * viewmatrix * MVMatrix;
-
-//     // envoi des matrices
-//     glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
-//     glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-//     glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-//     LightVarToShader(viewmatrix, arpenteur_position);
-// }
-
-void ::Program::LightVarToShader(const glm::mat4& viewmatrix)
+void Program::LightVarToShader(const glm::mat4& viewmatrix) const
 {
     glUniform3f(m_uKd, 1., 1., 1.);  // lumiere blanche
     glUniform3f(m_uKs, 0., 0., 1.);  // reflets bleus
     glUniform3f(m_uKd2, 1., 0., 0.); // lumiere blanche
     glUniform3f(m_uKs, 1., 1., 1.);  // reflets bleus
-    // glUniform1f(m_uShininess, randomShininess());
     glUniform1f(m_uShininess, 100.);
     glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
-    // glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, 10, 90, arpenteur_position).x, lightPos_vs(viewmatrix, 10, 90, arpenteur_position).y, lightPos_vs(viewmatrix, 10, 90, arpenteur_position).z);
-
-    // glm::vec4 arp(arpenteur_position.x * -1, arpenteur_position.y, arpenteur_position.z, 1.0f);
-    // glm::vec3 lightpos = (arp * viewmatrix);
     glUniform3f(m_uLightPos_vs, 0., 0., 0.);
-    // glUniform3f(m_uLightPos_vs, arpenteur_position.x, arpenteur_position.y, arpenteur_position.z);
-    // std::cout << arpenteur_position.x << std::endl;
     glUniform3f(m_uLightIntensity, 8., 8., 8.);
 }
 
