@@ -54,7 +54,7 @@ void main() {
     vec3 directionalLight = blinnPhongDir(vPosition_vs, vNormal_vs);
     vec3 pointLight = blinnPhongPoint(vPosition_vs, vNormal_vs, viewDir);
 
-    vColor *= vec3(clamp(directionalLight+pointLight,0,1));
+    vColor *= vec3(clamp(directionalLight+pointLight,0.2,1));
     // vColor *= vec3(clamp(directionalLight,0,1));
 
     fFragColor = vec4(vColor, 1.0);

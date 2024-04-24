@@ -36,6 +36,7 @@ private:
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
+    int m_current_time;
 
 public:
     // Scene(p6::Context& ctx);
