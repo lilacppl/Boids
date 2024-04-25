@@ -63,10 +63,6 @@ private:
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
         // m_LeftVector  = glm::vec3(glm::cos(m_Phi + (p6::PI / 2)), 0, glm::sin(m_Phi + (p6::PI / 2)));
         m_LeftVector = glm::normalize(m_LeftVector);
-
-        // m_LeftVector = glm::vec3(-cos(m_Phi + M_PI / 2), 0.0, sin(m_Phi + M_PI / 2));
-        std::cout
-            << m_Phi << std::endl;
     }
 
 public:
@@ -132,11 +128,13 @@ public:
         }
         if (m_position[1] < -square_radius * margin)
         {
-            m_position.y = square_radius - 0.1;
+            m_position.y = height - 0.1;
         }
-        if (m_position[1] > height * margin)
+        // if (m_position[1] > height * margin)
+        if (m_position[1] > 10 * margin)
+
         {
-            m_position.y *= -1;
+            m_position.y = -square_radius + 0.1;
         }
         if (m_position[2] < -square_radius * margin)
         {

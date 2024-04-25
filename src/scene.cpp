@@ -9,17 +9,15 @@ Scene::Scene()
 
 void Scene::Init(p6::Context& ctx)
 {
-    // ImguiVariables imguivars; // initialisation des variables liées à imgui
-    // m_imguiVariables = imguivars;
-    // Boids boids2(m_imguiVariables.GetBoidsNumber()); // crée un flock de Boids de taille n
-    // m_first_boids = boids2;
-    // m_camera.eventManager(ctx);
-    // Mesh meh1(m_vertices.fish);
-    // m_fish_models.push_back(meh1);
-    // m_fish_models.push_back(m_vertices.fishlow);
     m_arpenteur.eventManager(ctx);
+    m_events_tables = eventsTimes(2, 0);
 }
 
+// void Scene::ResetChrono()
+// {
+//     if (m_reset_time)
+//         m_chrono.reset();
+// };
 // Program& Scene::markovProgram()
 // {
 //     switch (m_actual_state)
@@ -40,6 +38,8 @@ void Scene::Init(p6::Context& ctx)
 //     return m_p4;
 // }
 
+float random = rand01();
+
 void Scene::update(const p6::Context& ctx)
 {
     // taille du cube
@@ -47,12 +47,44 @@ void Scene::update(const p6::Context& ctx)
     // hauteur du cube (appliquée en plus de la taille globale cube_scale)
     float height_scale = 1.0;
     // hauteur de la partie en y positifs du cube
-    float height = cube_scale * height_scale / 2;
-    m_imguiVariables.UpdateValues();
+
     m_current_time = tempsEcoule(m_chrono);
     m_viewMatrix   = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
-    // m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, cube_scale, glm::vec3(0, 0, 0), height_scale, m_current_time);
+
+    // ResetChrono();
+
+    // if (niveauEau(m_current_time, m_events_tables, 2)) // POUR POISSON c'est cette condition
+    // {
+    //     m_events_tables = eventsTimes(2, m_current_time);
+    //     // hauteur du cube (appliquée en plus de la taille globale cube_scale)
+    //     m_cube_hscale = uniform(0.3f, 1.0f);
+    //     std::cout << "true" << std::endl;
+    // }
+
+    if (random < 0.2)
+    {
+        m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
+        // std::cout << m_current_time << std::endl;
+        // if (m_current_time > 20000)
+        // {
+        //     m_reset_time = true;
+        //     std::cout << "shark" << std::endl;
+        // }
+        // else
+        // {
+        //     m_reset_time = false;
+        // }
+    }
+
+    // hauteur de la partie en y positifs du cube
+    float height = m_cube_size * m_cube_hscale / 2;
+
+    m_imguiVariables.UpdateValues();
+    m_viewMatrix = m_arpenteur.getViewMatrix();
+    m_arpenteur.update(ctx, m_arpenteur_program, height, m_current_time);
+
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale, m_current_time);
     m_arpenteur.update(ctx, m_arpenteur_program, height, m_current_time);
     m_arpenteur.eventUpdate();
     // if (texture_markov(m_chrono))
@@ -62,14 +94,14 @@ void Scene::update(const p6::Context& ctx)
 
     // std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), cube_scale / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
-    
-    m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
+
+    m_current_time = tempsEcoule(m_chrono);
 }
 
 void Scene::draw(const p6::Context& ctx) const
 {
-    // m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program, m_current_time);
+    m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program, m_current_time);
     // m_objects.drawSceneObjOfSameMesh(m_objects.stone, m_stone, ctx, m_viewMatrix, m_stone_program);
 }
 
