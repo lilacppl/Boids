@@ -52,8 +52,7 @@ public:
     void useText() const;
     void LightVarToShader(const glm::mat4& viewmatrix, const int& time) const;
     void setTexture();
-
-    // rajouter une fonction qui libere les textures etc a la fin
+    void deleteTextureBufferArray() const;
 };
 
 float randomShininess();

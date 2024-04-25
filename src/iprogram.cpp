@@ -123,12 +123,7 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const int& time) // position 
     float     translation      = time * translationSpeed;
     float     x                = radius * cos(angle);
     float     z                = radius * sin(angle);
-    float     y                = translation;
     glm::vec4 lightPos(x, 1, z, 1.0f);
-    // float x = 2 * cos(0.005 * time);
-
-    // glm::vec4 lightPos(x, x, 0, 1.0f);
-    // glm::vec4 lightPos(position, 1.0f);
     return glm::vec3(viewmatrix * lightPos);
 }
 
@@ -141,4 +136,8 @@ void Program::setTexture()
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Program::deleteTextureBufferArray() const{
+    glDeleteTextures(1, &m_name);
 }

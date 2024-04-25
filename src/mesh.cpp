@@ -34,3 +34,8 @@ void Mesh::InitMeshVboVao(const std::vector<glimac::ShapeVertex>& vertices)
     m_vbo.debind();
     m_vao.debind();
 }
+
+void Mesh::DeleteVboVao() const{
+    m_vbo.~VBO();
+    m_vao.~VAO();
+}

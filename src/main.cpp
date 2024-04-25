@@ -17,14 +17,13 @@ int main()
         "../shaders/3D.vs.glsl",
         "../shaders/text3D.fs.glsl"
     );
-    Scene      scene;
+    Scene scene;
     scene.Init(ctx);
     std::string text = "Hello";
     ctx.imgui        = [&]() {
     };
 
     ctx.update = [&]() {
-
         // vao.bind();
         shader.use();
         glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -37,4 +36,5 @@ int main()
     };
     // Should be done last. It starts the infinite loop.
     ctx.start();
+    scene.cleanupRessources();
 }

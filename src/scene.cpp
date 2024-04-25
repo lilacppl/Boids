@@ -52,29 +52,9 @@ void Scene::update(const p6::Context& ctx)
     m_viewMatrix   = m_arpenteur.getViewMatrix();
     glm::vec3 position(0.f, 0.f, 0.f);
 
-    // ResetChrono();
-
-    // if (niveauEau(m_current_time, m_events_tables, 2)) // POUR POISSON c'est cette condition
-    // {
-    //     m_events_tables = eventsTimes(2, m_current_time);
-    //     // hauteur du cube (appliquée en plus de la taille globale cube_scale)
-    //     m_cube_hscale = uniform(0.3f, 1.0f);
-    //     std::cout << "true" << std::endl;
-    // }
-
     if (random < 0.2)
     {
         m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
-        // std::cout << m_current_time << std::endl;
-        // if (m_current_time > 20000)
-        // {
-        //     m_reset_time = true;
-        //     std::cout << "shark" << std::endl;
-        // }
-        // else
-        // {
-        //     m_reset_time = false;
-        // }
     }
 
     // hauteur de la partie en y positifs du cube
@@ -128,4 +108,19 @@ int Scene::getState()
 void Scene::setState(int a)
 {
     m_actual_state = a;
+}
+
+void Scene::cleanupRessources()
+{
+    m_fish_program.deleteTextureBufferArray();
+    m_cube_program.deleteTextureBufferArray();
+    m_arpenteur_program.deleteTextureBufferArray();
+    m_seaweed_program.deleteTextureBufferArray();
+    m_shark_program.deleteTextureBufferArray();
+    m_cube.DeleteVboVao();
+    m_fish.DeleteVboVao();
+    m_fishlow.DeleteVboVao();
+    m_fishverylow.DeleteVboVao();
+    m_shark.DeleteVboVao();
+    m_seaweed.DeleteVboVao();
 }

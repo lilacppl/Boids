@@ -48,10 +48,10 @@ private:
 
     void computeDirectionVectors()
     {
-        float cosPhi = cos(m_Phi);
-        float sinPhi = sin(m_Phi);
-        // m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
-        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
+        float cosPhi  = cos(m_Phi);
+        float sinPhi  = sin(m_Phi);
+        m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        // glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
         // m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
 
         // Ajoute le résultat à m_FrontVector

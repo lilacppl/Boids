@@ -14,7 +14,6 @@
 #include "vao.hpp"
 // #include "vertex3d.hpp"
 
-
 class VBO {
 private:
     GLuint m_vbo;
