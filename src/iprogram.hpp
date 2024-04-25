@@ -36,10 +36,13 @@ private:
     GLint m_uShininess;
     GLint m_uLightDir_vs;
     GLint m_uLightIntensity;
+    GLint m_uLightIntensity2;
+
     GLint m_uLightPos_vs;
     int   m_frame_index = 0;
     float m_shininess;
     float m_intensity;
+    float m_intensity2;
     float m_r;
     float m_g;
     float m_b;

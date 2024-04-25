@@ -15,7 +15,7 @@ glm::vec3 Arpenteur::getArpenteurPosition()
 void Arpenteur::update(const p6::Context& ctx, const Program& program, const float height, const int& time)
 {
     m_camera.updatePosition(m_position, m_Phi);
-    handleMapBounds(4.0, height);
+    // handleMapBounds(4.0, height);
     m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., 0., 0.), 1., time);
 }
 

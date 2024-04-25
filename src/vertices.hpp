@@ -55,7 +55,7 @@ struct Vertices {
     };
 
     std::vector<glimac::ShapeVertex> fish        = tinyVertice("./assets/fish_color.obj");
-    std::vector<glimac::ShapeVertex> seaweed     = tinyVertice("./assets/algue.obj");
+    std::vector<glimac::ShapeVertex> seaweed     = tinyVertice("./assets/algues2.obj");
     std::vector<glimac::ShapeVertex> fishlow     = tinyVertice("./assets/poissonopenglow.obj");
     std::vector<glimac::ShapeVertex> fishverylow = tinyVertice("./assets/poissonopenglverylow.obj");
     std::vector<glimac::ShapeVertex> shark       = tinyVertice("./assets/shark.obj");
