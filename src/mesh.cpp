@@ -12,7 +12,7 @@ Mesh::Mesh(const std::vector<glimac::ShapeVertex>& vertices)
 }
 
 // void DrawMesh(p6::Context& ctx, const glm::mat4& viewmatrix, Program& program, const glm::vec3& position, const float scale_value, glm::vec3 direction)
-void Mesh::DrawMesh(const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down, const int& time) const
+void Mesh::DrawMesh(const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float& scale_down, const int& time) const
 {
     // program.getUniformLocations();
 
@@ -33,4 +33,10 @@ void Mesh::InitMeshVboVao(const std::vector<glimac::ShapeVertex>& vertices)
     m_vao.vertexAttrib();
     m_vbo.debind();
     m_vao.debind();
+}
+
+void Mesh::DeleteVboVao() const
+{
+    m_vbo.~VBO();
+    m_vao.~VAO();
 }

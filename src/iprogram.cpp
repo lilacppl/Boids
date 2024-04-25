@@ -5,7 +5,7 @@
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
-    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0)
+    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0), m_shininess(randomShininess()), m_intensity(randomIntensityValue()), m_r(randomColor()), m_g(randomColor()), m_b(randomColor())
 {
     // Création de la texture
     glGenTextures(1, &m_name);
@@ -57,10 +57,13 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
     // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
 
     glm::mat4 MVMatrix = glm::mat4{1.f};
-    MVMatrix           = glm::translate(MVMatrix, glm::vec3{0.0, -(1.0 - scale_down) * scale_value / 2.0, 0.0});
-    MVMatrix           = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
-    MVMatrix           = glm::translate(glm::mat4{1.f}, position);
 
+    MVMatrix = glm::translate(glm::mat4{1.f}, position);
+    if (scale_down < 1.0f)
+    {
+        MVMatrix = glm::translate(MVMatrix, glm::vec3{0.0, -(1.0 - scale_down) * scale_value / 2.0, 0.0});
+        MVMatrix = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
+    }
     // On oriente le poisson pour qu'il regarde dans la direction du déplacement
     MVMatrix = glm::rotate(MVMatrix, direction[0], glm::vec3{1, 0, 0});
     MVMatrix = glm::rotate(MVMatrix, direction[1], glm::vec3{0, 1, 0});
@@ -79,14 +82,14 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
 
 void Program::LightVarToShader(const glm::mat4& viewmatrix, const int& time) const
 {
-    glUniform3f(m_uKd, 1., 1., 1.);  // lumiere blanche
-    glUniform3f(m_uKs, 0., 0., 1.);  // reflets bleus
-    glUniform3f(m_uKd2, 1., 0., 0.); // lumiere blanche
-    glUniform3f(m_uKs, 1., 1., 1.);  // reflets bleus
-    glUniform1f(m_uShininess, 100.);
+    glUniform3f(m_uKd, m_r, m_g, m_b); // lumiere blanche
+    glUniform3f(m_uKs, 0., 0., 1.);    // reflets bleus
+    glUniform3f(m_uKd2, 1., 0., 0.);   // lumiere blanche
+    glUniform3f(m_uKs, 1., 1., 1.);    // reflets bleus
+    glUniform1f(m_uShininess, m_shininess);
     glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
     glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, time).x, lightPos_vs(viewmatrix, time).y, lightPos_vs(viewmatrix, time).z);
-    glUniform3f(m_uLightIntensity, 8., 8., 8.);
+    glUniform3f(m_uLightIntensity, m_intensity, m_intensity, m_intensity);
 }
 
 void Program::useText() const
@@ -103,7 +106,12 @@ float randomShininess()
 
 float randomIntensityValue()
 {
-    return loiExponentielle(0.1f, 2.0f,1.5);
+    return loiExponentielle(10.0f, 15.0f, 1.5);
+}
+
+float randomColor()
+{
+    return uniform(0.05, 1.0);
 }
 
 glm::vec3 lightDir_vs(const glm::mat4& viewmatrix) // lumiere directionnelle : soleil
@@ -141,4 +149,9 @@ void Program::setTexture()
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Program::deleteTextureBufferArray() const
+{
+    glDeleteTextures(1, &m_name);
 }

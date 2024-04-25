@@ -35,6 +35,7 @@ private:
     // std::vector<Program> programs ; //a faire
     Arpenteur m_arpenteur;
     Mesh      m_seaweed;
+    Mesh      m_mushroom;
     // Mesh              m_stone;
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
@@ -44,8 +45,9 @@ private:
     int              m_actual_state = 0;
     std::vector<int> m_events_tables{};
     const float      m_cube_size   = 10.0f;
-    float            m_cube_hscale = 0.3f;
-    bool m_reset_time=false;
+    float            m_cube_hscale = 0.9f;
+    bool             m_reset_time  = false;
+    int              m_index       = 0;
 
 public:
     // Scene(p6::Context& ctx);
@@ -53,13 +55,14 @@ public:
 public:
     Scene();
     void     Init(p6::Context& ctx);
-    void ResetChrono();
+    void     ResetChrono();
     void     update(const p6::Context& ctx);
     void     draw(const p6::Context& ctx) const;
     Mesh&    returnFishMeshUsingLodValue();
     Program& markovProgram();
     int      getState();
     void     setState(int a);
+    void     cleanupRessources();
 };
 
 // static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");

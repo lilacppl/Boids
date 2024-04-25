@@ -48,7 +48,7 @@ int    plusOne();
 int loiDePoisson(const double lambda);
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule);
+std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule, int duree);
 // loi normale pour la hauteur de l'eau
 float loiNormale(const float esperance, const float ecart_type);
 
@@ -59,42 +59,16 @@ double loiExponentielle(double min, double max, double lambda);
 double loiBeta(float alpha, float beta);
 double betaReduite();
 
-static bool niveauEau(const int& temps, std::vector<int> event_time_table, const int& number_events)
+static bool niveauEau(const int& temps, std::vector<int>& event_time_table, const int& number_events, int duree)
 {
-    // std::cout<<temps<<std::endl;
-    // if (temps % 2000 == 0)
-    // {
-    //     std::vector<int>vec = eventsTimes(number_events, temps);
-    //     for (int i = 0; i < event_time_table.size(); i++)
-    //     {
-    //         std::cout << event_time_table[0] << std::endl;
-    //     }
-    // }
-    // return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
-    if (temps % 4000 == 0)
+    if (temps % duree == 0)
     {
         // Générer les temps des événements si nécessaire
-        std::vector<int> generated_event_times = eventsTimes(number_events, temps);
-
-        // Parcourir les temps générés pour afficher chaque temps
-        for (int i = 0; i < generated_event_times.size(); i++)
-        {
-            std::cout << generated_event_times[i] << std::endl;
-        }
+        std::vector<int> generated_event_times = eventsTimes(number_events, temps, duree);
+        event_time_table                       = generated_event_times;
     }
 
-    // Définir l'intervalle de temps
-    int interval_start = temps - 100;
-    int interval_end   = temps + 100;
+    return (std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end());
 
-    // Parcourir les temps des événements pour vérifier si un temps se trouve dans l'intervalle
-    for (int event_time : event_time_table)
-    {
-        if (event_time >= interval_start + temps && event_time <= interval_end + temps)
-        {
-            return true; // Si un temps est trouvé dans l'intervalle, retourner true
-        }
-    };
-
-    return false; // Si aucun temps n'est trouvé dans l'intervalle, retourner false
+    return false;
 }

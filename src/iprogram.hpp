@@ -38,6 +38,13 @@ private:
     GLint m_uLightIntensity;
     GLint m_uLightPos_vs;
 
+    int   m_frame_index = 0;
+    float m_shininess;
+    float m_intensity;
+    float m_r;
+    float m_g;
+    float m_b;
+
 public:
     int m_actual_state = 0; // état de départ pour Markov
     Program(std::string texture_path, std::string vs_path, std::string fs_path);
@@ -52,6 +59,7 @@ public:
     void useText() const;
     void LightVarToShader(const glm::mat4& viewmatrix, const int& time) const;
     void setTexture();
+    void deleteTextureBufferArray() const;
 
     // rajouter une fonction qui libere les textures etc a la fin
 };
@@ -59,6 +67,8 @@ public:
 float randomShininess();
 
 float randomIntensityValue();
+
+float randomColor();
 
 glm::vec3 lightDir_vs(const glm::mat4& viewmatrix);
 

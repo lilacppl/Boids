@@ -52,14 +52,14 @@ int loiDePoisson(const double lambda)
 }
 
 // loi uniforme pour répartir les lambda évènements dans l'intervalle
-std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule)
+std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule, int duree)
 {
     std::vector<int> events;
     for (int i = 0; i < poisson; ++i)
     {
         // Utiliser une distribution uniforme pour déterminer le moment de l'événement
         double time_fraction = rand01();
-        int    time          = static_cast<int>(time_fraction * 4000);
+        int    time          = static_cast<int>(time_fraction * duree);
         events.push_back(time + temps_ecoule);
     }
     // std::cout<<events[0]<< ", temps  "<<temps_ecoule<<std::endl;

@@ -17,9 +17,10 @@ public:
     Mesh();
     Mesh(const std::vector<glimac::ShapeVertex>& vertices);
 
-    void DrawMesh(const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float scale_down, const int& time) const;
+    void DrawMesh(const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const glm::vec3& position, const float scale_value, const glm::vec3 direction, const float& scale_down, const int& time) const;
 
     void InitMeshVboVao(const std::vector<glimac::ShapeVertex>& vertices);
+    void DeleteVboVao() const;
 };
 
 #endif // MESH_HPP
