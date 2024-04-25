@@ -20,9 +20,12 @@ private:
 
     // juste position rotation
 
-    glm::vec3       m_FrontVector = glm::vec3(-1., 0., 0.);
-    glm::vec3       m_LeftVector  = glm::vec3(0., 0., 1.);
-    glm::vec3       m_UpVector    = glm::vec3(.0, 1., 0.);
+    glm::vec3 m_FrontVector = glm::vec3(-1., 0., 0.);
+    glm::vec3 m_LeftVector  = glm::vec3(0., 0., 1.);
+    glm::vec3 m_UpVector    = glm::vec3(.0, 1., 0.);
+    // glm::vec3       m_FrontVector;
+    // glm::vec3       m_LeftVector;
+    // glm::vec3       m_UpVector;
     Mesh            m_mesh;
     ArpenteurCamera m_camera;
     // c juste un objet qui bouge avec les input
@@ -48,26 +51,31 @@ private:
 
     void computeDirectionVectors()
     {
+        // float cosPhi  = cos(m_Phi);
+        // float sinPhi  = sin(m_Phi);
+        // m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        // // glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
+        // // m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
+
+        // // Ajoute le résultat à m_FrontVector
+        // // m_FrontVector = rotatedFrontVector;
+        // // std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
+
+        // m_FrontVector = glm::vec3(1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
+        // m_FrontVector = glm::normalize(m_FrontVector);
+        // m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
+        // // m_LeftVector  = glm::vec3(glm::cos(m_Phi + (p6::PI / 2)), 0, glm::sin(m_Phi + (p6::PI / 2)));
+        // m_LeftVector = glm::normalize(m_LeftVector);
+
         float cosPhi  = cos(m_Phi);
         float sinPhi  = sin(m_Phi);
-        m_FrontVector = glm::vec3(-1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
-        // glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Phi), glm::vec3(1.0f, 0.0f, 0.0f));
-        // m_FrontVector            = glm::vec3(rotationMatrix * glm::vec4(m_FrontVector, 1.0f));
-
-        // Ajoute le résultat à m_FrontVector
-        // m_FrontVector = rotatedFrontVector;
-        // std::cout << m_FrontVector.x << m_FrontVector.y << m_FrontVector.z << std::endl;
-
-        m_FrontVector = glm::vec3(1.0 * (cosPhi), 0.0, 1.0 * sinPhi);
-        m_FrontVector = glm::normalize(m_FrontVector);
+        m_FrontVector = glm::vec3(cosPhi, 0.0, sinPhi);
         m_LeftVector  = glm::cross(m_UpVector, m_FrontVector);
-        // m_LeftVector  = glm::vec3(glm::cos(m_Phi + (p6::PI / 2)), 0, glm::sin(m_Phi + (p6::PI / 2)));
-        m_LeftVector = glm::normalize(m_LeftVector);
     }
 
 public:
     Arpenteur()
-        : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish)
+        : m_position(glm::vec3(0.0f)), m_mesh(m_vertices.fish), m_Phi(glm::pi<float>()), m_Theta(0.0f)
     {
         m_camera.updatePosition(m_position, 0);
     }
@@ -78,12 +86,13 @@ public:
 
     void update(const p6::Context& ctx, const Program& program, const float height, const int& time)
     {
-        m_camera.updatePosition(m_position, m_Phi);
+        m_camera.updatePosition(m_position, -m_Phi);
         handleMapBounds(4.0, height);
-        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1., time);
+        m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., 1, 0.), 1., time);
+        // m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., glm::radians(m_Phi), 0.), 1., time);
     }
 
-    glm::mat4 getViewMatrix() const
+    glm::mat4 getViewMatrix()
     {
         return m_camera.getViewMatrix(m_position);
     }
@@ -112,7 +121,11 @@ public:
     void rotateLeft(float degrees)
     {
         m_Phi += glm::radians(degrees);
-        computeDirectionVectors();
+        // m_camera.updatePosition(m_position, m_Phi);
+        // computeDirectionVectors();
+        // m_FrontVector = m_camera.getFrontVector();
+        // m_LeftVector  = m_camera.getLeftVector();
+        // m_UpVector = m_camera.getUpVector();
     }
 
     void handleMapBounds(const float square_radius, float height)
@@ -128,10 +141,11 @@ public:
         }
         if (m_position[1] < -square_radius * margin)
         {
-            m_position.y = height - 0.1;
+            // m_position.y = height - 0.1;
+            m_position.y *= -1;
         }
         // if (m_position[1] > height * margin)
-        if (m_position[1] > 10 * margin)
+        if (m_position[1] > square_radius * margin)
 
         {
             m_position.y = -square_radius + 0.1;
