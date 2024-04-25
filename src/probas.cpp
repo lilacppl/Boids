@@ -148,7 +148,7 @@ double loiBeta(float alpha, float beta)
 
 double betaReduite()
 {
-    return loiBeta(2.0, 2.0) / 1.6 + 1.0;
+    return loiBeta(2.0, 2.0) / 1.6 * 90 + 10.0;
 }
 
 double loiExponentielle(double min, double max, double lambda)
