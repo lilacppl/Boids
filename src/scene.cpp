@@ -49,9 +49,9 @@ void Scene::update(const p6::Context& ctx)
 
     // std::cout << m_current_time << std::endl;
 
-    // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
 
-    m_current_time = tempsEcoule(m_chrono);
+    // m_current_time = tempsEcoule(m_chrono);
 }
 
 void Scene::draw(const p6::Context& ctx) const
