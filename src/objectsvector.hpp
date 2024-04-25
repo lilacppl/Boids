@@ -31,30 +31,6 @@ struct SceneObjectVector {
         ObjectPositionScale(glm::vec3(-3.0f, 1.f, -20.0f), 3.f)
     };
 
-    void drawSceneObjOfSameMesh(const std::vector<ObjectPositionScale> list, const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const int& time) const
-    {
-        for (const auto& obj : list)
-        {
-            // Récupérer la position et l'échelle de l'objet
-            glm::vec3 position = obj.getPosition();
-            float     scale    = obj.getScale();
-            mesh.DrawMesh(ctx, viewmatrix, program, position, scale, glm::vec3(0, 0, 0), 1., time);
-        }
-    }
-
-    void drawShark(const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, ImguiVariables& var, const int& time) const
-    {
-        for (const auto& obj : shark)
-        {
-            float     z        = obj.getPosition().z + time / 100;
-            glm::vec3 position = glm::vec3(obj.getPosition().x, obj.getPosition().y, z);
-            float     scale    = obj.getScale();
-            mesh.DrawMesh(ctx, viewmatrix, program, position, scale, glm::vec3(0, 0, 0), 1., time);
-        }
-    }
-
-    // void drawAllObjectsOfSameMesh(Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program) const
-    // {
-    //     draw(seaweed, mesh, ctx, viewmatrix, program);
-    // }
+    void drawSceneObjOfSameMesh(const std::vector<ObjectPositionScale> list, const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, const int& time) const;
+    void drawShark(const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, ImguiVariables& var, const int& time) const;
 };

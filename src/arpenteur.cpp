@@ -12,10 +12,10 @@ glm::vec3 Arpenteur::getArpenteurPosition()
     return m_position;
 }
 
-void Arpenteur::update(const p6::Context& ctx, const Program& program, const float height, const int& time)
+void Arpenteur::update(const p6::Context& ctx, const Program& program, const int& time)
 {
     m_camera.updatePosition(m_position, m_Phi);
-    // handleMapBounds(4.0, height);
+    handleMapBounds(4.0);
     m_mesh.DrawMesh(ctx, m_camera.getViewMatrix(m_position), program, m_position, 0.1, glm::vec3(0., 0., 0.), 1., time);
 }
 
@@ -24,28 +24,28 @@ glm::mat4 Arpenteur::getViewMatrix()
     return m_camera.getViewMatrix(m_position);
 }
 
-void Arpenteur::moveLeft(float t)
+void Arpenteur::moveLeft(const float t)
 {
     m_position += t * m_LeftVector;
 }
 
-void Arpenteur::moveFront(float t)
+void Arpenteur::moveFront(const float t)
 {
     m_position += t * m_FrontVector;
 }
 
-void Arpenteur::moveUp(float t)
+void Arpenteur::moveUp(const float t)
 {
     glm::vec3 upMovement = t * m_UpVector;
     m_position += upMovement;
 }
 
-void Arpenteur::rotateLeft(float degrees)
+void Arpenteur::rotateLeft(const float degrees)
 {
     m_Phi += glm::radians(degrees);
 }
 
-void Arpenteur::handleMapBounds(const float square_radius, float height)
+void Arpenteur::handleMapBounds(const float square_radius)
 {
     float margin = 1.0;
     if (m_position[0] < -square_radius)
@@ -54,13 +54,11 @@ void Arpenteur::handleMapBounds(const float square_radius, float height)
     }
     if (m_position[0] > square_radius * margin)
     {
-        // m_position.x *= -1;
         m_position.x = -square_radius + 0.1;
     }
     if (m_position[1] < -square_radius * margin)
     {
         m_position.y = square_radius - 0.1;
-        // m_position.y *= -1;
     }
     if (m_position[1] > square_radius * margin)
     {

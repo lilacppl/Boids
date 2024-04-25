@@ -1,11 +1,8 @@
 #pragma once
-// #include <corecrt_math_defines.h>
 #include <p6/p6.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp> // pour glm::pi
-// #include "common.hpp"
-
 #include "arpenteurcamera.hpp"
 #include "glm/ext/quaternion_geometric.hpp"
 #include "mesh.hpp"
@@ -37,22 +34,15 @@ private:
 public:
     Arpenteur();
     glm::vec3 getArpenteurPosition();
-
-    void      update(const p6::Context& ctx, const Program& program, const float height, const int& time);
+    void      update(const p6::Context& ctx, const Program& program, const int& time);
     glm::mat4 getViewMatrix();
+    void      moveLeft(float t);
+    void      moveFront(float t);
+    void      moveUp(float t);
+    void      rotateLeft(float degrees);
+    void      eventManager(p6::Context& ctx);
 
-    // Méthode pour déplacer la caméra le long du vecteur Left
-    void moveLeft(float t);
-    // Méthode pour déplacer la caméra le long du vecteur Front
-    void moveFront(float t);
-
-    void moveUp(float t);
-
-    // Méthode pour tourner la caméra autour de l'arpenteur
-    void rotateLeft(float degrees);
-    void eventManager(p6::Context& ctx);
-
-    void handleMapBounds(const float square_radius, float height);
+    void handleMapBounds(const float square_radius);
 
     void eventUpdate();
 };

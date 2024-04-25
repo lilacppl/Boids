@@ -30,7 +30,6 @@ void Boids::draw(const p6::Context& ctx, const float square_radius, const float 
 {
     for (auto& i : m_boids)
     {
-        // i.draw(ctx);
         i.draw(ctx, mesh, viewmatrix, program, time);
         i.move(square_radius, maxspeed, minspeed, height);
     }
@@ -122,7 +121,6 @@ void Boids::alignement(const float neighbor_dist)
 
 void Boids::cohesion(const float neighbor_dist)
 {
-    // float neighbordist     = 0.15; // Field of vision
     float centering_factor = 0.01;
 
     for (auto& b : m_boids) // on boucle sur chaque boid
@@ -157,7 +155,6 @@ void Boids::cohesion(const float neighbor_dist)
 void Boids::separation(const float avoid_factor)
 {
     float neighborprotect = 0.09;
-    // float avoidfactor     = 0.02;
     float close_dx, close_dy;
     for (auto& b : m_boids)
     {

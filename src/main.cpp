@@ -20,12 +20,7 @@ int main()
     Scene scene;
     scene.Init(ctx);
     std::string text = "Hello";
-    ctx.imgui        = [&]() {
-    };
-
     ctx.update = [&]() {
-        // vao.bind();
-        shader.use();
         glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

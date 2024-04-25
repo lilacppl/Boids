@@ -13,7 +13,7 @@ private:
     float m_avoid_factor  = 0.02f;
     float m_max_speed     = 0.05f;
     float m_min_speed     = 0.03f;
-    float m_lod_value     = 3.f;
+    float m_lod_value     = 4.f;
 
 public:
     ImguiVariables() = default;

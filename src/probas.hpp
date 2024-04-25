@@ -61,16 +61,6 @@ double betaReduite();
 
 static bool niveauEau(const int& temps, std::vector<int> event_time_table, const int& number_events)
 {
-    // std::cout<<temps<<std::endl;
-    // if (temps % 2000 == 0)
-    // {
-    //     std::vector<int>vec = eventsTimes(number_events, temps);
-    //     for (int i = 0; i < event_time_table.size(); i++)
-    //     {
-    //         std::cout << event_time_table[0] << std::endl;
-    //     }
-    // }
-    // return std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end();
     if (temps % 4000 == 0)
     {
         // Générer les temps des événements si nécessaire

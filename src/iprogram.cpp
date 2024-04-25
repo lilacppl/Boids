@@ -5,7 +5,7 @@
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
-    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0), m_shininess(20.), m_intensity(2),m_intensity2(10), m_r(randomColor()), m_g(randomColor()), m_b(randomColor())
+    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0), m_shininess(20.), m_intensity(2), m_intensity2(10), m_r(randomColor()), m_g(randomColor()), m_b(randomColor())
 {
     // Création de la texture
     glGenTextures(1, &m_name);
@@ -25,16 +25,15 @@ void Program::getUniformLocations()
     uNormalMatrix = glGetUniformLocation(m_Program.id(), "uNormalMatrix");
     m_uTexture    = glGetUniformLocation(m_Program.id(), "TextureCoordinate");
 
-    m_uKd             = glGetUniformLocation(m_Program.id(), "uKd");
-    m_uKs             = glGetUniformLocation(m_Program.id(), "uKs");
-    m_uKd2            = glGetUniformLocation(m_Program.id(), "uKd2");
-    m_uKs2            = glGetUniformLocation(m_Program.id(), "uKs2");
-    m_uShininess      = glGetUniformLocation(m_Program.id(), "uShininess");
-    m_uLightDir_vs    = glGetUniformLocation(m_Program.id(), "uLightDir_vs");
-    m_uLightPos_vs    = glGetUniformLocation(m_Program.id(), "uLightPos_vs");
-    m_uLightIntensity = glGetUniformLocation(m_Program.id(), "uLightIntensity");
+    m_uKd              = glGetUniformLocation(m_Program.id(), "uKd");
+    m_uKs              = glGetUniformLocation(m_Program.id(), "uKs");
+    m_uKd2             = glGetUniformLocation(m_Program.id(), "uKd2");
+    m_uKs2             = glGetUniformLocation(m_Program.id(), "uKs2");
+    m_uShininess       = glGetUniformLocation(m_Program.id(), "uShininess");
+    m_uLightDir_vs     = glGetUniformLocation(m_Program.id(), "uLightDir_vs");
+    m_uLightPos_vs     = glGetUniformLocation(m_Program.id(), "uLightPos_vs");
+    m_uLightIntensity  = glGetUniformLocation(m_Program.id(), "uLightIntensity");
     m_uLightIntensity2 = glGetUniformLocation(m_Program.id(), "uLightIntensity2");
-
 }
 
 void Program::bind() const
@@ -55,13 +54,10 @@ void Program::use(const glm::mat4& viewmatrix, const p6::Context& ctx, const glm
     glBindTexture(GL_TEXTURE_2D, m_name);
 
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), 0.1f, 100.f);
-    // glm::mat4 MVMatrix     = glm::translate(glm::mat4{1.f}, glm::vec3(0.f, 0.f, -5.f));
-    // std::cout << "Position: (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
-
-    glm::mat4 MVMatrix = glm::mat4{1.f};
-    MVMatrix           = glm::translate(MVMatrix, glm::vec3{0.0, -(1.0 - scale_down) * scale_value / 2.0, 0.0});
-    MVMatrix           = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
-    MVMatrix           = glm::translate(glm::mat4{1.f}, position);
+    glm::mat4 MVMatrix   = glm::mat4{1.f};
+    MVMatrix             = glm::translate(MVMatrix, glm::vec3{0.0, -(1.0 - scale_down) * scale_value / 2.0, 0.0});
+    MVMatrix             = glm::scale(MVMatrix, glm::vec3{1, scale_down, 1});
+    MVMatrix             = glm::translate(glm::mat4{1.f}, position);
 
     // On oriente le poisson pour qu'il regarde dans la direction du déplacement
     MVMatrix = glm::rotate(MVMatrix, direction[0], glm::vec3{1, 0, 0});
@@ -90,17 +86,11 @@ void Program::LightVarToShader(const glm::mat4& viewmatrix, const int& time) con
     glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, time).x, lightPos_vs(viewmatrix, time).y, lightPos_vs(viewmatrix, time).z);
     glUniform3f(m_uLightIntensity, m_intensity, m_intensity, m_intensity);
     glUniform3f(m_uLightIntensity2, m_intensity2, m_intensity2, m_intensity2);
-
 }
 
 void Program::useText() const
 {
     glUniform1i(m_uTexture, 0);
-}
-
-float randomShininess()
-{
-    return betaReduite();
 }
 
 float randomIntensityValue()
@@ -127,33 +117,7 @@ glm::vec3 lightPos_vs(const glm::mat4& viewmatrix, const int& time) // position 
     return glm::vec3(viewmatrix * lightPos);
 }
 
-void Program::setTexture()
-{
-    chaineMarkov(m_actual_state);
-    // m_image = p6::load_image_buffer(textures[m_actual_state]);
-    // glBindTexture(GL_TEXTURE_2D, m_name);
-    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_image.width(), m_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_image.data());
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // glBindTexture(GL_TEXTURE_2D, 0);
-}
-
 void Program::deleteTextureBufferArray() const
 {
     glDeleteTextures(1, &m_name);
-}
-
-bool Program::lightChange()
-{
-    if (m_index == 100)
-    {
-        m_index = 0;
-        return true;
-    }
-    else
-        return false;
-}
-void Program::setIndex()
-{
-    m_frame_index++;
 }
