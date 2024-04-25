@@ -18,8 +18,11 @@ struct SceneObjectVector {
         ObjectPositionScale(glm::vec3(1.0f, -5.f, 2.0f), 0.2f),
         ObjectPositionScale(glm::vec3(-4.0f, -5.f, -1.5f), 0.5f)
     }; // liste des algues sur forme de vector contenant position et scale
-    std::vector<ObjectPositionScale> stone = {
-        ObjectPositionScale(glm::vec3(0.0f, -5.f, -10.0f), 0.5f)
+    std::vector<ObjectPositionScale> mushroom = {
+        ObjectPositionScale(glm::vec3(-3.0f, -5.f, -9.5f), 3.f),
+        ObjectPositionScale(glm::vec3(0.5f, -5.f, -7.0f), 1.f),
+        ObjectPositionScale(glm::vec3(0.3f, -5.f, -4.f), 0.2f),
+        ObjectPositionScale(glm::vec3(0.1f, -5.f, -4.f), 0.4f)
     };
 
     std::vector<ObjectPositionScale> shark = {

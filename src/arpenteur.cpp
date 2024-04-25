@@ -36,13 +36,10 @@ void Arpenteur::moveFront(float t)
 
 void Arpenteur::moveUp(float t)
 {
-    // Calculer le vecteur de déplacement en fonction de l'axe Up
     glm::vec3 upMovement = t * m_UpVector;
-    // Ajouter le déplacement à la position de la caméra
     m_position += upMovement;
 }
 
-// Méthode pour tourner la caméra autour de l'arpenteur
 void Arpenteur::rotateLeft(float degrees)
 {
     m_Phi += glm::radians(degrees);
@@ -65,7 +62,6 @@ void Arpenteur::handleMapBounds(const float square_radius, float height)
         m_position.y = square_radius - 0.1;
         // m_position.y *= -1;
     }
-    // if (m_position[1] > height * margin)
     if (m_position[1] > square_radius * margin)
     {
         m_position.y = -square_radius + 0.1;
@@ -100,8 +96,6 @@ void Arpenteur::eventManager(p6::Context& ctx)
         else if (key.logical == "e")
             m_rotateRight = true;
     };
-
-    // Gestionnaire d'événements de touche relâchée
     ctx.key_released = [&](p6::Key key) {
         if (key.logical == "z")
             m_moveForward = false;

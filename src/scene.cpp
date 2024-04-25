@@ -3,7 +3,7 @@
 #include "probas.hpp"
 
 Scene::Scene()
-    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fishlow(m_vertices.fishlow), m_fishverylow(m_vertices.fishverylow), m_shark(m_vertices.shark), m_fish_program(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_cube_program("./assets/eau.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_shark_program("./assets/material_diffuse.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed(m_vertices.seaweed)
+    : m_imguiVariables(), m_vertices(), m_first_boids(m_imguiVariables.GetBoidsNumber()), m_cube(m_vertices.cube), m_fish(m_vertices.fish), m_fishlow(m_vertices.fishlow), m_fishverylow(m_vertices.fishverylow), m_shark(m_vertices.shark), m_fish_program(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_cube_program("./assets/eau.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_arpenteur_program("./assets/arpenteur_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed_program("./assets/algue_color.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_shark_program("./assets/material_diffuse.png", "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl"), m_seaweed(m_vertices.seaweed), m_mushroom(m_vertices.mushroom)
 {
 }
 
@@ -12,31 +12,6 @@ void Scene::Init(p6::Context& ctx)
     m_arpenteur.eventManager(ctx);
     m_events_tables = eventsTimes(2, 0);
 }
-
-// void Scene::ResetChrono()
-// {
-//     if (m_reset_time)
-//         m_chrono.reset();
-// };
-// Program& Scene::markovProgram()
-// {
-//     switch (m_actual_state)
-//     {
-//     case 0:
-//         return m_p0;
-//         break;
-//     case 1:
-//         return m_p1;
-//         break;
-//     case 2:
-//         return m_p2;
-//         break;
-//     case 3:
-//         return m_p3;
-//         break;
-//     }
-//     return m_p4;
-// }
 
 float random = rand01();
 
@@ -74,7 +49,7 @@ void Scene::update(const p6::Context& ctx)
 
     // std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
+    // m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
 
     m_current_time = tempsEcoule(m_chrono);
 }
@@ -82,7 +57,7 @@ void Scene::update(const p6::Context& ctx)
 void Scene::draw(const p6::Context& ctx) const
 {
     m_objects.drawSceneObjOfSameMesh(m_objects.seaweed, m_seaweed, ctx, m_viewMatrix, m_seaweed_program, m_current_time);
-    // m_objects.drawSceneObjOfSameMesh(m_objects.stone, m_stone, ctx, m_viewMatrix, m_stone_program);
+    m_objects.drawSceneObjOfSameMesh(m_objects.mushroom, m_mushroom, ctx, m_viewMatrix, m_arpenteur_program, m_current_time);
 }
 
 Mesh& Scene::returnFishMeshUsingLodValue()
@@ -123,4 +98,5 @@ void Scene::cleanupRessources()
     m_fishverylow.DeleteVboVao();
     m_shark.DeleteVboVao();
     m_seaweed.DeleteVboVao();
+    m_mushroom.DeleteVboVao();
 }

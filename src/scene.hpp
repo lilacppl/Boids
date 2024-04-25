@@ -24,18 +24,15 @@ private:
     Mesh           m_fishlow;
     Mesh           m_fishverylow;
     Mesh           m_shark;
-    // MeshVec        m_fish_models;
 
-    // FreeflyCamera m_camera;
     Program m_fish_program;
     Program m_cube_program;
     Program m_arpenteur_program;
     Program m_seaweed_program;
     Program m_shark_program;
-    // std::vector<Program> programs ; //a faire
     Arpenteur m_arpenteur;
     Mesh      m_seaweed;
-    // Mesh              m_stone;
+    Mesh m_mushroom;
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
