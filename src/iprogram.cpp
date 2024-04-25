@@ -5,7 +5,7 @@
 
 // Initialisation
 Program::Program(std::string texture_path, std::string vs_path, std::string fs_path)
-    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0), m_shininess(randomShininess()), m_intensity(randomIntensityValue()), m_r(randomColor()), m_g(randomColor()), m_b(randomColor())
+    : m_image(p6::load_image_buffer(texture_path)), m_Program{p6::load_shader(vs_path, fs_path)}, m_actual_state(0), m_shininess(200.), m_intensity(10), m_r(randomColor()), m_g(randomColor()), m_b(randomColor())
 {
     // Création de la texture
     glGenTextures(1, &m_name);
@@ -88,11 +88,11 @@ void Program::LightVarToShader(const glm::mat4& viewmatrix, const int& time) con
     //     // m_g            = randomColor();
     //     // m_b            = randomColor();
     // }
-    glUniform3f(m_uKd, m_r, m_g, m_b); // lumiere blanche
-    glUniform3f(m_uKs, 0., 0., 1.);    // reflets bleus
-    glUniform3f(m_uKd2, 1., 0., 0.);   // lumiere blanche
-    glUniform3f(m_uKs, 1., 1., 1.);    // reflets bleus
-    glUniform1f(m_uShininess, m_shininess);
+    glUniform3f(m_uKd, 1., 1., 1.);   // lumiere blanche
+    glUniform3f(m_uKs, 0., 0., 1.);   // reflets bleus
+    glUniform3f(m_uKd2, m_r, 0., 0.); // lumiere blanche
+    glUniform3f(m_uKs, 1., 1., 1.);   // reflets bleus
+    glUniform1f(m_uShininess, 20.);
     glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
     glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, time).x, lightPos_vs(viewmatrix, time).y, lightPos_vs(viewmatrix, time).z);
     glUniform3f(m_uLightIntensity, m_intensity, m_intensity, m_intensity);
@@ -110,12 +110,12 @@ float randomShininess()
 
 float randomIntensityValue()
 {
-    return loiExponentielle(0.1f, 2.0f, 1.5);
+    return loiExponentielle(0.6f, 1.0f, 1.5);
 }
 
 float randomColor()
 {
-    return uniform(0.3, 1.0);
+    return uniform(0.7, 1.0);
 }
 
 glm::vec3 lightDir_vs(const glm::mat4& viewmatrix) // lumiere directionnelle : soleil
