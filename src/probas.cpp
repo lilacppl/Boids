@@ -82,71 +82,74 @@ float loiNormale(const float esperance, const float ecart_type)
 void markovSuivant(int& actual_state, const glm::vec4& v)
 {
     float a = rand01();
-    // if (a < v[0])
-    // {
-    //     actual_state = 0;
-    //     std::cout << "Transition vers l'état 0" << std::endl;
-    // }
-    // else if (a < v[0] + v[1])
-    // {
-    //     actual_state = 1;
-    //     std::cout << "Transition vers l'état 1" << std::endl;
-    // }
-    // else if (a < v[0] + v[1] + v[2])
-    // {
-    //     actual_state = 2;
-    // }
-    // else if (a < v[0] + v[1] + v[2] + v[3])
-    // {
-    //     actual_state = 3;
-    // }
-    // else
-    // {
-    //     actual_state = 4;
-    //     std::cout << "cest le 4" << std::endl;
-    // }
     if (a < v[0])
     {
         actual_state = 0;
         std::cout << "Transition vers l'état 0" << std::endl;
     }
-    else if (a < v[1])
+    else if (a < v[0] + v[1])
     {
         actual_state = 1;
         std::cout << "Transition vers l'état 1" << std::endl;
     }
-    else if (a < v[2])
+    else if (a < v[0] + v[1] + v[2])
     {
         actual_state = 2;
     }
-    else if (a < v[3])
+    else if (a < v[0] + v[1] + v[2] + v[3])
     {
         actual_state = 3;
     }
     else
     {
         actual_state = 4;
-        // std::cout << "cest le 4" << std::endl;
+        std::cout << "cest le 4" << std::endl;
     }
-    std::cout << "valeur du vecteur" << v[0] << v[1] << std::endl;
+    // if (a < v[0])
+    // {
+    //     actual_state = 0;
+    //     std::cout << "Transition vers l'état 0" << std::endl;
+    // }
+    // else if (a < v[1])
+    // {
+    //     actual_state = 1;
+    //     std::cout << "Transition vers l'état 1" << std::endl;
+    // }
+    // else if (a < v[2])
+    // {
+    //     actual_state = 2;
+    // }
+    // else if (a < v[3])
+    // {
+    //     actual_state = 3;
+    // }
+    // else
+    // {
+    //     actual_state = 4;
+    //     // std::cout << "cest le 4" << std::endl;
+    // }
+    // std::cout << "valeur du vecteur" << v[0] << v[1] << std::endl;
 }
 
-void chaineMarkov(int& actual_state)
+void chaineMarkov(int& actual_state, const int current_time)
 {
-    switch (actual_state)
+    if (current_time % 20 == 0)
     {
-    case 0:
-        markovSuivant(actual_state, mat[0]);
-        break;
-    case 1:
-        markovSuivant(actual_state, mat[1]);
-        break;
-    case 2:
-        markovSuivant(actual_state, mat[2]);
-        break;
-    case 3:
-        markovSuivant(actual_state, mat[3]);
-        break;
+        switch (actual_state)
+        {
+        case 0:
+            markovSuivant(actual_state, mat[0]);
+            break;
+        case 1:
+            markovSuivant(actual_state, mat[1]);
+            break;
+        case 2:
+            markovSuivant(actual_state, mat[2]);
+            break;
+        case 3:
+            markovSuivant(actual_state, mat[3]);
+            break;
+        }
     }
 }
 
@@ -156,6 +159,20 @@ bool textureMarkov(const Timer chrono)
         return true;
     else
         return false;
+}
+
+bool switchMarkov(const int current_time)
+{
+    if (current_time % 100 == 0)
+    {
+        std::cout
+            << "oui ca change" << std::endl;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 double loiBeta(float alpha, float beta)

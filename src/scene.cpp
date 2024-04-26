@@ -46,7 +46,7 @@ void Scene::update(const p6::Context& ctx)
         // Vérifier si m_index se trouve dans l'intervalle [spawn_time, despawn_time]
         if (m_index >= spawn_time && m_index <= despawn_time)
         {
-            std::cout << "requin" << std::endl;
+            // std::cout << "requin" << std::endl;
             m_objects.drawShark(m_objects.shark[0], m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
         }
     }
@@ -64,7 +64,7 @@ void Scene::update(const p6::Context& ctx)
 
     // std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, returnMarkovProgram(m_chrono), height, m_current_time);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, returnMarkovProgram(m_current_time), height, m_current_time);
 
     // m_current_time = tempsEcoule(m_chrono);
 }
@@ -90,22 +90,23 @@ Mesh& Scene::returnFishMeshUsingLodValue()
         return m_fish;
 }
 
-Program& Scene::returnMarkovProgram(Timer& chrono)
+Program& Scene::returnMarkovProgram(int& current_time)
 {
-    if (textureMarkov(chrono))
-    {
-        chaineMarkov(m_actual_state);
-        // std::cout << m_actual_state << std::endl;
-    }
-
+    // if (switchMarkov(current_time))
+    // {
+    chaineMarkov(m_actual_state, current_time);
+    // std::cout << m_actual_state << std::endl;
+    //}
     switch (m_actual_state)
     {
-        std::cout << "hello" << std::endl;
     case 0:
+        // std::cout << "hello" << std::endl;
         return m_fish_program;
     case 1:
+        // std::cout << "hello1" << std::endl;
         return m_cube_program;
     case 2:
+        // std::cout << "hello2" << std::endl;
         return m_arpenteur_program;
     case 3:
         return m_seaweed_program;

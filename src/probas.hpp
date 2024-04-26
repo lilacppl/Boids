@@ -53,7 +53,7 @@ std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule, int dur
 float loiNormale(const float esperance, const float ecart_type);
 
 void   markovSuivant(int& actual_state, const glm::vec4& v);
-void   chaineMarkov(int& actual_state);
+void   chaineMarkov(int& actual_stat, const int current_time);
 bool   textureMarkov(const Timer chrono);
 double loiExponentielle(double min, double max, double lambda);
 double loiBeta(float alpha, float beta);
@@ -74,3 +74,4 @@ static bool niveauEau(const int& temps, std::vector<int>& event_time_table, cons
 }
 // std::pair<int, int>               eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);
 std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);
+bool                             switchMarkov(const int current_time);
