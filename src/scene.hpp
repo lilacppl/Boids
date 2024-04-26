@@ -66,6 +66,7 @@ public:
     int      getState();
     void     setState(int a);
     void     cleanupRessources();
+    Program& returnMarkovProgram(Timer& chrono);
 };
 
 // static Program m_p0(textures[0], "../shaders/3D.vs.glsl", "../shaders/Light.fs.glsl");

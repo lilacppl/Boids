@@ -19,7 +19,7 @@
 static std::vector<int> event_time_table;
 
 // Matrice de passage pour chaîne de Markov
-static glm::mat4 mat{{1 / 2, 1 / 6, 1 / 6, 1 / 6}, {1 / 4, 1 / 8, 1 / 4, 3 / 8}, {1 / 6, 1 / 6, 1 / 2, 1 / 6}, {1 / 4, 3 / 8, 1 / 4, 1 / 8}};
+static glm::mat4 mat{{1.0 / 2., 1. / 6., 1. / 6., 1. / 6.}, {1. / 4., 1. / 8., 1. / 4., 3. / 8.}, {1. / 6., 1. / 6., 1. / 2., 1. / 6.}, {1. / 4., 3. / 8., 1. / 4., 1. / 8.}};
 
 // vecteur des textures pour poissons
 static const std::vector<std::string> textures{"../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png", "../assets/fish_color.png"};
@@ -52,7 +52,7 @@ std::vector<int> eventsTimes(const int poisson, const int& temps_ecoule, int dur
 // loi normale pour la hauteur de l'eau
 float loiNormale(const float esperance, const float ecart_type);
 
-void   markovSuivant(int& actual_state, const glm::vec4 v);
+void   markovSuivant(int& actual_state, const glm::vec4& v);
 void   chaineMarkov(int& actual_state);
 bool   textureMarkov(const Timer chrono);
 double loiExponentielle(double min, double max, double lambda);
@@ -73,4 +73,4 @@ static bool niveauEau(const int& temps, std::vector<int>& event_time_table, cons
     // return false;
 }
 // std::pair<int, int>               eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);
-std::vector < std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);
+std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);

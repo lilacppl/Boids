@@ -79,29 +79,56 @@ float loiNormale(const float esperance, const float ecart_type)
     return sample;
 }
 
-void markovSuivant(int& actual_state, const glm::vec4 v)
+void markovSuivant(int& actual_state, const glm::vec4& v)
 {
     float a = rand01();
+    // if (a < v[0])
+    // {
+    //     actual_state = 0;
+    //     std::cout << "Transition vers l'état 0" << std::endl;
+    // }
+    // else if (a < v[0] + v[1])
+    // {
+    //     actual_state = 1;
+    //     std::cout << "Transition vers l'état 1" << std::endl;
+    // }
+    // else if (a < v[0] + v[1] + v[2])
+    // {
+    //     actual_state = 2;
+    // }
+    // else if (a < v[0] + v[1] + v[2] + v[3])
+    // {
+    //     actual_state = 3;
+    // }
+    // else
+    // {
+    //     actual_state = 4;
+    //     std::cout << "cest le 4" << std::endl;
+    // }
     if (a < v[0])
     {
         actual_state = 0;
+        std::cout << "Transition vers l'état 0" << std::endl;
     }
-    else if (a < v[0] + v[1])
+    else if (a < v[1])
     {
         actual_state = 1;
+        std::cout << "Transition vers l'état 1" << std::endl;
     }
-    else if (a < v[0] + v[1] + v[2])
+    else if (a < v[2])
     {
         actual_state = 2;
     }
-    else if (a < v[0] + v[1] + v[2] + v[3])
+    else if (a < v[3])
     {
         actual_state = 3;
     }
     else
     {
         actual_state = 4;
+        // std::cout << "cest le 4" << std::endl;
     }
+    std::cout << "valeur du vecteur" << v[0] << v[1] << std::endl;
 }
 
 void chaineMarkov(int& actual_state)
@@ -162,28 +189,19 @@ double loiExponentielle(double min, double max, double lambda)
 
 std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins)
 {
-    // double time_fraction = rand01();                                               // determiner le moment de l'event avec une var uniforme
-    // int    spawn_time    = static_cast<int>(time_fraction * duree) + temps_ecoule; // Instant de spawn du requin
-    // int    despawn_time  = spawn_time + duree_requins;                             // Instant de disparition du requin
-
-    // return std::make_pair(spawn_time, despawn_time);
-
-    double                         lambda = 4; // Paramètre de la loi de Poisson (ajustez selon vos besoins)
+    double                         lambda = 10;
     std::default_random_engine     generator;
     std::poisson_distribution<int> poisson_distribution(lambda);
     int                            number_of_events = poisson_distribution(generator);
 
-    // Générer les instants de spawn et de disparition des requins
     std::vector<std::pair<int, int>> event_times;
     for (int i = 0; i < number_of_events; ++i)
     {
-        // Utiliser une distribution uniforme pour déterminer le moment de l'événement
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
         double                                 time_fraction = distribution(generator);
         int                                    spawn_time    = static_cast<int>(time_fraction * duree) + temps_ecoule; // Instant de spawn du requin
         int                                    despawn_time  = spawn_time + duree_requins;                             // Instant de disparition du requin
 
-        // Mettre à jour event_times pour inclure chaque événement de spawn et de disparition
         event_times.push_back(std::make_pair(spawn_time, despawn_time));
         std::cout << "event shark ajouté" << std::endl;
     }

@@ -38,16 +38,6 @@ void Scene::update(const p6::Context& ctx)
             m_cube_hscale = 0.99;
     }
 
-    // int spawn_time   = m_events_shark.first;
-    // int despawn_time = m_events_shark.second;
-    // std::cout << spawn_time << std::endl;
-
-    // if (m_index >= spawn_time && m_index <= despawn_time)
-    // {
-    //     std::cout << "requin" << std::endl;
-    //     m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
-    // }
-
     for (const auto& event : m_events_shark)
     {
         int spawn_time   = event.first;
@@ -69,16 +59,12 @@ void Scene::update(const p6::Context& ctx)
     m_arpenteur.update(ctx, m_arpenteur_program, height, m_current_time);
     // m_objects.drawShark(m_objects.shark[0], m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
 
-    // m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale, m_current_time);
+    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale, m_current_time);
     m_arpenteur.eventUpdate();
-    // if (texture_markov(m_chrono))
-    // {
-    //     // m_fish_program = markov_program();
-    // }
 
     // std::cout << m_current_time << std::endl;
 
-    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, m_fish_program, height, m_current_time);
+    m_first_boids.update(ctx, m_imguiVariables.GetBoidsNumber(), m_cube_size / 2.0, m_imguiVariables.GetNeighborDist(), m_imguiVariables.GetAvoidFactor(), m_imguiVariables.GetMaxSpeed(), m_imguiVariables.GetMinSpeed(), returnFishMeshUsingLodValue(), m_viewMatrix, returnMarkovProgram(m_chrono), height, m_current_time);
 
     // m_current_time = tempsEcoule(m_chrono);
 }
@@ -102,6 +88,30 @@ Mesh& Scene::returnFishMeshUsingLodValue()
     }
     else
         return m_fish;
+}
+
+Program& Scene::returnMarkovProgram(Timer& chrono)
+{
+    if (textureMarkov(chrono))
+    {
+        chaineMarkov(m_actual_state);
+        // std::cout << m_actual_state << std::endl;
+    }
+
+    switch (m_actual_state)
+    {
+        std::cout << "hello" << std::endl;
+    case 0:
+        return m_fish_program;
+    case 1:
+        return m_cube_program;
+    case 2:
+        return m_arpenteur_program;
+    case 3:
+        return m_seaweed_program;
+    default:
+        return m_cube_program;
+    }
 }
 
 int Scene::getState()

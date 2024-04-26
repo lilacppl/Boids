@@ -45,12 +45,7 @@ struct SceneObjectVector {
 
     void drawShark(ObjectPositionScale& obj, const Mesh& mesh, const p6::Context& ctx, const glm::mat4& viewmatrix, const Program& program, ImguiVariables& var, const int& time) const
     {
-        //     // Si z devient négatif, ajustez-le pour qu'il reste positif dans la plage
-        //     // if (z < 0.0f) {
-        //     //     z += maxZ;
-        //     // }
         float z = obj.getPosition().z;
-        // z += (time / 1000);
         z += 0.1;
         if (z > 6.)
         {
@@ -60,30 +55,6 @@ struct SceneObjectVector {
         glm::vec3 position = glm::vec3(obj.getPosition().x, obj.getPosition().y, z);
         float     scale    = obj.getScale();
         mesh.DrawMesh(ctx, viewmatrix, program, obj.getPosition(), scale, glm::vec3(0, 0, 0), 1., time);
-        // }
-        // float movement_speed = 1.f;
-
-        // // for (auto& obj : shark) // itérer sur une copie des objets
-        // // {
-        //     // Récupérer la position actuelle du requin
-        //     glm::vec3 position = obj.getPosition();
-
-        //     // Mettre à jour la position en fonction du temps et de la vitesse de déplacement
-        //     position.z += movement_speed * (time / 1000);
-
-        //     // Réinitialiser la position si le requin dépasse une certaine limite
-        //     if (position.z > 6.0f)
-        //     {
-        //         position.z = -20.0f;
-        //     }
-
-        //     // Définir la nouvelle position du requin
-        //     obj.setPosition(position);
-
-        //     // Dessiner le requin avec sa nouvelle position
-        //     float scale = obj.getScale();
-        //     mesh.DrawMesh(ctx, viewmatrix, program, position, scale, glm::vec3(0, 0, 0), 1.0f, time);
-        //}
     }
 
     // void drawAllObjectsOfSameMesh(Mesh& mesh, p6::Context& ctx, const glm::mat4& viewmatrix, Program& program) const
