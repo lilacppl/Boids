@@ -124,15 +124,13 @@ public:
         }
         if (m_position[0] > square_radius * margin)
         {
-            m_position.x *= -1;
+            m_position.x = -square_radius + 0.1;
         }
         if (m_position[1] < -square_radius * margin)
         {
-            m_position.y = height - 0.1;
+            m_position.y = square_radius - 0.1;
         }
-        // if (m_position[1] > height * margin)
-        if (m_position[1] > 10 * margin)
-
+        if (m_position[1] > square_radius * margin)
         {
             m_position.y = -square_radius + 0.1;
         }
@@ -142,7 +140,7 @@ public:
         }
         if (m_position[2] > square_radius * margin)
         {
-            m_position.z *= -1;
+            m_position.z = -square_radius + 0.1;
         }
     }
 

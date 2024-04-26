@@ -87,7 +87,7 @@ void Program::LightVarToShader(const glm::mat4& viewmatrix, const int& time) con
     glUniform3f(m_uKd2, 1., 0., 0.);   // lumiere blanche
     glUniform3f(m_uKs, 1., 1., 1.);    // reflets bleus
     glUniform1f(m_uShininess, m_shininess);
-    glUniform3f(m_uLightDir_vs, lightDir_vs(viewmatrix).x, lightDir_vs(viewmatrix).y, lightDir_vs(viewmatrix).z);
+    glUniform3f(m_uLightDir_vs, 1, 1, 1);
     glUniform3f(m_uLightPos_vs, lightPos_vs(viewmatrix, time).x, lightPos_vs(viewmatrix, time).y, lightPos_vs(viewmatrix, time).z);
     glUniform3f(m_uLightIntensity, m_intensity, m_intensity, m_intensity);
 }

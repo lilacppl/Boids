@@ -11,6 +11,8 @@ void Scene::Init(p6::Context& ctx)
 {
     m_arpenteur.eventManager(ctx);
     m_events_tables = eventsTimes(2, 0, 500);
+    // m_events_tables2 = eventsTimes(3, 0, 10000);
+    m_events_shark = eventsTimesShark(0, 10000, 600); // genere un intervalle de debut aléatoire
 }
 
 float random = rand01();
@@ -24,16 +26,34 @@ void Scene::update(const p6::Context& ctx)
 
     if (niveauEau(m_index, m_events_tables, 2, 500))
     {
-        std::cout << m_events_tables[0] << std::endl;
+        // std::cout << m_events_tables[0] << std::endl;
         m_cube_hscale = loiNormale(0.8, 0.1);
         if (m_cube_hscale < 0.5)
             m_cube_hscale = 0.99;
     }
 
-    if (random < 0.2)
-    {
-        m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
-    }
+    // int spawn_time   = m_events_shark.first;
+    // int despawn_time = m_events_shark.second;
+    // std::cout << spawn_time << std::endl;
+
+    // if (m_index >= spawn_time && m_index <= despawn_time)
+    // {
+    //     std::cout << "requin" << std::endl;
+    //     m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
+    // }
+
+    // for (const auto& event : m_events_shark)
+    // {
+    //     int spawn_time   = event.first;
+    //     int despawn_time = event.second;
+
+    //     // Vérifier si m_index se trouve dans l'intervalle [spawn_time, despawn_time]
+    //     if (m_index >= spawn_time && m_index <= despawn_time)
+    //     {
+    //         std::cout << "requin" << std::endl;
+    //         m_objects.drawShark(m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
+    //     }
+    // }
 
     // hauteur de la partie en y positifs du cube
     float height = m_cube_size * m_cube_hscale / 2;
@@ -41,9 +61,9 @@ void Scene::update(const p6::Context& ctx)
     m_imguiVariables.UpdateValues();
     m_viewMatrix = m_arpenteur.getViewMatrix();
     m_arpenteur.update(ctx, m_arpenteur_program, height, m_current_time);
+    m_objects.drawShark(m_objects.shark[0], m_shark, ctx, m_viewMatrix, m_shark_program, m_imguiVariables, m_current_time);
 
-    m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale, m_current_time);
-    m_arpenteur.update(ctx, m_arpenteur_program, height, m_current_time);
+    // m_cube.DrawMesh(ctx, m_viewMatrix, m_cube_program, position, m_cube_size, glm::vec3(0, 0, 0), m_cube_hscale, m_current_time);
     m_arpenteur.eventUpdate();
     // if (texture_markov(m_chrono))
     // {

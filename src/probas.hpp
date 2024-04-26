@@ -70,5 +70,7 @@ static bool niveauEau(const int& temps, std::vector<int>& event_time_table, cons
 
     return (std::find(event_time_table.begin(), event_time_table.end(), temps) != event_time_table.end());
 
-    return false;
+    // return false;
 }
+// std::pair<int, int>               eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);
+std::vector < std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins);

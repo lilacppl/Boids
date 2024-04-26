@@ -159,3 +159,33 @@ double loiExponentielle(double min, double max, double lambda)
     double u2 = -log(1 - u1) / lambda;
     return min + (max - min) * u2;
 }
+
+std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int duree, int duree_requins)
+{
+    // double time_fraction = rand01();                                               // determiner le moment de l'event avec une var uniforme
+    // int    spawn_time    = static_cast<int>(time_fraction * duree) + temps_ecoule; // Instant de spawn du requin
+    // int    despawn_time  = spawn_time + duree_requins;                             // Instant de disparition du requin
+
+    // return std::make_pair(spawn_time, despawn_time);
+
+    double                         lambda = 10; // Paramètre de la loi de Poisson (ajustez selon vos besoins)
+    std::default_random_engine     generator;
+    std::poisson_distribution<int> poisson_distribution(lambda);
+    int                            number_of_events = poisson_distribution(generator);
+
+    // Générer les instants de spawn et de disparition des requins
+    std::vector<std::pair<int, int>> event_times;
+    for (int i = 0; i < number_of_events; ++i)
+    {
+        // Utiliser une distribution uniforme pour déterminer le moment de l'événement
+        std::uniform_real_distribution<double> distribution(0.0, 1.0);
+        double                                 time_fraction = distribution(generator);
+        int                                    spawn_time    = static_cast<int>(time_fraction * duree) + temps_ecoule; // Instant de spawn du requin
+        int                                    despawn_time  = spawn_time + duree_requins;                             // Instant de disparition du requin
+
+        // Mettre à jour event_times pour inclure chaque événement de spawn et de disparition
+        event_times.push_back(std::make_pair(spawn_time, despawn_time));
+    }
+
+    return event_times;
+}

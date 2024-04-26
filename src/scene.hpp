@@ -41,13 +41,15 @@ private:
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
 
-    int              m_current_time = 0;
-    int              m_actual_state = 0;
-    std::vector<int> m_events_tables{};
-    const float      m_cube_size   = 10.0f;
-    float            m_cube_hscale = 0.9f;
-    bool             m_reset_time  = false;
-    int              m_index       = 0;
+    int                              m_current_time = 0;
+    int                              m_actual_state = 0;
+    std::vector<int>                 m_events_tables{};  // pour le niveau de l'eau
+    std::vector<int>                 m_events_tables2{}; // pour les requins
+    std::vector<std::pair<int, int>> m_events_shark;
+    const float                      m_cube_size   = 10.0f;
+    float                            m_cube_hscale = 0.9f;
+    bool                             m_reset_time  = false;
+    int                              m_index       = 0;
 
 public:
     // Scene(p6::Context& ctx);
