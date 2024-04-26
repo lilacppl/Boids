@@ -40,6 +40,7 @@ private:
     SceneObjectVector m_objects;
     glm::mat4         m_viewMatrix;
     Timer             m_chrono;
+    Timer             m_chronoreset;
 
     int                              m_current_time = 0;
     int                              m_actual_state = 0;

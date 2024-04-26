@@ -168,7 +168,7 @@ std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int d
 
     // return std::make_pair(spawn_time, despawn_time);
 
-    double                         lambda = 10; // Paramètre de la loi de Poisson (ajustez selon vos besoins)
+    double                         lambda = 4; // Paramètre de la loi de Poisson (ajustez selon vos besoins)
     std::default_random_engine     generator;
     std::poisson_distribution<int> poisson_distribution(lambda);
     int                            number_of_events = poisson_distribution(generator);
@@ -185,6 +185,7 @@ std::vector<std::pair<int, int>> eventsTimesShark(const int& temps_ecoule, int d
 
         // Mettre à jour event_times pour inclure chaque événement de spawn et de disparition
         event_times.push_back(std::make_pair(spawn_time, despawn_time));
+        std::cout << "event shark ajouté" << std::endl;
     }
 
     return event_times;

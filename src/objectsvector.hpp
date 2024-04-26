@@ -49,7 +49,9 @@ struct SceneObjectVector {
         //     // if (z < 0.0f) {
         //     //     z += maxZ;
         //     // }
-        float z = obj.getPosition().z * (time / 1000);
+        float z = obj.getPosition().z;
+        // z += (time / 1000);
+        z += 0.1;
         if (z > 6.)
         {
             z = -20;
